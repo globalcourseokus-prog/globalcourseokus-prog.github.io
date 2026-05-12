@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unduhan - Global Course</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;80&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: #050A18;
+            color: #e0e0e0;
+        }
+        .bg-tech {
+            background: radial-gradient(circle at top left, #1E40AF, transparent 40%),
+                        radial-gradient(circle at bottom right, #22D3EE, transparent 40%),
+                        linear-gradient(135deg, #020617 0%, #0F172A 100%);
+        }
+        .card-tech {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(55, 65, 81, 0.5);
+            transition: all 0.3s ease;
+        }
+        .card-tech:hover {
+            border-color: rgba(56, 189, 248, 0.5);
+        }
+        .text-gradient {
+            background: linear-gradient(to right, #38bdf8, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .btn-download {
+            background: linear-gradient(45deg, #10b981, #059669);
+            transition: all 0.3s ease;
+        }
+        .btn-download:hover {
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+            transform: translateY(-2px);
+        }
+        .file-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body class="bg-tech min-h-screen py-10">
+
+    <div class="max-w-5xl mx-auto px-4">
+
+        <!-- HEADER -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold"><span class="text-gradient">MENU UNDUHAN</span></h1>
+            <p class="text-slate-400 mt-3 text-lg">Download Sertifikat, Modul, dan Bahan Belajar</p>
+        </div>
+
+        <!-- ============================================== -->
+        <!--               BAGIAN SERTIFIKAT               -->
+        <!-- ============================================== -->
+        <div class="card-tech rounded-2xl p-8 mb-10">
+            <div class="flex items-center gap-4 mb-8">
+                <div class="file-icon" style="background: rgba(234, 179, 8, 0.1); color: #eab308;">
+                    <i class="fas fa-certificate"></i>
+                </div>
+                <h2 class="text-3xl font-bold text-white">Sertifikat Kelulusan</h2>
+            </div>
+
+            <p class="text-slate-300 mb-6">Silakan download sertifikat sesuai dengan program yang telah Anda selesaikan:</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <!-- Sertifikat Office -->
+                <div class="bg-slate-800/70 rounded-xl p-5 flex items-center gap-4 border border-slate-700">
+                    <i class="fas fa-file-pdf text-3xl text-red-400"></i>
+                    <div class="flex-1">
+                        <h3 class="font-bold text-white">Sertifikat Microsoft Office</h3>
+                        <p class="text-xs text-slate-400">Format PDF - Siap Print</p>
+                    </div>
+                    <a href="#" class="btn-download text-white text-sm font-semibold py-2 px-4 rounded-lg">
+                        <i class="fas fa-download mr-2"></i> Download
+                    </a>
+                </div>
+
+                <!-- Sertifikat Desain -->
+                <div class="bg-slate-800/70 rounded-xl p-5 flex items-center gap-4 border border-slate-700">
+                    <i class="fas fa-file-pdf text-3xl text-red-400"></i>
+                    <div class="flex-1">
+                        <h3 class="font-bold text-white">Sertifikat Desain Grafis</h3>
+                        <p class="text-xs text-slate-400">Format PDF - Siap Print</p>
+                    </div>
+                    <a href="#" class="btn-download text-white text-sm font-semibold py-2 px-4 rounded-lg">
+                        <i class="fas fa-download mr-2"></i> Download
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- ============================================== -->
+        <!--               BAGIAN MODUL BELAJAR            -->
+        <!-- ============================================== -->
+        <div class="card-tech rounded-2xl p-8 mb-10">
+            <div class="flex items-center gap-4 mb-8">
+                <div class="file-icon" style="background: rgba(56, 189, 248, 0.1); color: #38bdf8;">
+                    <i class="fas fa-book"></i>
+                </div>
+                <h2 class="text-3xl font-bold text-white">Modul & Buku Panduan</h2>
+            </div>
+
+            <p class="text-slate-300 mb-6">Download materi pembelajaran lengkap untuk dipelajari lagi di rumah:</p>
+
+            <!-- Kategori Office -->
+            <h3 class="text-xl font-bold text-cyan-400 mb-4 flex items-center">
+                <i class="fas fa-laptop-code mr-2"></i> Microsoft Office
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                
+                <div class="bg-slate-800/70 rounded-xl p-4 flex items-center gap-4 border border-slate-700">
+                    <i class="fab fa-microsoft text-2xl text-blue-400"></i>
+                    <span class="flex-1">Modul Lengkap Microsoft Word</span>
+                    <a href="#" class="text-cyan-400 hover:text-cyan-300"><i class="fas fa-download"></i></a>
+                </div>
+
+                <div class="bg-slate-800/70 rounded-xl p-4 flex items-center gap-4 border border-slate-700">
+                    <i class="fas fa-table-cells text-2xl text-green-400"></i>
+                    <span class="flex-1">Modul Rumus & Fungsi Excel</span>
+                    <a href="#" class="text-cyan-400 hover:text-cyan-300"><i class="fas fa-download"></i></a>
+                </div>
+
+                <div class="bg-slate-800/70 rounded-xl p-4 flex items-center gap-4 border border-slate-700">
+                    <i class="fas fa-display text-2xl text-orange-400"></i>
+                    <span class="flex-1">Modul Desain Presentasi PowerPoint</span>
+                    <a href="#" class="text-cyan-400 hover:text-cyan-300"><i class="fas fa-download"></i></a>
+                </div>
+
+                <div class="bg-slate-800/70 rounded-xl p-4 flex items-center gap-4 border border-slate-700">
+                    <i class="fas fa-file-pdf text-2xl text-red-400"></i>
+                    <span class="flex-1">Paket Lengkap Soal Latihan Office</span>
+                    <a href="#" class="text-cyan-400 hover:text-cyan-300"><i class="fas fa-download"></i></a>
+                </div>
+
+            </div>
+
+            <!-- Kategori Desain Grafis -->
+            <h3 class="text-xl font-bold text-pink-400 mb-4 flex items-center">
+                <i class="fas fa-palette mr-2"></i> Desain Grafis
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                
+                <div class="bg-slate-800/70 rounded-xl p-4 flex items-center gap-4 border border-slate-700">
+                    <i class="fas fa-vector-square text-2xl text-pink-400"></i>
+                    <span class="flex-1">Modul Dasar CorelDraw & Photoshop</span>
+                    <a href="#" class="text-cyan-400 hover:text-cyan-300"><i class="fas fa-download"></i></a>
+                </div>
+
+                <div class="bg-slate-800/70 rounded-xl p-4 flex items-center gap-4 border border-slate-700">
+                    <i class="fas fa-paint-brush text-2xl text-yellow-400"></i>
+                    <span class="flex-1">Buku Panduan Teori Warna & Tipografi</span>
+                    <a href="#" class="text-cyan-400 hover:text-cyan-300"><i class="fas fa-download"></i></a>
+                </div>
+
+                <div class="bg-slate-800/70 rounded-xl p-4 flex items-center gap-4 border border-slate-700">
+                    <i class="fas fa-images text-2xl text-purple-400"></i>
+                    <span class="flex-1">Kumpulan Contoh Hasil Desain</span>
+                    <a href="#" class="text-cyan-400 hover:text-cyan-300"><i class="fas fa-download"></i></a>
+                </div>
+
+                <div class="bg-slate-800/70 rounded-xl p-4 flex items-center gap-4 border border-slate-700">
+                    <i class="fas fa-file-zip text-2xl text-blue-400"></i>
+                    <span class="flex-1">File Latihan & Asset Desain (.ZIP)</span>
+                    <a href="#" class="text-cyan-400 hover:text-cyan-300"><i class="fas fa-download"></i></a>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- TOMBOL KEMBALI -->
+        <div class="text-center mt-12">
+            <a href="index.html" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-cyan-400 border border-cyan-400/30 hover:bg-cyan-400/10 transition">
+                <i class="fas fa-home"></i> Kembali ke Beranda
+            </a>
+        </div>
+
+    </div>
+
+</body>
+</html>
