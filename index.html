@@ -63,6 +63,25 @@
         .program-icon {
             background: linear-gradient(135deg, rgba(56,189,248,0.1), rgba(168,85,247,0.1));
         }
+
+        /* CSS Khusus untuk Slider Banner */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+        .slider-wrapper {
+            display: flex;
+            transition: transform 0.8s ease-in-out; /* Animasi geser */
+        }
+        .slide {
+            min-width: 100%;
+        }
+        .slide img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
     </style>
 </head>
 <body>
@@ -84,7 +103,8 @@
                     <a href="download.html" class="text-slate-300 hover:text-cyan-400 font-medium transition">Download</a>
                     <!-------------->
                     <a href="registrasi.html" class="text-slate-300 hover:text-cyan-400 font-medium transition">Daftar</a>
-                    <a href="https://testmoz.com/13402132" target="_blank" class="text-slate-300 hover:text-cyan-400 font-medium transition">Uji Kompetensi</a>
+                    <!-- ✅ LINK SUDAH DIUBAH KE FILE UJIAN_KOMPETENSI.HTML -->
+                    <a href="ujian_kompetensi.html" class="text-slate-300 hover:text-cyan-400 font-medium transition">Uji Kompetensi</a>
                     <a href="https://wa.me/6287781865701" target="_blank" class="bg-green-600 hover:bg-green-500 text-white px-5 py-2 rounded-lg font-semibold transition">
                         <i class="fab fa-whatsapp mr-2"></i>Hubungi Kami
                     </a>
@@ -96,31 +116,37 @@
         </div>
     </nav>
 
-    <!-- HERO SECTION -->
-    <section class="hero-tech text-white py-20 md:py-28">
-        <div class="max-w-7xl mx-auto px-4 text-center relative z-10">
-            <p class="text-cyan-300 font-medium mb-4 tracking-widest">WELCOME TO THE FUTURE OF LEARNING</p>
-            <h1 class="text-4xl md:text-6xl font-extrabold mb-4 leading-tight">YAYASAN PENDIDIKAN & PELATIHAN</h1>
-            <h2 class="text-3xl md:text-5xl font-extrabold text-gradient mb-6">GLOBAL COURSE</h2>
-            <p class="text-slate-300 text-lg md:text-xl max-w-3xl mx-auto mb-10">
-                Membangun Generasi Unggul, Kompeten, dan Siap Kerja di Era Digital
-            </p>
-            <div class="flex flex-col sm:flex-row gap-6 justify-center">
-                <a href="registrasi.html" class="btn-glow text-slate-900 font-bold py-4 px-8 rounded-xl text-lg">
-                    <i class="fas fa-user-graduate mr-2"></i> DAFTAR SEKARANG
-                </a>
-                <a href="https://testmoz.com/13402132" target="_blank" class="border-2 border-cyan-400 text-cyan-300 hover:bg-cyan-400/10 font-bold py-4 px-8 rounded-xl text-lg transition-all">
-                    <i class="fas fa-laptop-code mr-2"></i> UJI KOMPETENSI
-                </a>
+    <!-- HERO SECTION - SLIDER BERGESER OTOMATIS -->
+    <section class="bg-slate-900">
+        <div class="slider-container max-w-7xl mx-auto">
+            <div class="slider-wrapper" id="slider">
+                <div class="slide">
+                    <img src="Banner1.jpg" alt="Yayasan Pendidikan & Pelatihan Global Course - Banner 1">
+                </div>
+                <div class="slide">
+                    <img src="Banner2.jpg" alt="Yayasan Pendidikan & Pelatihan Global Course - Banner 2">
+                </div>
             </div>
         </div>
     </section>
+
+    <!-- JAVASCRIPT UNTUK SLIDER OTOMATIS -->
+    <script>
+        const slider = document.getElementById('slider');
+        const totalSlides = slider.children.length;
+        let currentIndex = 0;
+
+        setInterval(() => {
+    currentIndex = (currentIndex + 1) % totalSlides;
+    slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+}, 5000); // 👈 Sekarang durasinya 5 detik
+    </script>
 
     <!-- PROGRAM KURSUS SECTION -->
     <section id="program" class="py-20">
         <div class="max-w-6xl mx-auto px-4">
             <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">PROGRAM <span class="text-gradient">KURSUS KAMI</span></h2>
-            <p class="text-center text-slate-400 mb-12">Pilih keahlian sesuai minat dan bakatmu</p>
+            <p class="text-center text-slate-400 mb-12">Pilih keahlian sesuai minat dan bakatmu bersertifikat Resmi</p>
 
             <div class="grid md:grid-cols-2 gap-8">
                 <!-- Card Microsoft Office -->
@@ -224,7 +250,6 @@
                         <i class="fas fa-star text-yellow-400"></i>
                         <i class="fas fa-star-half-alt text-yellow-400"></i>
                     </div>
-                    <p class="italic text-slate-300 mb-4
                     <p class="italic text-slate-300 mb-4">"Sistem ujian onlinenya canggih dan praktis. Sertifikat yang dihasilkan juga diakui resmi oleh pemerintah. Sangat recommended untuk meningkatkan skill!"</p>
                     <h4 class="font-bold text-white">- Siti Aminah</h4>
                     <p class="text-xs text-cyan-400">Lulusan Administrasi Perkantoran</p>
@@ -245,6 +270,7 @@
                 </div>
             </div>
         </div>
+
     </section>
 
     <!-- FOOTER -->
