@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LKP Global Course OKU Selatan - Portal Edukasi & Sertifikasi</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        secondary: {
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col antialiased">
+
+    <!-- TOP TOOLBAR: PROMO BANNER -->
+    <div class="bg-slate-900 text-white text-xs py-2 px-4 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+                <span class="bg-amber-500 text-slate-950 text-[10px] font-extrabold px-2 py-0.5 rounded">PROMO BARU</span>
+                <span>Biaya Pendaftaran hanya <strong>Rp 50.000</strong> untuk semua paket kelas!</span>
+            </div>
+            <div class="flex items-center gap-3">
+                <span class="text-slate-400">Hubungi WA Kami:</span>
+                <a href="https://wa.me/6287781865701" target="_blank" class="text-emerald-400 font-bold hover:underline">
+                    <i class="fa-brands fa-whatsapp mr-1"></i> 0877-8186-5701
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAVIGATION BAR -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo LKP Baru dengan Fallback -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="window.location.href='index.html'">
+                    <img src="Logo Global.png" alt="Logo LKP Global Course" class="h-14 w-auto object-contain" onerror="this.src='https://placehold.co/200x200/0f172a/38bdf8?text=LKP'">
+                    <div>
+                        <span class="font-extrabold text-lg sm:text-xl tracking-tight bg-gradient-to-r from-primary-900 to-indigo-800 bg-clip-text text-transparent">YAYASAN PENDIDIKAN DAN PELATIHAN GLOBAL COURSE</span>
+                        <div class="text-[10px] font-bold text-slate-500 uppercase tracking-widest -mt-1">KEC.SIMPANG OKU SELATAN • LKP</div>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation Menu (Lengkap dengan 6 Menu utama) -->
+                <nav class="hidden xl:flex items-center space-x-1 font-semibold text-sm">
+                    <a href="index.html" class="px-3 py-2 rounded-lg text-primary-600 bg-primary-50 transition-all">
+                        <i class="fa-solid fa-house mr-1"></i> Home
+                    </a>
+                    <a href="legalitas.html" class="px-3 py-2 rounded-lg text-slate-600 hover:text-primary-600 hover:bg-slate-50 transition-all">
+                        <i class="fa-solid fa-scale-balanced mr-1"></i> Legalitas Kami
+                    </a>
+                    <a href="ujian.html" class="px-3 py-2 rounded-lg text-slate-600 hover:text-primary-600 hover:bg-slate-50 transition-all">
+                        <i class="fa-solid fa-laptop-code mr-1"></i> Uji Kompetensi Online
+                    </a>
+                    <a href="registrasi.html" class="px-3 py-2 rounded-lg text-slate-600 hover:text-primary-600 hover:bg-slate-50 transition-all">
+                        <i class="fa-solid fa-user-plus mr-1"></i> Registrasi
+                    </a>
+                    <a href="galeri.html" class="px-3 py-2 rounded-lg text-slate-600 hover:text-primary-600 hover:bg-slate-50 transition-all">
+                        <i class="fa-solid fa-images mr-1"></i> Galeri
+                    </a>
+                    <a href="hubungi.html" class="px-3 py-2 rounded-lg text-slate-600 hover:text-primary-600 hover:bg-slate-50 transition-all">
+                        <i class="fa-solid fa-envelope mr-1"></i> Hubungi Kami
+                    </a>
+                </nav>
+
+                <!-- CTA Button Desktop & Burger Button Mobile -->
+                <div class="flex items-center space-x-3">
+                    <div class="hidden md:block">
+                        <a href="registrasi.html" class="bg-gradient-to-r from-primary-600 to-indigo-600 text-white font-semibold text-sm px-5 py-2.5 rounded-xl shadow-lg shadow-primary-100 hover:shadow-primary-200 hover:-translate-y-0.5 transition-all duration-200 inline-flex items-center gap-1.5">
+                            Daftar Sekarang <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    <!-- Mobile Menu Toggler (Hadir di bawah layar XL) -->
+                    <button id="mobile-menu-btn" class="xl:hidden text-slate-600 hover:text-primary-600 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                        <i class="fa-solid fa-bars text-xl" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="hidden xl:hidden border-b border-slate-200 bg-white shadow-lg">
+            <div class="px-3 pt-2 pb-4 space-y-1 sm:px-4 text-base font-semibold">
+                <a href="index.html" class="block px-4 py-2.5 rounded-xl text-primary-600 bg-primary-50">
+                    <i class="fa-solid fa-house mr-2 w-5 text-center"></i> Home
+                </a>
+                <a href="legalitas.html" class="block px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-50">
+                    <i class="fa-solid fa-scale-balanced mr-2 w-5 text-center"></i> Legalitas Kami
+                </a>
+                <a href="ujian.html" class="block px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-50">
+                    <i class="fa-solid fa-laptop-code mr-2 w-5 text-center"></i> Uji Kompetensi Online
+                </a>
+                <a href="registrasi.html" class="block px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-50">
+                    <i class="fa-solid fa-user-plus mr-2 w-5 text-center"></i> Registrasi
+                </a>
+                <a href="galeri.html" class="block px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-50">
+                    <i class="fa-solid fa-images mr-2 w-5 text-center"></i> Galeri
+                </a>
+                <a href="hubungi.html" class="block px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-50">
+                    <i class="fa-solid fa-envelope mr-2 w-5 text-center"></i> Hubungi Kami
+                </a>
+                <div class="pt-2 border-t border-slate-100 mt-2">
+                    <a href="registrasi.html" class="w-full bg-gradient-to-r from-primary-600 to-indigo-600 text-white font-semibold text-center py-3 rounded-xl shadow-md flex items-center justify-center gap-1.5">
+                        Daftar Kelas Baru <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN BODY -->
+    <main class="flex-grow">
+
+        <!-- HERO SECTION -->
+        <section class="relative overflow-hidden bg-gradient-to-b from-slate-900 to-slate-950 text-white py-16 lg:py-24">
+            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary-900/40 via-transparent to-transparent"></div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Hero Content Left -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center space-x-2 bg-amber-500/20 border border-amber-500/40 text-amber-300 rounded-full px-4 py-1.5 text-xs sm:text-sm font-semibold animate-pulse">
+                        <span class="flex h-2 w-2 rounded-full bg-amber-400"></span>
+                        <span>Promo Terbatas: Biaya Pendaftaran Hanya Rp 50.000!</span>
+                    </div>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
+                        Investasi <span class="bg-gradient-to-r from-amber-400 to-amber-200 bg-clip-text text-transparent">Masa Depan</span> Bersama LKP Global Course!
+                    </h1>
+                    <p class="text-slate-300 text-base sm:text-lg lg:text-xl max-w-2xl mx-auto lg:mx-0 font-light">
+                        Salah satu Lembaga Kursus & Pelatihan komputer terbaik di Muara Dua, OKU Selatan. Kami menyediakan materi bimbingan praktis dari nol hingga mahir untuk kebutuhan dunia kerja dan wirausaha.
+                    </p>
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                        <a href="registrasi.html" class="w-full sm:w-auto bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-extrabold px-8 py-4 rounded-xl shadow-lg shadow-amber-500/15 transition-all duration-200 flex items-center justify-center gap-2 text-base">
+                            <i class="fa-solid fa-user-plus"></i> Ambil Promo Sekarang
+                        </a>
+                        <button onclick="document.getElementById('program-pricing-section').scrollIntoView({ behavior: 'smooth' })" class="w-full sm:w-auto bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 font-bold px-8 py-4 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 text-base">
+                            <i class="fa-solid fa-tags"></i> Lihat Paket Kursus
+                        </button>
+                    </div>
+                    <div class="flex items-center justify-center lg:justify-start gap-6 text-xs text-slate-400 pt-6">
+                        <span><i class="fa-solid fa-circle-check text-emerald-400 mr-1.5"></i> Izin Dinas Pendidikan Resmi</span>
+                        <span><i class="fa-solid fa-circle-check text-emerald-400 mr-1.5"></i> Bimbingan Instruktur Berpengalaman</span>
+                        <span><i class="fa-solid fa-circle-check text-emerald-400 mr-1.5"></i> Sertifikat Lisensi Kerja</span>
+                    </div>
+                </div>
+
+                <!-- Hero Visual Right -->
+                <div class="lg:col-span-5 relative">
+                    <div class="absolute -inset-1 rounded-2xl bg-gradient-to-r from-amber-500 to-indigo-500 opacity-30 blur-xl animate-pulse"></div>
+                    <div class="relative bg-slate-800/90 border border-slate-700 p-6 sm:p-8 rounded-2xl shadow-2xl">
+                        <div class="flex items-center justify-between mb-4 border-b border-slate-700 pb-4">
+                            <div class="flex items-center space-x-2">
+                                <span class="w-3 h-3 rounded-full bg-rose-500"></span>
+                                <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+                                <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+                            </div>
+                            <span class="text-xs text-amber-400 font-mono"><i class="fa-solid fa-percent"></i> SPESIAL_PROMO_LKP</span>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-700/50">
+                                <span class="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">Biaya Registrasi Normal: <del class="text-rose-400">Rp 100.000</del></span>
+                                <div class="text-2xl font-black text-amber-400 mt-1">Hanya Rp 50.000!</div>
+                                <p class="text-[11px] text-slate-300 mt-1 leading-relaxed">Berlaku untuk pendaftar minggu ini. Amankan kuota belajar Anda sekarang juga sebelum kelas penuh.</p>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="bg-slate-900/50 p-3 rounded-lg border border-slate-700/40 text-center">
+                                    <div class="text-xs text-slate-400 font-medium">Banyak Pertemuan</div>
+                                    <div class="text-lg font-bold text-white mt-1">Hingga 36x</div>
+                                </div>
+                                <div class="bg-slate-900/50 p-3 rounded-lg border border-slate-700/40 text-center">
+                                    <div class="text-xs text-slate-400 font-medium">Sistem Belajar</div>
+                                    <div class="text-lg font-bold text-emerald-400 mt-1">100% Praktis</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STATS BAR -->
+        <div class="bg-white border-b border-slate-200 py-8 relative z-10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                    <div class="space-y-1">
+                        <div class="text-3xl sm:text-4xl font-extrabold text-primary-600">500+</div>
+                        <div class="text-xs sm:text-sm font-semibold text-slate-500 uppercase tracking-wider">Alumni Sukses</div>
+                    </div>
+                    <div class="space-y-1">
+                        <div class="text-3xl sm:text-4xl font-extrabold text-indigo-600">Rp 50rb</div>
+                        <div class="text-xs sm:text-sm font-semibold text-slate-500 uppercase tracking-wider">Biaya Pendaftaran</div>
+                    </div>
+                    <div class="space-y-1">
+                        <div class="text-3xl sm:text-4xl font-extrabold text-rose-600">1 Siswa</div>
+                        <div class="text-xs sm:text-sm font-semibold text-slate-500 uppercase tracking-wider">1 Komputer (AC)</div>
+                    </div>
+                    <div class="space-y-1">
+                        <div class="text-3xl sm:text-4xl font-extrabold text-emerald-600">100%</div>
+                        <div class="text-xs sm:text-sm font-semibold text-slate-500 uppercase tracking-wider">Garansi Mengulang</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PROGRAM KURSUS & HARGA PROMO -->
+        <div class="py-16 bg-slate-50" id="program-pricing-section">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <h2 class="text-xs font-bold text-primary-600 uppercase tracking-widest">Pilihan Paket Belajar Terfavorit</h2>
+                    <p class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-2">Daftar Paket Program Pelatihan LKP</p>
+                    <p class="text-slate-500 mt-3 text-sm sm:text-base">Materi bimbingan didesain secara adaptif dengan didukung sarana komputer modern ber-AC. Biaya pendaftaran awal hanya <strong>Rp 50.000</strong>.</p>
+                </div>
+
+                <!-- Program Pricing Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto items-stretch">
+                    
+                    <!-- PAKET 1: MICROSOFT OFFICE -->
+                    <div class="bg-white rounded-2xl border-2 border-slate-200/60 p-8 shadow-sm hover:shadow-xl hover:border-primary-500 transition-all duration-300 flex flex-col justify-between relative overflow-hidden">
+                        <div class="absolute top-0 right-0 bg-primary-600 text-white text-[10px] font-bold uppercase tracking-wider px-4 py-1.5 rounded-bl-xl shadow-md">
+                            Relevan Untuk Perkantoran
+                        </div>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-center gap-4">
+                                <div class="w-14 h-14 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center text-2xl flex-shrink-0">
+                                    <i class="fa-solid fa-file-invoice"></i>
+                                </div>
+                                <div>
+                                    <span class="text-xs font-bold text-slate-400 block uppercase tracking-wider">PAKET 1</span>
+                                    <h3 class="text-2xl font-black text-slate-900">Microsoft Office</h3>
+                                </div>
+                            </div>
+                            
+                            <div class="border-y border-slate-100 py-4 flex items-baseline gap-2">
+                                <span class="text-4xl font-black text-slate-900">Rp 450.000</span>
+                                <span class="text-slate-400 text-sm font-semibold">/ Total Biaya</span>
+                            </div>
+
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-2.5 text-sm font-semibold text-slate-700">
+                                    <i class="fa-solid fa-circle-play text-primary-500"></i>
+                                    <span>36 Kali Pertemuan Terjadwal</span>
+                                </div>
+                                <div class="flex items-center gap-2.5 text-sm text-slate-600">
+                                    <i class="fa-solid fa-check text-emerald-500"></i>
+                                    <span>Microsoft Word (Dokumen Surat Menyurat)</span>
+                                </div>
+                                <div class="flex items-center gap-2.5 text-sm text-slate-600">
+                                    <i class="fa-solid fa-check text-emerald-500"></i>
+                                    <span>Microsoft Excel (Olah Data & Rumus Kerja)</span>
+                                </div>
+                                <div class="flex items-center gap-2.5 text-sm text-slate-600">
+                                    <i class="fa-solid fa-check text-emerald-500"></i>
+                                    <span>Microsoft PowerPoint (Animasi Presentasi)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pt-8">
+                            <a href="registrasi.html" class="w-full bg-slate-900 hover:bg-primary-600 text-white font-bold py-3.5 px-6 rounded-xl transition-all duration-200 shadow-md flex items-center justify-center gap-2">
+                                Daftar Kelas Office <i class="fa-solid fa-chevron-right text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- PAKET 2: DESAIN GRAFIS PHOTOSHOP -->
+                    <div class="bg-white rounded-2xl border-2 border-slate-200/60 p-8 shadow-sm hover:shadow-xl hover:border-amber-500 transition-all duration-300 flex flex-col justify-between relative overflow-hidden">
+                        <div class="absolute top-0 right-0 bg-amber-500 text-slate-950 text-[10px] font-extrabold uppercase tracking-wider px-4 py-1.5 rounded-bl-xl shadow-md">
+                            Industri Kreatif
+                        </div>
+
+                        <div class="space-y-6">
+                            <div class="flex items-center gap-4">
+                                <div class="w-14 h-14 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-2xl flex-shrink-0">
+                                    <i class="fa-solid fa-palette"></i>
+                                </div>
+                                <div>
+                                    <span class="text-xs font-bold text-slate-400 block uppercase tracking-wider">PAKET 2</span>
+                                    <h3 class="text-2xl font-black text-slate-900">Desain Grafis</h3>
+                                </div>
+                            </div>
+
+                            <div class="border-y border-slate-100 py-4 flex items-baseline gap-2">
+                                <span class="text-4xl font-black text-slate-900">Rp 550.000</span>
+                                <span class="text-slate-400 text-sm font-semibold">/ Total Biaya</span>
+                            </div>
+
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-2.5 text-sm font-semibold text-slate-700">
+                                    <i class="fa-solid fa-circle-play text-amber-500"></i>
+                                    <span>24 Kali Pertemuan Terjadwal</span>
+                                </div>
+                                <div class="flex items-center gap-2.5 text-sm text-slate-600">
+                                    <i class="fa-solid fa-check text-emerald-500"></i>
+                                    <span>Adobe Photoshop (Manipulasi & Koreksi Foto)</span>
+                                </div>
+                                <div class="flex items-center gap-2.5 text-sm text-slate-600">
+                                    <i class="fa-solid fa-check text-emerald-500"></i>
+                                    <span>Prinsip Dasar Tata Letak & Teori Warna</span>
+                                </div>
+                                <div class="flex items-center gap-2.5 text-sm text-slate-600">
+                                    <i class="fa-solid fa-check text-emerald-500"></i>
+                                    <span>Ekspor Desain Promosi Media Sosial</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pt-8">
+                            <a href="registrasi.html" class="w-full bg-slate-900 hover:bg-amber-500 hover:text-slate-950 text-white font-bold py-3.5 px-6 rounded-xl transition-all duration-200 shadow-md flex items-center justify-center gap-2">
+                                Daftar Kelas Desain <i class="fa-solid fa-chevron-right text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- KENAPA MEMILIH KAMI -->
+        <div class="py-16 bg-white border-y border-slate-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-xs font-bold text-primary-600 uppercase tracking-widest">Kenapa Memilih Kami?</h2>
+                    <h3 class="text-3xl font-extrabold text-slate-900 mt-2 mb-6">Lembaga Terpercaya dengan Fasilitas Lengkap</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="bg-emerald-50 text-emerald-600 p-2 rounded-lg mt-1"><i class="fa-solid fa-shield-halved"></i></div>
+                            <div>
+                                <h4 class="font-bold text-slate-900">Kurikulum Berbasis Kerja (SKKNI)</h4>
+                                <p class="text-slate-500 text-sm">Materi disusun secara adaptif agar langsung relevan dengan industri kerja saat ini.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="bg-emerald-50 text-emerald-600 p-2 rounded-lg mt-1"><i class="fa-solid fa-display"></i></div>
+                            <div>
+                                <h4 class="font-bold text-slate-900">Laboratorium Komputer Modern</h4>
+                                <p class="text-slate-500 text-sm">Fasilitas belajar 1 siswa 1 komputer berspesifikasi mumpuni dan ruangan ber-AC yang nyaman.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="bg-emerald-50 text-emerald-600 p-2 rounded-lg mt-1"><i class="fa-solid fa-id-card"></i></div>
+                            <div>
+                                <h4 class="font-bold text-slate-900">Sertifikat Lisensi Resmi</h4>
+                                <p class="text-slate-500 text-sm">Setiap peserta yang lulus ujian evaluasi berhak mendapatkan sertifikat kelulusan terakreditasi resmi.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- LOKASI & KONTAK + GOOGLE MAPS INTEGRATED -->
+                <div class="bg-slate-50 rounded-2xl p-8 border border-slate-200 shadow-md">
+                    <h3 class="font-bold text-lg text-slate-900 mb-4"><i class="fa-solid fa-map-location-dot text-primary-600 mr-2"></i>Lokasi & Kontak LKP</h3>
+                    <p class="text-sm text-slate-600 mb-6">Kunjungi kantor sekretariat kami atau hubungi nomor telepon layanan operasional berikut:</p>
+                    
+                    <div class="space-y-4 mb-6">
+                        <div class="flex items-center gap-3 text-sm text-slate-700">
+                            <i class="fa-solid fa-location-dot text-rose-500 w-5 text-center"></i>
+                            <span>Desa Simpang Agung Kec. Simpang, Kab. Ogan Komering Ulu Selatan, Sumatera Selatan.</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-sm text-slate-700">
+                            <i class="fa-solid fa-phone text-emerald-600 w-5 text-center"></i>
+                            <span>+62 877-8186-5701 (Admin Utama)</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-sm text-slate-700">
+                            <i class="fa-solid fa-envelope text-primary-600 w-5 text-center"></i>
+                            <span>globalcourseokus@gmail.com</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Google Maps Live Iframe Integration -->
+                    <div class="bg-slate-200 h-60 rounded-xl border border-slate-300 relative overflow-hidden mb-4">
+                        <iframe 
+                            class="w-full h-full border-0" 
+                            src="https://maps.google.com/maps?q=Simpang%20Agung,%20Kec.%20Simpang,%20Kabupaten%20Ogan%20Komering%20Ulu%20Selatan&t=&z=14&ie=UTF8&iwloc=&output=embed" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+
+                    <!-- Direct Navigation Action Button -->
+                    <div class="text-center">
+                        <a 
+                            href="https://maps.app.goo.gl/aaKvxNEnKzCu55MdA" 
+                            target="_blank" 
+                            class="inline-flex items-center gap-2 bg-gradient-to-r from-primary-600 to-indigo-600 hover:from-primary-700 hover:to-indigo-700 text-white font-bold text-xs px-5 py-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-200"
+                        >
+                            <i class="fa-solid fa-diamond-turn-right"></i> Petunjuk Arah Google Maps
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 pt-16 pb-8 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            
+            <!-- About dengan Logo LKP -->
+            <div class="space-y-4">
+                <div class="flex items-center space-x-3 text-white">
+                    <img src="Logo Global.png" alt="Logo LKP Global Course" class="h-12 w-auto object-contain" onerror="this.src='https://placehold.co/200x200/0f172a/38bdf8?text=LKP'">
+                    <span class="font-extrabold text-lg tracking-tight">GLOBAL COURSE</span>
+                </div>
+                <p class="text-xs sm:text-sm leading-relaxed">
+                    Lembaga Kursus dan Pelatihan resmi yang membekali generasi muda dengan kompetensi siap kerja berstandar nasional di Ogan Komering Ulu Selatan.
+                </p>
+            </div>
+
+            <!-- Program list footer -->
+            <div>
+                <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-4">Program Unggulan</h4>
+                <ul class="space-y-2 text-xs sm:text-sm">
+                    <li><span class="hover:text-white transition-colors"><i class="fa-solid fa-chevron-right text-primary-500 mr-2 text-[10px]"></i> Paket 1: Microsoft Office</span></li>
+                    <li><span class="hover:text-white transition-colors"><i class="fa-solid fa-chevron-right text-primary-500 mr-2 text-[10px]"></i> Paket 2: Desain Grafis Photoshop</span></li>
+                </ul>
+            </div>
+
+            <!-- Copyright / Socials -->
+            <div class="space-y-4">
+                <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-4">Hubungi Kami</h4>
+                <p class="text-xs leading-relaxed">Muara Dua, Kab. Ogan Komering Ulu Selatan, Sumatera Selatan.</p>
+                <div class="flex space-x-4">
+                    <a href="https://wa.me/6287781865701" target="_blank" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-primary-600 hover:text-white flex items-center justify-center transition-all text-slate-300"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-primary-600 hover:text-white flex items-center justify-center transition-all text-slate-300"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-primary-600 hover:text-white flex items-center justify-center transition-all text-slate-300"><i class="fa-brands fa-youtube"></i></a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-slate-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+            <p>&copy; 2026 LKP Global Course OKU Selatan. Hak Cipta Dilindungi Undang-Undang.</p>
+            <div class="flex space-x-4">
+                <a href="#" class="hover:underline">Syarat & Ketentuan</a>
+                <a href="#" class="hover:underline">Kebijakan Privasi</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MOBILE NAVIGATION LOGIC -->
+    <script>
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            const isHidden = mobileMenu.classList.contains('hidden');
+            
+            if (isHidden) {
+                mobileMenu.classList.remove('hidden');
+                menuIcon.className = "fa-solid fa-xmark text-xl";
+            } else {
+                mobileMenu.classList.add('hidden');
+                menuIcon.className = "fa-solid fa-bars text-xl";
+            }
+        });
+    </script>
+
+</body>
+</html>
