@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - LKP Global Course</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = { 
+            theme: { 
+                extend: { 
+                    colors: { 
+                        'dark-main': '#0A1128', 
+                        'dark-card': '#121A36', 
+                        'dark-input': '#1E294B', 
+                        'accent-blue': '#3B82F6', 
+                        'light-text': '#E2E8F0', 
+                        'neon-blue': '#00F0FF', 
+                    }
+                } 
+            } 
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities { 
+            .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; } 
+            .scrollbar-hide::-webkit-scrollbar { display: none; } 
+            .border-glow { border: 1px solid rgba(59, 130, 246, 0.3); box-shadow: 0 0 15px rgba(59, 130, 246, 0.1); } 
+            .tab-active { background-color: rgba(59, 130, 246, 0.2); color: #00F0FF; border-bottom: 2px solid #00F0FF; }
+        }
+        table { border-collapse: collapse; width: 100%; }
+        th { background-color: rgba(30, 41, 75, 0.8); color: #00F0FF; font-weight: 600; text-transform: uppercase; font-size: 0.85rem; padding: 12px 16px; border-bottom: 1px solid rgba(59, 130, 246, 0.3); }
+        td { padding: 12px 16px; border-bottom: 1px solid rgba(55, 65, 81, 0.5); color: #E2E8F0; font-size: 0.9rem; }
+        tr:hover td { background-color: rgba(59, 130, 246, 0.05); }
+    </style>
+</head>
+<body class="bg-[#050A18] min-h-screen font-sans text-light-text py-8">
+
+    <div class="container mx-auto px-4 max-w-7xl">
+        <!-- HEADER ADMIN -->
+        <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+            <div class="flex items-center gap-4">
+                <div class="w-14 h-14 rounded-xl bg-dark-input border-glow flex items-center justify-center shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+                    <i class="fa fa-database text-neon-blue text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-white tracking-wide">ADMIN <span class="text-accent-blue">DASHBOARD</span></h1>
+                    <p class="text-sm text-light-text/60">Sistem Informasi LKP Global Course</p>
+                </div>
+            </div>
+            <div class="bg-dark-input/50 border border-blue-500/30 px-4 py-2 rounded-lg text-sm text-neon-blue flex items-center gap-2">
+                <div class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
+                Sistem Terhubung Real-Time
+            </div>
+        </div>
+
+        <!-- MAIN KONTEN -->
+        <div class="bg-dark-card/90 backdrop-blur-lg rounded-2xl border-glow shadow-[0_8px_32px_rgba(0,0,0,0.5)] overflow-hidden">
+            
+            <!-- MENU TAB -->
+            <div class="flex border-b border-gray-700/50">
+                <button id="btnTabPendaftaran" class="flex-1 py-4 text-center font-semibold transition-all tab-active hover:bg-dark-input/50" onclick="bukaTab('pendaftaran')">
+                    <i class="fa fa-users mr-2"></i> Data Pendaftaran Siswa
+                </button>
+                <button id="btnTabUjian" class="flex-1 py-4 text-center font-semibold text-gray-400 transition-all hover:bg-dark-input/50" onclick="bukaTab('ujian')">
+                    <i class="fa fa-file-text-o mr-2"></i> Hasil Uji Kompetensi
+                </button>
+            </div>
+
+            <!-- TAB PENDAFTARAN -->
+            <div id="tabPendaftaran" class="p-6 overflow-x-auto scrollbar-hide">
+                <table class="w-full text-left whitespace-nowrap">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>NISGC</th>
+                            <th>Nama Lengkap</th>
+                            <th>NISN</th>
+                            <th>Program Kursus</th>
+                            <th>No. WhatsApp</th>
+                            <th>Waktu Daftar</th>
+                            <th class="text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelPendaftaranBody">
+                        <tr><td colspan="8" class="text-center py-8 text-gray-400"><i class="fa fa-spinner fa-spin mr-2"></i> Memuat data pendaftaran...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- TAB UJIAN -->
+            <div id="tabUjian" class="p-6 overflow-x-auto scrollbar-hide hidden">
+                <table class="w-full text-left whitespace-nowrap">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Peserta</th>
+                            <th>NISN</th>
+                            <th>Jawaban Benar</th>
+                            <th>Nilai Akhir</th>
+                            <th>Waktu Ujian</th>
+                            <th class="text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelUjianBody">
+                        <tr><td colspan="7" class="text-center py-8 text-gray-400"><i class="fa fa-spinner fa-spin mr-2"></i> Memuat data ujian...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- LOGIKA TAMPILAN TAB (Tanpa Firebase) -->
+    <script>
+        function bukaTab(namaTab) {
+            const tabPendaftaran = document.getElementById('tabPendaftaran');
+            const tabUjian = document.getElementById('tabUjian');
+            const btnPendaftaran = document.getElementById('btnTabPendaftaran');
+            const btnUjian = document.getElementById('btnTabUjian');
+
+            if (namaTab === 'pendaftaran') {
+                tabPendaftaran.classList.remove('hidden');
+                tabUjian.classList.add('hidden');
+                btnPendaftaran.classList.add('tab-active');
+                btnPendaftaran.classList.remove('text-gray-400');
+                btnUjian.classList.remove('tab-active');
+                btnUjian.classList.add('text-gray-400');
+            } else {
+                tabPendaftaran.classList.add('hidden');
+                tabUjian.classList.remove('hidden');
+                btnUjian.classList.add('tab-active');
+                btnUjian.classList.remove('text-gray-400');
+                btnPendaftaran.classList.remove('tab-active');
+                btnPendaftaran.classList.add('text-gray-400');
+            }
+        }
+    </script>
+
+    <!-- INTEGRASI FIREBASE REALTIME DATABASE UNTUK MENGAMBIL DATA -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, onValue, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCe7o7XvCfQiMOn0dlBO20AK8IzQbz6nJw",
+            authDomain: "lkp-global-course.firebaseapp.com",
+            databaseURL: "https://lkp-global-course-default-rtdb.firebaseio.com",
+            projectId: "lkp-global-course",
+            storageBucket: "lkp-global-course.firebasestorage.app",
+            messagingSenderId: "95358874758",
+            appId: "1:95358874758:web:83c12f2d1cbbac3f53faa7"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // 1. FUNGSI UNTUK MENGAMBIL DATA PENDAFTARAN
+        const pendaftaranRef = ref(db, 'pendaftaran_siswa');
+        onValue(pendaftaranRef, (snapshot) => {
+            const tbody = document.getElementById('tabelPendaftaranBody');
+            tbody.innerHTML = ''; // Kosongkan tabel sebelum diisi
+            let no = 1;
+
+            if (snapshot.exists()) {
+                snapshot.forEach((childSnapshot) => {
+                    const key = childSnapshot.key; // ID unik firebase
+                    const data = childSnapshot.val();
+                    
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${no++}</td>
+                        <td class="font-bold text-accent-blue">${data.nisgc || '-'}</td>
+                        <td class="font-semibold text-white">${data.nama || '-'}</td>
+                        <td>${data.nisn || '-'}</td>
+                        <td><span class="bg-blue-500/20 text-blue-300 px-3 py-1 rounded-full text-xs">${data.program || '-'}</span></td>
+                        <td><a href="https://wa.me/62${(data.hp || '').replace(/^0+/, '')}" target="_blank" class="text-green-400 hover:underline"><i class="fa fa-whatsapp"></i> ${data.hp || '-'}</a></td>
+                        <td class="text-sm text-gray-400">${data.waktu_daftar || '-'}</td>
+                        <td class="text-center">
+                            <button onclick="hapusData('pendaftaran_siswa', '${key}')" class="bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white px-3 py-1 rounded transition-all" title="Hapus Data">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } else {
+                tbody.innerHTML = '<tr><td colspan="8" class="text-center py-6 text-gray-500">Belum ada data pendaftaran masuk.</td></tr>';
+            }
+        });
+
+        // 2. FUNGSI UNTUK MENGAMBIL DATA UJIAN
+        const ujianRef = ref(db, 'hasil_ujian');
+        onValue(ujianRef, (snapshot) => {
+            const tbody = document.getElementById('tabelUjianBody');
+            tbody.innerHTML = '';
+            let no = 1;
+
+            if (snapshot.exists()) {
+                snapshot.forEach((childSnapshot) => {
+                    const key = childSnapshot.key;
+                    const data = childSnapshot.val();
+                    
+                    // Logika warna nilai
+                    let warnaNilai = parseInt(data.nilai_akhir) >= 70 ? 'text-green-400' : 'text-red-400';
+
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${no++}</td>
+                        <td class="font-semibold text-white">${data.nama || '-'}</td>
+                        <td>${data.nisn || '-'}</td>
+                        <td>${data.jumlah_benar || '0'} dari 45</td>
+                        <td class="font-bold text-lg ${warnaNilai}">${data.nilai_akhir || '0'}</td>
+                        <td class="text-sm text-gray-400">${data.waktu_ujian || '-'}</td>
+                        <td class="text-center">
+                            <button onclick="hapusData('hasil_ujian', '${key}')" class="bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white px-3 py-1 rounded transition-all" title="Hapus Data">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } else {
+                tbody.innerHTML = '<tr><td colspan="7" class="text-center py-6 text-gray-500">Belum ada data hasil ujian.</td></tr>';
+            }
+        });
+
+        // 3. FUNGSI UNTUK MENGHAPUS DATA
+        // Dibuat global window agar bisa dipanggil dari atribut onclick di HTML
+        window.hapusData = async function(folder, id) {
+            if (confirm("⚠️ PERINGATAN: Yakin ingin menghapus data ini secara permanen dari Database?")) {
+                try {
+                    await remove(ref(db, folder + '/' + id));
+                    // Tidak perlu alert sukses karena onValue akan otomatis me-refresh tabel secara instan!
+                } catch (error) {
+                    console.error("Gagal menghapus data: ", error);
+                    alert("Terjadi kesalahan saat menghapus data.");
+                }
+            }
+        };
+    </script>
+</body>
+</html>

@@ -4,13 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ujian Kompetensi - LKP Global Course</title>
+    <!-- Tailwind CSS & Icon & Fonts -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <script>
         tailwind.config = { 
             theme: { 
                 extend: { 
+                    fontFamily: { 
+                        sans: ['Inter', 'sans-serif'], 
+                    }, 
                     colors: { 
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        secondary: {
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309',
+                        },
                         'dark-main': '#0A1128', 
                         'dark-card': '#121A36', 
                         'dark-input': '#1E294B', 
@@ -18,17 +39,14 @@
                         'light-text': '#E2E8F0', 
                         'neon-blue': '#00F0FF', 
                     }, 
-                    fontFamily: { 
-                        sans: ['Inter', 'Segoe UI', 'Roboto', 'sans-serif'], 
-                    }, 
                     boxShadow: { 
                         'glow': '0 0 20px rgba(59, 130, 246, 0.2)', 
                         'card-dark': '0 8px 32px rgba(0, 0, 0, 0.3)', 
                     }, 
                     backgroundImage: { 
                         'gradient-main': 'linear-gradient(135deg, #0A1128 0%, #1A2751 100%)', 
-                    } 
-                } 
+                    }
+                }
             } 
         }
     </script>
@@ -40,65 +58,207 @@
             .text-shadow-glow { text-shadow: 0 0 8px rgba(59, 130, 246, 0.4); } 
             .border-glow { border: 1px solid rgba(59, 130, 246, 0.3); } 
         }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .no-select {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
     </style>
+
+    <!-- SCRIPT PENINGKATAN KEAMANAN (ANTI-INSPECT & ANTI-DEBUGGER) -->
+    <script>
+        // 1. Blokir Klik Kanan seluruh halaman
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        // 2. Blokir Shortcut keyboard F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C, Ctrl+U, Ctrl+S
+        document.addEventListener('keydown', function(e) {
+            if (
+                e.keyCode === 123 || // F12
+                (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || // Ctrl+Shift+I / J / C
+                (e.ctrlKey && (e.keyCode === 85 || e.keyCode === 83)) // Ctrl+U / Ctrl+S
+            ) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+        });
+
+        // 3. Script Anti-Debugger (Freeze DevTools secara agresif jika dibuka)
+        setInterval(function() {
+            (function() {
+                return false;
+            })["constructor"]("debugger")();
+        }, 100);
+    </script>
 </head>
-<body class="bg-gradient-main min-h-screen font-sans">
+<body class="bg-gradient-main min-h-screen font-sans text-slate-800 antialiased no-select">
 
-    <!-- HALAMAN FORM DATA -->
-    <div id="halaman-data" class="container mx-auto px-4 py-16 max-w-xl">
-        <div class="bg-dark-card/80 backdrop-blur-lg rounded-2xl shadow-card-dark shadow-glow p-10 md:p-12 text-center border-glow">
-            <div class="flex justify-center mb-6">
-                <div class="w-20 h-20 rounded-full bg-dark-input border-glow flex items-center justify-center shadow-glow">
-                    <i class="fa fa-graduation-cap text-neon-blue text-3xl"></i>
-                </div>
+    <!-- TOP BAR PROMO -->
+    <div class="bg-slate-900 text-white text-xs py-2 px-4 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+                <span class="bg-amber-500 text-slate-950 text-[10px] font-extrabold px-2 py-0.5 rounded">PROMO BARU</span>
+                <span>Biaya Pendaftaran hanya <strong>Rp 50.000</strong> untuk semua paket kelas!</span>
             </div>
-            <h1 class="text-[clamp(1.8rem,3vw,2.4rem)] font-bold text-white mb-2 text-shadow-glow">
-                <span class="text-accent-blue">FORMULIR</span> UJIAN
-            </h1>
-            <p class="text-light-text font-medium text-lg mb-1">Yayasan Pendidikan & Pelatihan Global Course</p>
-            <div class="w-3/4 h-[1px] bg-gradient-to-r from-transparent via-accent-blue/50 to-transparent mx-auto my-4"></div>
-            <h2 class="text-xl text-light-text/40 mb-4">Silakan lengkapi data diri sebelum memulai ujian. Kerjakan cukup satu kali nilai yang diambil dari hasil ujian pertama</h2>
-
-            <div class="space-y-5 text-left mb-8">
-                <div>
-                    <label class="block text-light-text text-sm font-semibold mb-2">Nama Lengkap</label>
-                    <input type="text" id="nama" class="w-full px-4 py-3 bg-dark-input border-glow rounded-lg text-light-text focus:outline-none focus:ring-2 focus:ring-accent-blue/50 transition-all" placeholder="Masukkan nama lengkap">
-                </div>
-                <div>
-                    <label class="block text-light-text text-sm font-semibold mb-2">NISN</label>
-                    <input type="text" id="nisn" class="w-full px-4 py-3 bg-dark-input border-glow rounded-lg text-light-text focus:outline-none focus:ring-2 focus:ring-accent-blue/50 transition-all" placeholder="Nomor Induk Siswa Nasional">
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-light-text text-sm font-semibold mb-2">Tempat Lahir</label>
-                        <input type="text" id="tempatLahir" class="w-full px-4 py-3 bg-dark-input border-glow rounded-lg text-light-text focus:outline-none focus:ring-2 focus:ring-accent-blue/50 transition-all" placeholder="Kota kelahiran">
-                    </div>
-                    <div>
-                        <label class="block text-light-text text-sm font-semibold mb-2">Tanggal Lahir</label>
-                        <input type="date" id="tglLahir" class="w-full px-4 py-3 bg-dark-input border-glow rounded-lg text-light-text focus:outline-none focus:ring-2 focus:ring-accent-blue/50 transition-all">
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-light-text text-sm font-semibold mb-2">Alamat Lengkap</label>
-                    <textarea id="alamat" rows="3" class="w-full px-4 py-3 bg-dark-input border-glow rounded-lg text-light-text focus:outline-none focus:ring-2 focus:ring-accent-blue/50 transition-all" placeholder="Alamat tempat tinggal lengkap"></textarea>
-                </div>
+            <div class="flex items-center gap-3">
+                <span class="text-slate-400">Hubungi WA Kami:</span>
+                <a href="https://wa.me/6287781865701" target="_blank" class="text-emerald-400 font-bold hover:underline">
+                    <i class="fa-brands fa-whatsapp mr-1"></i> 0877-8186-5701
+                </a>
             </div>
-            
-            <button id="btnMulai" class="w-full bg-accent-blue hover:bg-accent-blue/90 text-white font-semibold py-3 px-6 rounded-lg shadow-glow hover:shadow-glow/70 transition-all transform hover:scale-[1.02] active:scale-[0.98]">
-                MULAI UJIAN SEKARANG
-            </button>
-            
-            <p class="text-light-text/50 text-xs mt-8">© 2026 LKP Global Course • Semua Hak Dilindungi</p>
         </div>
     </div>
 
-    <!-- HALAMAN UJIAN -->
+    <!-- HEADER & NAVBAR -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="window.location.href='index.html'">
+                    <img src="Logo Global.png" alt="Logo LKP Global Course" class="h-14 w-auto object-contain" onerror="this.src='https://placehold.co/200x200/0f172a/38bdf8?text=LKP'">
+                    <div>
+                        <span class="font-extrabold text-lg sm:text-xl tracking-tight bg-gradient-to-r from-primary-900 to-indigo-800 bg-clip-text text-transparent">YAYASAN PENDIDIKAN DAN PELATIHAN GLOBAL COURSE</span>
+                        <div class="text-[10px] font-bold text-slate-500 uppercase tracking-widest -mt-1">KEC.SIMPANG OKU SELATAN • LKP</div>
+                    </div>
+                </div>
+
+                <nav class="hidden xl:flex items-center space-x-1 font-semibold text-sm">
+                    <a href="index.html" class="px-3 py-2 rounded-lg text-slate-600 hover:text-primary-600 hover:bg-slate-50 transition-all">
+                        <i class="fa-solid fa-house mr-1"></i> Home
+                    </a>
+                    <a href="legalitas.html" class="px-3 py-2 rounded-lg text-slate-600 hover:text-primary-600 hover:bg-slate-50 transition-all">
+                        <i class="fa-solid fa-scale-balanced mr-1"></i> Legalitas Kami
+                    </a>
+                    <a href="ujian.html" class="px-3 py-2 rounded-lg text-primary-600 bg-primary-50 transition-all">
+                        <i class="fa-solid fa-laptop-code mr-1"></i> Uji Kompetensi
+                    </a>
+                    <a href="registrasi.html" class="px-3 py-2 rounded-lg text-slate-600 hover:text-primary-600 hover:bg-slate-50 transition-all">
+                        <i class="fa-solid fa-user-plus mr-1"></i> Registrasi
+                    </a>
+                    <a href="pembayaran.html" class="px-3 py-2 rounded-lg text-slate-600 hover:text-primary-600 hover:bg-slate-50 transition-all">
+                        <i class="fa-solid fa-money-bill-wave mr-1"></i> Pembayaran
+                    </a>
+                    <a href="galeri.html" class="px-3 py-2 rounded-lg text-slate-600 hover:text-primary-600 hover:bg-slate-50 transition-all">
+                        <i class="fa-solid fa-images mr-1"></i> Galeri
+                    </a>
+                    <a href="hubungi.html" class="px-3 py-2 rounded-lg text-slate-600 hover:text-primary-600 hover:bg-slate-50 transition-all">
+                        <i class="fa-solid fa-envelope mr-1"></i> Hubungi Kami
+                    </a>
+                </nav>
+
+                <div class="flex items-center space-x-3">
+                    <div class="hidden md:block">
+                        <a href="registrasi.html" class="bg-gradient-to-r from-primary-600 to-indigo-600 text-white font-semibold text-sm px-5 py-2.5 rounded-xl shadow-lg shadow-primary-100 hover:shadow-primary-200 hover:-translate-y-0.5 transition-all duration-200 inline-flex items-center gap-1.5">
+                            Daftar Sekarang <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    <button id="mobile-menu-btn" class="xl:hidden text-slate-600 hover:text-primary-600 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                        <i class="fa-solid fa-bars text-xl" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden xl:hidden border-b border-slate-200 bg-white shadow-lg">
+            <div class="px-3 pt-2 pb-4 space-y-1 sm:px-4 text-base font-semibold">
+                <a href="index.html" class="block px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-50">
+                    <i class="fa-solid fa-house mr-2 w-5 text-center"></i> Home
+                </a>
+                <a href="legalitas.html" class="block px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-50">
+                    <i class="fa-solid fa-scale-balanced mr-2 w-5 text-center"></i> Legalitas Kami
+                </a>
+                <a href="ujian.html" class="block px-4 py-2.5 rounded-xl text-primary-600 bg-primary-50">
+                    <i class="fa-solid fa-laptop-code mr-2 w-5 text-center"></i> Uji Kompetensi Online
+                </a>
+                <a href="registrasi.html" class="block px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-50">
+                    <i class="fa-solid fa-user-plus mr-2 w-5 text-center"></i> Registrasi
+                </a>
+                <a href="pembayaran.html" class="block px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-50">
+                    <i class="fa-solid fa-money-bill-wave mr-2 w-5 text-center"></i> Pembayaran
+                </a>
+                <a href="galeri.html" class="block px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-50">
+                    <i class="fa-solid fa-images mr-2 w-5 text-center"></i> Galeri
+                </a>
+                <a href="hubungi.html" class="block px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-50">
+                    <i class="fa-solid fa-envelope mr-2 w-5 text-center"></i> Hubungi Kami
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- HALAMAN CEK NISGC & PREVIEW DATA SISWA -->
+    <div id="halaman-data" class="container mx-auto px-4 py-8 max-w-xl">
+        <div class="bg-dark-card/80 backdrop-blur-lg rounded-2xl shadow-card-dark shadow-glow p-8 md:p-10 text-center border-glow">
+            <div class="flex justify-center mb-6">
+                <div class="w-20 h-20 rounded-full bg-dark-input border-glow flex items-center justify-center shadow-glow">
+                    <i class="fa-solid fa-graduation-cap text-neon-blue text-3xl"></i>
+                </div>
+            </div>
+            <h1 class="text-[clamp(1.8rem,3vw,2.4rem)] font-bold text-white mb-2 text-shadow-glow">
+                <span class="text-accent-blue">UJIAN</span> KOMPETENSI
+            </h1>
+            <p class="text-light-text font-medium text-base mb-1">Yayasan Pendidikan & Pelatihan Global Course</p>
+            <div class="w-3/4 h-[1px] bg-gradient-to-r from-transparent via-accent-blue/50 to-transparent mx-auto my-4"></div>
+
+            <!-- INPUT NISGC -->
+            <div id="boxInputNisgc" class="space-y-4 text-left mb-6">
+                <label class="block text-light-text text-sm font-semibold">Masukkan NISGC (Nomor Induk Siswa)</label>
+                <div class="flex gap-2">
+                    <input type="text" id="nisgcInput" class="w-full px-4 py-3 bg-dark-input border-glow rounded-lg text-light-text focus:outline-none focus:ring-2 focus:ring-accent-blue/50 transition-all uppercase tracking-wider" placeholder="Masukkan NISGC">
+                    <button id="btnCekNisgc" class="bg-accent-blue hover:bg-accent-blue/90 text-white font-semibold px-6 rounded-lg transition-all flex items-center gap-2 whitespace-nowrap">
+                        <i class="fa-solid fa-magnifying-glass"></i> Cek Data
+                    </button>
+                </div>
+                <div id="msgStatusNisgc" class="hidden text-sm p-3 rounded-lg border"></div>
+            </div>
+
+            <!-- CARD PREVIEW DATA SISWA -->
+            <div id="cardSiswaFound" class="hidden bg-dark-input/60 rounded-xl p-5 border-glow text-left space-y-3 mb-6 shadow-inner">
+                <div class="flex items-center gap-2 pb-2 border-b border-slate-700 text-neon-blue font-bold text-sm">
+                    <i class="fa-solid fa-id-card"></i> Data Peserta Terverifikasi
+                </div>
+                <div class="grid grid-cols-3 gap-1 text-sm">
+                    <span class="text-light-text/60">NISGC</span>
+                    <span class="col-span-2 text-white font-bold tracking-wider" id="previewNisgc">-</span>
+                </div>
+                <div class="grid grid-cols-3 gap-1 text-sm">
+                    <span class="text-light-text/60">Nama Lengkap</span>
+                    <span class="col-span-2 text-white font-semibold" id="previewNama">-</span>
+                </div>
+                <div class="grid grid-cols-3 gap-1 text-sm">
+                    <span class="text-light-text/60">Program Kursus</span>
+                    <span class="col-span-2 text-amber-400 font-bold" id="previewKursus">-</span>
+                </div>
+                <div class="grid grid-cols-3 gap-1 text-sm">
+                    <span class="text-light-text/60">Tanggal Lahir</span>
+                    <span class="col-span-2 text-white" id="previewTglLahir">-</span>
+                </div>
+            </div>
+
+            <!-- TOMBOL MULAI -->
+            <button id="btnMulai" disabled class="w-full bg-slate-700 opacity-50 cursor-not-allowed text-white font-semibold py-3.5 px-6 rounded-lg shadow-glow transition-all">
+                MULAI UJIAN SEKARANG
+            </button>
+            
+            <p class="text-light-text/50 text-xs mt-6">© 2026 LKP Global Course • Ujian Hanya Dapat Dikerjakan 1 Kali</p>
+        </div>
+    </div>
+
+    <!-- HALAMAN SOAL UJIAN -->
     <div id="halaman-ujian" class="hidden container mx-auto px-4 py-6 max-w-5xl">
         <div class="bg-dark-card/80 backdrop-blur-lg rounded-xl shadow-card-dark border-glow p-5 mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
             <div>
                 <div class="flex items-center gap-3 mb-1">
                     <div class="w-8 h-8 rounded-md bg-dark-input border-glow flex items-center justify-center">
-                        <i class="fa fa-laptop text-neon-blue"></i>
+                        <i class="fa-solid fa-laptop text-neon-blue"></i>
                     </div>
                     <h2 class="font-bold text-white text-lg">LKP Global Course</h2>
                 </div>
@@ -106,31 +266,49 @@
             </div>
             <div class="flex items-center gap-4">
                 <div class="bg-dark-input/70 border-glow text-neon-blue font-bold px-4 py-2 rounded-lg flex items-center gap-2 shadow-glow">
-                    <i class="fa fa-clock-o"></i>
+                    <i class="fa-regular fa-clock"></i>
                     <span id="waktuMundur">35:00</span>
                 </div>
                 <button id="btnSelesai" class="bg-red-600/80 hover:bg-red-600 text-white text-sm px-4 py-2 rounded-lg transition-all border border-red-500/30">
-                    <i class="fa fa-check-circle mr-1"></i> Akhiri
+                    <i class="fa-solid fa-circle-check mr-1"></i> Akhiri
                 </button>
             </div>
         </div>
 
-        <div class="bg-dark-card/80 backdrop-blur-lg rounded-xl shadow-card-dark border-glow p-4 mb-6 overflow-x-auto scrollbar-hide">
-            <p class="text-light-text/70 text-sm mb-3">Navigasi Soal</p>
-            <div id="wadahNavigasi" class="flex gap-2 flex-nowrap"></div>
+        <!-- NAVIGASI SOAL -->
+        <div class="bg-dark-card/80 backdrop-blur-lg rounded-xl shadow-card-dark border-glow p-4 mb-6">
+            <div class="flex justify-between items-center mb-3">
+                <p class="text-light-text/70 text-sm">Navigasi Soal</p>
+                <div class="flex gap-3 text-xs text-light-text/70">
+                    <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-green-500/40 border border-green-500 inline-block"></span> Terjawab</span>
+                    <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-amber-500/40 border border-amber-500 inline-block"></span> Ragu</span>
+                    <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-dark-input border border-slate-600 inline-block"></span> Belum</span>
+                </div>
+            </div>
+            <div id="wadahNavigasi" class="flex gap-2 overflow-x-auto scrollbar-hide py-1"></div>
         </div>
 
-        <div class="bg-dark-card/80 backdrop-blur-lg rounded-xl shadow-card-dark border-glow p-6 md:p-8 mb-6 min-h-[450px]">
-            <div id="teksSoal" class="text-lg md:text-xl text-white leading-relaxed mb-8 font-medium"></div>
-            <div id="wadahPilihan" class="space-y-3"></div>
+        <!-- AREA SOAL & PILIHAN -->
+        <div class="bg-dark-card/80 backdrop-blur-lg rounded-xl shadow-card-dark border-glow p-6 md:p-8 mb-6 min-h-[420px] flex flex-col justify-between">
+            <div>
+                <div id="teksSoal" class="text-lg md:text-xl text-white leading-relaxed mb-8 font-medium"></div>
+                <div id="wadahPilihan" class="space-y-3 mb-6"></div>
+            </div>
+
+            <div class="pt-4 border-t border-slate-700/60 flex items-center">
+                <label class="inline-flex items-center gap-2 cursor-pointer select-none text-amber-400 font-medium text-sm hover:text-amber-300">
+                    <input type="checkbox" id="chkRagu" class="w-4 h-4 rounded text-amber-500 focus:ring-amber-400 bg-dark-input border-amber-500/50 cursor-pointer">
+                    <i class="fa-solid fa-flag"></i> Ragu-ragu dengan jawaban ini
+                </label>
+            </div>
         </div>
 
-        <div class="flex justify-between">
+        <div class="flex justify-between items-center">
             <button id="btnSebelumnya" class="border-glow bg-dark-card/50 hover:bg-dark-input text-light-text font-medium px-6 py-2 rounded-lg transition-all opacity-50 cursor-not-allowed" disabled>
-                <i class="fa fa-arrow-left mr-2"></i> Sebelumnya
+                <i class="fa-solid fa-arrow-left mr-2"></i> Sebelumnya
             </button>
             <button id="btnSelanjutnya" class="bg-accent-blue hover:bg-accent-blue/90 text-white font-medium px-6 py-2 rounded-lg shadow-glow transition-all">
-                Selanjutnya <i class="fa fa-arrow-right ml-2"></i>
+                Selanjutnya <i class="fa-solid fa-arrow-right ml-2"></i>
             </button>
         </div>
     </div>
@@ -142,41 +320,60 @@
             <h2 id="judulHasil" class="text-2xl md:text-3xl font-bold mb-4 text-white"></h2>
             
             <div class="bg-dark-input/50 rounded-lg p-5 mb-8 text-left border-glow">
-                <p class="text-light-text font-bold mb-3">Data Peserta</p>
+                <p class="text-light-text font-bold mb-3 border-b border-slate-700 pb-2">Data Peserta Ujian</p>
                 <div class="space-y-2 text-sm text-light-text/80">
+                    <div class="flex justify-between"><span>NISGC</span><span class="font-bold text-white" id="hasilNisgc"></span></div>
                     <div class="flex justify-between"><span>Nama</span><span class="font-medium text-white" id="hasilNama"></span></div>
-                    <div class="flex justify-between"><span>NISN</span><span class="font-medium text-white" id="hasilNisn"></span></div>
-                    <div class="flex justify-between"><span>TTL</span><span class="font-medium text-white text-right" id="hasilTtl"></span></div>
-                    <div class="flex justify-between"><span>Alamat</span><span class="font-medium text-white text-right" id="hasilAlamat"></span></div>
+                    <div class="flex justify-between"><span>Program Kursus</span><span class="font-bold text-amber-400" id="hasilKursus"></span></div>
+                    <div class="flex justify-between"><span>Tanggal Lahir</span><span class="font-medium text-white" id="hasilTglLahir"></span></div>
                 </div>
             </div>
 
-            <div class="grid grid-cols-2 gap-4 mb-8">
-                <div class="bg-dark-input/50 rounded-lg p-4 border-glow">
-                    <p class="text-light-text/70 text-sm">Jumlah Benar</p>
-                    <p id="hasilBenar" class="text-2xl font-bold text-white"></p>
-                </div>
-                <div class="bg-accent-blue/20 rounded-lg p-4 border border-accent-blue/30 shadow-glow">
-                    <p class="text-neon-blue/80 text-sm">Nilai Akhir</p>
-                    <p id="hasilNilai" class="text-2xl font-bold text-neon-blue"></p>
-                </div>
-            </div>
-
-            <!-- NOTIFIKASI STATUS KIRIM DATA -->
             <div id="statusKirim" class="p-3 rounded-lg mb-8 border">
-                <i class="fa fa-spinner fa-spin mr-2"></i> Menyimpan data ke server...
+                <i class="fa-solid fa-spinner fa-spin mr-2"></i> Mengirimkan lembar jawaban ke server...
             </div>
 
-            <button onclick="window.location.reload()" class="w-full bg-accent-blue hover:bg-accent-blue/90 text-white font-semibold py-3 rounded-lg shadow-glow transition-all">
+            <button onclick="window.location.href='index.html'" class="w-full bg-accent-blue hover:bg-accent-blue/90 text-white font-semibold py-3 rounded-lg shadow-glow transition-all">
                 Kembali ke Beranda
             </button>
         </div>
     </div>
 
     <script>
-        // ✅ LINK BARU ANDA SUDAH TERSEDIA DI SINI
-        const LINK_GOOGLE_SCRIPT = "https://script.google.com/macros/s/AKfycbySyGsPW2rEIqoa7Z3UwhcCFXZwM_lDL0qQai1AIaMyM66s6Vvo1ydRszetrR_CP94Bog/exec"; 
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            const isHidden = mobileMenu.classList.contains('hidden');
+            
+            if (isHidden) {
+                mobileMenu.classList.remove('hidden');
+                menuIcon.className = "fa-solid fa-xmark text-xl";
+            } else {
+                mobileMenu.classList.add('hidden');
+                menuIcon.className = "fa-solid fa-bars text-xl";
+            }
+        });
+    </script>
 
+    <!-- INTEGRASI FIREBASE & SYSTEM UJIAN -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, set, push, get, query, orderByChild, equalTo } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCe7o7XvCfQiMOn0dlBO20AK8IzQbz6nJw",
+            authDomain: "lkp-global-course.firebaseapp.com",
+            databaseURL: "https://lkp-global-course-default-rtdb.firebaseio.com",
+            projectId: "lkp-global-course",
+            storageBucket: "lkp-global-course.firebasestorage.app",
+            messagingSenderId: "95358874758",
+            appId: "1:95358874758:web:83c12f2d1cbbac3f53faa7"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // BANK SOAL LENGKAP DENGAN INDEKS KUNCI JAWABAN (0-3)
         const bankSoal = [
             { id: 1, materi: "Microsoft Word", soal: "Menu yang digunakan untuk menyisipkan gambar, bentuk, atau simbol ke dalam dokumen adalah...", pilihan: ["File", "Insert / Sisipkan", "View / Tampilan", "Layout / Tata Letak"], kunci: 1 },
             { id: 2, materi: "Microsoft Word", soal: "Kombinasi tombol papan ketik untuk membuat teks menjadi tebal adalah...", pilihan: ["Ctrl + I", "Ctrl + U", "Ctrl + B", "Ctrl + P"], kunci: 2 },
@@ -225,29 +422,122 @@
             { id: 45, materi: "Dasar Pengoperasian Komputer", soal: "Urutan langkah yang benar dan aman untuk mematikan komputer agar sistem tidak rusak adalah...", pilihan: ["Cabut langsung kabel listrik -> Matikan Monitor", "Start -> Power -> Shut Down -> Tunggu mati -> Cabut kabel", "Tekan tombol Power CPU terus menerus", "Matikan Monitor -> Cabut kabel CPU"], kunci: 1 }
         ];
 
-        let daftarSoal = [], jawaban = Array(45).fill(null), aktif = 0, waktu = 35 * 60, timer, dataUser = {};
+        let daftarSoal = [], jawaban = Array(45).fill(null), raguState = Array(45).fill(false);
+        let aktif = 0, waktu = 35 * 60, timer, dataUser = null;
+        let sedangUjian = false;
+
         const elData = document.getElementById('halaman-data');
         const elUjian = document.getElementById('halaman-ujian');
         const elHasil = document.getElementById('halaman-hasil');
         const btnMulai = document.getElementById('btnMulai');
+        const btnCekNisgc = document.getElementById('btnCekNisgc');
+        const nisgcInput = document.getElementById('nisgcInput');
+        const msgStatusNisgc = document.getElementById('msgStatusNisgc');
+        const cardSiswaFound = document.getElementById('cardSiswaFound');
+        const chkRagu = document.getElementById('chkRagu');
         const statusKirim = document.getElementById('statusKirim');
 
-        // MULAI UJIAN
-        btnMulai.addEventListener('click', () => {
-            dataUser = {
-                nama: document.getElementById('nama').value.trim(),
-                nisn: document.getElementById('nisn').value.trim(),
-                tempatLahir: document.getElementById('tempatLahir').value.trim(),
-                tglLahir: document.getElementById('tglLahir').value,
-                alamat: document.getElementById('alamat').value.trim()
-            };
-            if(!dataUser.nama || !dataUser.nisn || !dataUser.tempatLahir || !dataUser.tglLahir || !dataUser.alamat) {
-                return alert("Lengkapi semua data terlebih dahulu!");
+        btnCekNisgc.addEventListener('click', cekDataNisgc);
+        nisgcInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') cekDataNisgc(); });
+
+        async function cekDataNisgc() {
+            const nisgc = nisgcInput.value.trim();
+            if(!nisgc) {
+                tampilkanPesanNisgc("Silakan masukkan NISGC Anda terlebih dahulu!", "error");
+                return;
             }
-            
+
+            tampilkanPesanNisgc('<i class="fa-solid fa-spinner fa-spin mr-2"></i> Memeriksa status sistem dan data NISGC...', "info");
+            btnCekNisgc.disabled = true;
+
+            try {
+                // 1. Cek Akses Sistem (Play / Stop dari Admin)
+                const snapStatus = await get(ref(db, 'system_status/ujian'));
+                if (snapStatus.exists() && snapStatus.val() === false) {
+                    tampilkanPesanNisgc("⚠️ Maaf, Uji Kompetensi saat ini sedang DITUTUP oleh Admin LKP Global Course.", "error");
+                    resetPreviewSiswa();
+                    btnCekNisgc.disabled = false;
+                    return;
+                }
+
+                // 2. Cek Apakah NISGC sudah pernah Ujian
+                const hasilRef = ref(db, 'hasil_ujian');
+                const qHasil = query(hasilRef, orderByChild('nisgc'), equalTo(nisgc));
+                const snapHasil = await get(qHasil);
+
+                if(snapHasil.exists()) {
+                    tampilkanPesanNisgc("⚠️ NISGC ini SUDAH PERNAH mengikuti ujian! Ujian hanya dapat dikerjakan 1 kali.", "error");
+                    resetPreviewSiswa();
+                    btnCekNisgc.disabled = false;
+                    return;
+                }
+
+                // 3. Cari Data Siswa di Node 'pendaftaran_siswa'
+                const qSiswa = query(ref(db, 'pendaftaran_siswa'), orderByChild('nisgc'), equalTo(nisgc));
+                const snapQuery = await get(qSiswa);
+
+                if(snapQuery.exists()){
+                    const val = snapQuery.val();
+                    const key = Object.keys(val)[0];
+                    const studentData = val[key];
+
+                    dataUser = {
+                        nisgc: studentData.nisgc || nisgc,
+                        nama: studentData.nama || studentData.nama_lengkap || "-",
+                        kursus: studentData.paket_kelas || studentData.program || studentData.kursus || "-",
+                        tglLahir: studentData.tgl_lahir || studentData.tanggal_lahir || studentData.ttl || "-"
+                    };
+
+                    document.getElementById('previewNisgc').innerText = dataUser.nisgc;
+                    document.getElementById('previewNama').innerText = dataUser.nama;
+                    document.getElementById('previewKursus').innerText = dataUser.kursus;
+                    document.getElementById('previewTglLahir').innerText = dataUser.tglLahir;
+
+                    cardSiswaFound.classList.remove('hidden');
+                    tampilkanPesanNisgc("✅ Data ditemukan! Silakan klik 'MULAI UJIAN SEKARANG'.", "success");
+
+                    btnMulai.disabled = false;
+                    btnMulai.className = "w-full bg-accent-blue hover:bg-accent-blue/90 text-white font-semibold py-3.5 px-6 rounded-lg shadow-glow transition-all transform hover:scale-[1.01] active:scale-[0.98]";
+                } else {
+                    tampilkanPesanNisgc("❌ Data NISGC tidak ditemukan! Pastikan NISGC benar atau hubungi Admin.", "error");
+                    resetPreviewSiswa();
+                }
+            } catch(err) {
+                console.error(err);
+                tampilkanPesanNisgc("Gagal terhubung ke database. Periksa koneksi internet Anda.", "error");
+                resetPreviewSiswa();
+            } finally {
+                btnCekNisgc.disabled = false;
+            }
+        }
+
+        function tampilkanPesanNisgc(pesan, jenis) {
+            msgStatusNisgc.classList.remove('hidden', 'bg-red-500/10', 'text-red-400', 'border-red-500/30', 'bg-green-500/10', 'text-green-400', 'border-green-500/30', 'bg-blue-500/10', 'text-blue-400', 'border-blue-500/30');
+            if(jenis === 'error') {
+                msgStatusNisgc.classList.add('bg-red-500/10', 'text-red-400', 'border-red-500/30');
+            } else if(jenis === 'success') {
+                msgStatusNisgc.classList.add('bg-green-500/10', 'text-green-400', 'border-green-500/30');
+            } else {
+                msgStatusNisgc.classList.add('bg-blue-500/10', 'text-blue-400', 'border-blue-500/30');
+            }
+            msgStatusNisgc.innerHTML = pesan;
+        }
+
+        function resetPreviewSiswa() {
+            cardSiswaFound.classList.add('hidden');
+            btnMulai.disabled = true;
+            btnMulai.className = "w-full bg-slate-700 opacity-50 cursor-not-allowed text-white font-semibold py-3.5 px-6 rounded-lg shadow-glow transition-all";
+            dataUser = null;
+        }
+
+        btnMulai.addEventListener('click', () => {
+            if(!dataUser) return alert("Silakan cek NISGC Anda terlebih dahulu!");
+
             daftarSoal = [...bankSoal].sort(() => Math.random() - 0.5);
             elData.classList.add('hidden'); 
             elUjian.classList.remove('hidden');
+            sedangUjian = true;
+
             buatNavigasi(); 
             tampilkanSoal(0); 
             mulaiWaktu();
@@ -258,7 +548,7 @@
             wadah.innerHTML = '';
             daftarSoal.forEach((_,i)=>{
                 const b = document.createElement('button'); 
-                b.className = 'w-9 h-9 rounded text-sm font-semibold bg-dark-input text-light-text hover:bg-dark-input/70 transition-all border-glow';
+                b.className = 'w-9 h-9 rounded text-sm font-semibold bg-dark-input text-light-text hover:bg-dark-input/70 transition-all border-glow flex-shrink-0';
                 b.innerText = i+1; 
                 b.onclick = ()=>{ tampilkanSoal(i); }; 
                 wadah.appendChild(b);
@@ -268,9 +558,17 @@
         function perbaruiNav(){
             const tombol = document.querySelectorAll('#wadahNavigasi button');
             tombol.forEach((b,i)=>{
-                b.className = b.className.replace('bg-accent-blue/30','').replace('bg-green-500/20','').replace('text-neon-blue','').replace('text-green-300','');
-                if(i===aktif) b.className += ' bg-accent-blue/30 text-neon-blue shadow-glow';
-                else if(jawaban[i]!==null) b.className += ' bg-green-500/20 text-green-300 border-green-500/30';
+                b.className = 'w-9 h-9 rounded text-sm font-semibold transition-all border-glow flex-shrink-0 ';
+                
+                if(i === aktif) {
+                    b.className += ' ring-2 ring-neon-blue bg-accent-blue/30 text-neon-blue shadow-glow';
+                } else if(raguState[i]) {
+                    b.className += ' bg-amber-500/30 text-amber-300 border-amber-500/50';
+                } else if(jawaban[i] !== null) {
+                    b.className += ' bg-green-500/20 text-green-300 border-green-500/30';
+                } else {
+                    b.className += ' bg-dark-input text-light-text hover:bg-dark-input/70';
+                }
             });
         }
         
@@ -287,15 +585,22 @@
                 const d = document.createElement('div'); 
                 d.className = `p-4 rounded-lg border-glow cursor-pointer transition-all ${jawaban[nomor]===idx?'bg-accent-blue/20 border-accent-blue shadow-glow':'bg-dark-input/40 hover:bg-dark-input/70'}`;
                 d.innerHTML = `<div class="flex items-center gap-3 text-light-text"><div class="w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${jawaban[nomor]===idx?'border-neon-blue bg-neon-blue/20':'border-gray-500'}">${jawaban[nomor]===idx?'<div class="w-2 h-2 rounded-full bg-neon-blue"></div>':''}</div><span>${teks}</span></div>`;
-                d.onclick = ()=>{jawaban[nomor]=idx; tampilkanSoal(nomor);}; 
+                d.onclick = ()=>{ jawaban[nomor]=idx; tampilkanSoal(nomor); }; 
                 wadah.appendChild(d);
             });
             
+            chkRagu.checked = raguState[nomor];
+
             document.getElementById('btnSebelumnya').disabled = nomor===0; 
             document.getElementById('btnSebelumnya').classList.toggle('opacity-50', nomor===0);
             document.getElementById('btnSelanjutnya').innerText = nomor===44?'Selesai':'Selanjutnya';
             perbaruiNav();
         }
+
+        chkRagu.addEventListener('change', (e) => {
+            raguState[aktif] = e.target.checked;
+            perbaruiNav();
+        });
         
         function mulaiWaktu(){
             timer = setInterval(()=>{ 
@@ -309,73 +614,100 @@
         }
         
         document.getElementById('btnSebelumnya').addEventListener('click',()=>{if(aktif>0) tampilkanSoal(aktif-1);});
-        document.getElementById('btnSelanjutnya').addEventListener('click',()=>{if(aktif<44) tampilkanSoal(aktif+1); else if(confirm("Yakin selesai?")) akhiri();});
-        document.getElementById('btnSelesai').addEventListener('click',()=>{if(confirm("Yakin keluar?")) akhiri();});
+        document.getElementById('btnSelanjutnya').addEventListener('click',()=>{if(aktif<44) tampilkanSoal(aktif+1); else if(confirm("Konfirmasi: Apakah Anda yakin ingin menyelesaikan ujian ini?")) akhiri();});
+        document.getElementById('btnSelesai').addEventListener('click',()=>{if(confirm("Yakin ingin menyelesaikan ujian sekarang?")) akhiri();});
 
-        function akhiri(){
+        // SYSTEM ANTI-KECURANGAN DENGAN DETEKSI PINDAH TAB
+        let kecuranganCount = 0;
+        document.addEventListener('visibilitychange', () => {
+            if (sedangUjian && document.hidden) {
+                kecuranganCount++;
+                alert(`PERINGATAN KECURANGAN (${kecuranganCount}/3)!\nAnda terdeteksi berpindah halaman/tab. Jangan tinggalkan halaman ujian!`);
+                if (kecuranganCount >= 3) {
+                    alert("Batas percobaan pelanggaran terlampaui. Ujian dihentikan dan jawaban dikirim otomatis.");
+                    akhiri();
+                }
+            }
+        });
+
+        document.addEventListener('copy', e => e.preventDefault());
+        document.addEventListener('paste', e => e.preventDefault());
+
+        window.addEventListener('beforeunload', (e) => {
+            if(sedangUjian) {
+                e.preventDefault();
+                e.returnValue = '';
+            }
+        });
+
+        // PROSES AKHIRI UJIAN & PERHITUNGAN SKOR OTOMATIS
+        async function akhiri(){
+            sedangUjian = false;
             clearInterval(timer); 
             elUjian.classList.add('hidden'); 
             elHasil.classList.remove('hidden');
-            
-            let benar = 0, detail = [];
-            daftarSoal.forEach((s,i)=>{
-                const stat = jawaban[i]===null?"KOSONG":(jawaban[i]===s.kunci?"BENAR":"SALAH"); 
-                if(stat==="BENAR") benar++; 
-                detail.push(`S${i+1}:${stat}`);
-            });
-            const nilai = Math.round((benar/45)*100);
 
-            // TAMPILKAN HASIL
+            document.getElementById('hasilNisgc').innerText = dataUser.nisgc;
             document.getElementById('hasilNama').innerText = dataUser.nama; 
-            document.getElementById('hasilNisn').innerText = dataUser.nisn; 
-            document.getElementById('hasilTtl').innerText = `${dataUser.tempatLahir}, ${dataUser.tglLahir}`;
-            document.getElementById('hasilAlamat').innerText = dataUser.alamat;
-            document.getElementById('hasilBenar').innerText = `${benar}/45`; 
-            document.getElementById('hasilNilai').innerText = nilai;
+            document.getElementById('hasilKursus').innerText = dataUser.kursus; 
+            document.getElementById('hasilTglLahir').innerText = dataUser.tglLahir;
             
             const ikon = document.getElementById('ikonHasil'); 
             const judul = document.getElementById('judulHasil');
-            if(nilai>=70){
-                ikon.className='w-24 h-24 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-green-500/30'; 
-                ikon.innerHTML='<i class="fa fa-check text-green-400 text-4xl"></i>'; 
-                judul.innerText='KOMPETENSI TERPENUHI'; 
-                judul.className='text-2xl font-bold mb-4 text-green-400';
-            } else {
-                ikon.className='w-24 h-24 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-red-500/30'; 
-                ikon.innerHTML='<i class="fa fa-times text-red-400 text-4xl"></i>'; 
-                judul.innerText='PERLU PENINGKATAN'; 
-                judul.className='text-2xl font-bold mb-4 text-red-400';
-            }
+            
+            ikon.className='w-24 h-24 bg-sky-500/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-sky-500/30 shadow-glow'; 
+            ikon.innerHTML='<i class="fa-solid fa-paper-plane text-sky-400 text-4xl"></i>'; 
+            judul.innerText='UJIAN SELESAI'; 
+            judul.className='text-2xl font-bold mb-4 text-white';
 
-            // ✅ KIRIM DATA KE LINK BARU ANDA
-            const formData = new FormData();
-            formData.append('nama', dataUser.nama);
-            formData.append('nisn', dataUser.nisn);
-            formData.append('tempatLahir', dataUser.tempatLahir);
-            formData.append('tglLahir', dataUser.tglLahir);
-            formData.append('alamat', dataUser.alamat);
-            formData.append('benar', benar);
-            formData.append('nilai', nilai);
-            formData.append('detail', detail.join(" | "));
+            // HITUNG BENAR, SALAH, DAN SKOR
+            let benarCount = 0;
+            let totalSoal = daftarSoal.length;
+            let lembarJawabanSiswa = Array(totalSoal).fill(null);
 
-            fetch(LINK_GOOGLE_SCRIPT, {
-                method: 'POST',
-                body: formData
-            })
-            .then(res => res.text())
-            .then(respon => {
-                if(respon.includes("SUKSES")){
-                    statusKirim.className = 'bg-green-500/10 text-green-400 p-3 rounded-lg mb-8 border border-green-500/20';
-                    statusKirim.innerHTML = '<i class="fa fa-check-circle mr-2"></i> <b>BERHASIL!</b> Data sudah masuk ke Database.';
-                } else {
-                    throw new Error("Respon tidak sesuai");
+            daftarSoal.forEach((soalObj, idx) => {
+                const originalIndex = soalObj.id - 1;
+                const userChoice = jawaban[idx];
+                lembarJawabanSiswa[originalIndex] = userChoice;
+
+                if (userChoice !== null && userChoice === soalObj.kunci) {
+                    benarCount++;
                 }
-            })
-            .catch(err => {
-                statusKirim.className = 'bg-red-500/10 text-red-400 p-3 rounded-lg mb-8 border border-red-500/20';
-                statusKirim.innerHTML = '<i class="fa fa-exclamation-triangle mr-2"></i> <b>GAGAL!</b> Cek koneksi internet.';
-                console.error(err);
             });
+
+            let salahCount = totalSoal - benarCount;
+            let calculatedScore = Math.round((benarCount / totalSoal) * 100);
+            let statusLulus = calculatedScore >= 70 ? "LULUS" : "TIDAK LULUS";
+
+            const dataUjian = {
+                nisgc: dataUser.nisgc,
+                nama_siswa: dataUser.nama,
+                nama: dataUser.nama,
+                paket_kelas: dataUser.kursus,
+                program_kursus: dataUser.kursus,
+                tgl_lahir: dataUser.tglLahir,
+                skor: calculatedScore,
+                benar: benarCount,
+                salah: salahCount,
+                total_soal: totalSoal,
+                status: statusLulus,
+                jawaban_siswa: lembarJawabanSiswa,
+                waktu_ujian: new Date().toLocaleString('id-ID'),
+                pelanggaran_tab: kecuranganCount
+            };
+
+            try {
+                const ujianRef = ref(db, 'hasil_ujian');
+                const newUjianRef = push(ujianRef); 
+                await set(newUjianRef, dataUjian);
+
+                statusKirim.className = 'bg-green-500/10 text-green-400 p-4 rounded-xl mb-8 border border-green-500/20 text-sm';
+                statusKirim.innerHTML = '<i class="fa-solid fa-circle-check text-base mr-2"></i> <b>BERHASIL TERKIRIM!</b> Lembar jawaban Anda telah tersimpan di sistem. Hasil kelulusan dapat dipantau oleh Admin LKP Global Course.';
+            } catch(err) {
+                statusKirim.className = 'bg-red-500/10 text-red-400 p-4 rounded-xl mb-8 border border-red-500/20 text-sm';
+                statusKirim.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-base mr-2"></i> <b>GAGAL MENGIRIM!</b> Terjadi kendala jaringan. Silakan hubungi Admin.';
+                console.error("Firebase Error: ", err);
+            }
         }
     </script>
 </body>

@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Admin - LKP Global Course</title>
+    <!-- Tailwind CSS & Icon & Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- SheetJS CDN untuk Export Excel -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    
+    <script>
+        tailwind.config = { 
+            theme: { 
+                extend: { 
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }, 
+                    colors: { 
+                        primary: { 50: '#f0f9ff', 500: '#0ea5e9', 600: '#0284c7', 700: '#0369a1', 900: '#0c4a6e' }
+                    } 
+                }
+            } 
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        .bg-tech { background: radial-gradient(circle at top left, #1E40AF, transparent 40%), radial-gradient(circle at bottom right, #22D3EE, transparent 40%), linear-gradient(135deg, #020617 0%, #0F172A 100%); }
+        .card-tech { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(10px); border: 1px solid rgba(55, 65, 81, 0.6); }
+        
+        .tab-btn-active {
+            background-color: rgba(14, 165, 233, 0.2) !important;
+            color: #38bdf8 !important;
+            border-color: rgba(56, 189, 248, 0.4) !important;
+            font-weight: 700 !important;
+        }
+    </style>
+</head>
+<body class="bg-tech min-h-screen font-sans text-slate-100 p-4 sm:p-6 lg:p-8">
+
+    <div class="max-w-7xl mx-auto space-y-6">
+        
+        <!-- HEADER ADMIN -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-slate-900/80 p-6 rounded-2xl border border-slate-800 shadow-xl">
+            <div class="flex items-center space-x-3">
+                <img src="Logo Global.png" alt="Logo LKP Global Course" class="h-12 w-auto" onerror="this.src='https://placehold.co/100x100/0f172a/38bdf8?text=LKP'">
+                <div>
+                    <h1 class="text-xl sm:text-2xl font-extrabold text-white tracking-wide">PANEL ADMIN LKP GLOBAL COURSE</h1>
+                    <p class="text-xs text-sky-400 font-medium">Sistem Kelola Pendaftaran, Uji Kompetensi & Pembayaran</p>
+                </div>
+            </div>
+            <a href="index.html" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded-xl text-xs font-semibold border border-slate-700 transition-all flex items-center gap-2">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i> Kembali ke Website
+            </a>
+        </div>
+
+        <!-- TOP CARDS CONTROL & EXPORT -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            
+            <!-- KONTROL AKSES (PLAY / STOP) -->
+            <div class="card-tech rounded-2xl p-6 border-sky-500/30">
+                <h2 class="text-xs font-bold text-sky-400 tracking-wider uppercase mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-sliders"></i> KONTROL AKSES SISTEM (PLAY / STOP)
+                </h2>
+                <div class="space-y-3">
+                    <!-- STATUS REGISTRASI -->
+                    <div class="flex items-center justify-between bg-slate-900/90 p-3.5 rounded-xl border border-slate-800">
+                        <div>
+                            <div class="text-[11px] font-bold text-slate-400 uppercase">STATUS PENDAFTARAN</div>
+                            <div id="statusPendaftaranText" class="text-xs font-bold text-rose-500">DITUTUP (STOP)</div>
+                        </div>
+                        <button id="btnTogglePendaftaran" onclick="toggleSystemAccess('pendaftaran')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-2.5 rounded-lg flex items-center gap-2 transition-all shadow-md">
+                            <i class="fa-solid fa-play"></i> BUKA REGISTRASI
+                        </button>
+                    </div>
+
+                    <!-- STATUS UJIAN -->
+                    <div class="flex items-center justify-between bg-slate-900/90 p-3.5 rounded-xl border border-slate-800">
+                        <div>
+                            <div class="text-[11px] font-bold text-slate-400 uppercase">STATUS UJI KOMPETENSI</div>
+                            <div id="statusUjianText" class="text-xs font-bold text-rose-500">DITUTUP (STOP)</div>
+                        </div>
+                        <button id="btnToggleUjian" onclick="toggleSystemAccess('ujian')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-2.5 rounded-lg flex items-center gap-2 transition-all shadow-md">
+                            <i class="fa-solid fa-play"></i> BUKA UJIAN
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EXPORT DATA TO EXCEL -->
+            <div class="card-tech rounded-2xl p-6 border-emerald-500/30">
+                <h2 class="text-xs font-bold text-emerald-400 tracking-wider uppercase mb-4 flex items-center gap-2">
+                    <i class="fa-file-excel text-emerald-400"></i> EXPORT DATA KE EXCEL (.XLSX)
+                </h2>
+                <div class="flex flex-wrap gap-3">
+                    <button onclick="exportDataToExcel('pendaftaran')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs px-5 py-3 rounded-xl flex items-center gap-2 transition-all shadow-lg shadow-emerald-900/30">
+                        <i class="fa-solid fa-file-export"></i> Export Pendaftaran
+                    </button>
+                    <button onclick="exportDataToExcel('ujian')" class="bg-sky-600 hover:bg-sky-500 text-white font-semibold text-xs px-5 py-3 rounded-xl flex items-center gap-2 transition-all shadow-lg shadow-sky-900/30">
+                        <i class="fa-solid fa-file-export"></i> Export Hasil Ujian
+                    </button>
+                    <button onclick="exportDataToExcel('pembayaran')" class="bg-amber-600 hover:bg-amber-500 text-white font-semibold text-xs px-5 py-3 rounded-xl flex items-center gap-2 transition-all shadow-lg shadow-amber-900/30">
+                        <i class="fa-solid fa-file-invoice-dollar"></i> Export Pembayaran
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- NAVIGATION TABS -->
+        <div class="flex items-center gap-2 border-b border-slate-800 pb-2 overflow-x-auto">
+            <button id="tabBtnUjian" onclick="switchTab('ujian')" class="tab-btn-active px-5 py-2.5 rounded-xl font-semibold text-xs text-slate-400 hover:text-white border border-transparent transition-all flex items-center gap-2 whitespace-nowrap">
+                <i class="fa-solid fa-graduation-cap"></i> Hasil Ujian
+            </button>
+            <button id="tabBtnRegistrasi" onclick="switchTab('registrasi')" class="px-5 py-2.5 rounded-xl font-semibold text-xs text-slate-400 hover:text-white border border-transparent transition-all flex items-center gap-2 whitespace-nowrap">
+                <i class="fa-solid fa-user-plus"></i> Data Registrasi Siswa
+            </button>
+            <button id="tabBtnPembayaran" onclick="switchTab('pembayaran')" class="px-5 py-2.5 rounded-xl font-semibold text-xs text-slate-400 hover:text-white border border-transparent transition-all flex items-center gap-2 whitespace-nowrap">
+                <i class="fa-solid fa-wallet"></i> Data Pembayaran
+            </button>
+        </div>
+
+        <!-- CONTAINER TAB 1: HASIL UJIAN -->
+        <div id="tabContentUjian" class="card-tech rounded-2xl p-6 shadow-2xl">
+            <h3 class="text-base font-bold text-sky-400 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-graduation-cap"></i> Data Hasil Uji Kompetensi Siswa
+            </h3>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="text-[11px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-800">
+                            <th class="py-3 px-4">WAKTU UJIAN</th>
+                            <th class="py-3 px-4">NISGC</th>
+                            <th class="py-3 px-4">NAMA SISWA</th>
+                            <th class="py-3 px-4">PAKET KELAS</th>
+                            <th class="py-3 px-4">SKOR & RINCIAN</th>
+                            <th class="py-3 px-4">STATUS</th>
+                            <th class="py-3 px-4 text-center">AKSI</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ujianTableBody" class="divide-y divide-slate-800 text-xs">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- CONTAINER TAB 2: DATA REGISTRASI SISWA -->
+        <div id="tabContentRegistrasi" class="card-tech rounded-2xl p-6 shadow-2xl hidden">
+            <h3 class="text-base font-bold text-emerald-400 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-users"></i> Data Pendaftaran / Registrasi Siswa
+            </h3>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="text-[11px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-800">
+                            <th class="py-3 px-4 text-center">FOTO</th>
+                            <th class="py-3 px-4">TANGGAL</th>
+                            <th class="py-3 px-4">NISGC</th>
+                            <th class="py-3 px-4">NISN</th>
+                            <th class="py-3 px-4">NAMA LENGKAP</th>
+                            <th class="py-3 px-4">NO. WA / HP</th>
+                            <th class="py-3 px-4">TEMPAT, TGL LAHIR</th>
+                            <th class="py-3 px-4">PROGRAM / KELAS</th>
+                            <th class="py-3 px-4">ALAMAT</th>
+                            <th class="py-3 px-4 text-center">AKSI</th>
+                        </tr>
+                    </thead>
+                    <tbody id="registrasiTableBody" class="divide-y divide-slate-800 text-xs">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- CONTAINER TAB 3: DATA PEMBAYARAN -->
+        <div id="tabContentPembayaran" class="card-tech rounded-2xl p-6 shadow-2xl hidden">
+            <h3 class="text-base font-bold text-amber-400 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-folder-open"></i> Data Konfirmasi Pembayaran
+            </h3>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="text-[11px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-800">
+                            <th class="py-3 px-4">WAKTU</th>
+                            <th class="py-3 px-4">NISGC</th>
+                            <th class="py-3 px-4">NAMA PENGIRIM</th>
+                            <th class="py-3 px-4 text-amber-400">JENIS PEMBAYARAN</th>
+                            <th class="py-3 px-4">BANK TUJUAN</th>
+                            <th class="py-3 px-4">NOMINAL</th>
+                            <th class="py-3 px-4">BUKTI TRANSFER</th>
+                            <th class="py-3 px-4 text-center">AKSI</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pembayaranTableBody" class="divide-y divide-slate-800 text-xs">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- MODAL PRATINJAU GAMBAR -->
+    <div id="imageModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-700 p-4 rounded-2xl max-w-lg w-full relative">
+            <button onclick="closeModal()" class="absolute -top-3 -right-3 bg-rose-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold hover:bg-rose-500 shadow-lg">
+                &times;
+            </button>
+            <h4 id="modalTitle" class="text-sm font-bold text-sky-400 mb-3"><i class="fa-solid fa-image mr-1"></i> Pratinjau Gambar</h4>
+            <div class="max-h-[70vh] overflow-auto rounded-lg bg-black flex justify-center items-center p-2">
+                <img id="modalImg" src="" alt="Gambar Preview" class="max-w-full h-auto object-contain rounded">
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK v8 -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCe7o7XvCfQiMOn0dlBO20AK8IzQbz6nJw",
+            authDomain: "lkp-global-course.firebaseapp.com",
+            databaseURL: "https://lkp-global-course-default-rtdb.firebaseio.com",
+            projectId: "lkp-global-course",
+            storageBucket: "lkp-global-course.firebasestorage.app",
+            messagingSenderId: "95358874758",
+            appId: "1:95358874758:web:83c12f2d1cbbac3f53faa7",
+            measurementId: "G-MPG8SQDEWB"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        let siswaRegisterMap = {};
+
+        function switchTab(tabName) {
+            document.getElementById('tabContentUjian').classList.add('hidden');
+            document.getElementById('tabContentRegistrasi').classList.add('hidden');
+            document.getElementById('tabContentPembayaran').classList.add('hidden');
+
+            document.getElementById('tabBtnUjian').classList.remove('tab-btn-active');
+            document.getElementById('tabBtnRegistrasi').classList.remove('tab-btn-active');
+            document.getElementById('tabBtnPembayaran').classList.remove('tab-btn-active');
+
+            if (tabName === 'ujian') {
+                document.getElementById('tabContentUjian').classList.remove('hidden');
+                document.getElementById('tabBtnUjian').classList.add('tab-btn-active');
+            } else if (tabName === 'registrasi') {
+                document.getElementById('tabContentRegistrasi').classList.remove('hidden');
+                document.getElementById('tabBtnRegistrasi').classList.add('tab-btn-active');
+            } else if (tabName === 'pembayaran') {
+                document.getElementById('tabContentPembayaran').classList.remove('hidden');
+                document.getElementById('tabBtnPembayaran').classList.add('tab-btn-active');
+            }
+        }
+
+        let currentStatus = { pendaftaran: false, ujian: false };
+
+        database.ref('system_status').on('value', function(snapshot) {
+            const data = snapshot.val() || {};
+            currentStatus.pendaftaran = !!data.pendaftaran;
+            currentStatus.ujian = !!data.ujian;
+
+            const textPendaftaran = document.getElementById('statusPendaftaranText');
+            const btnPendaftaran = document.getElementById('btnTogglePendaftaran');
+            if (currentStatus.pendaftaran) {
+                textPendaftaran.className = "text-xs font-bold text-emerald-400";
+                textPendaftaran.innerHTML = '<i class="fa-solid fa-circle-check mr-1"></i> DIBUKA (PLAY)';
+                btnPendaftaran.className = "bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs px-4 py-2.5 rounded-lg flex items-center gap-2 transition-all shadow-md";
+                btnPendaftaran.innerHTML = '<i class="fa-solid fa-stop"></i> TUTUP REGISTRASI';
+            } else {
+                textPendaftaran.className = "text-xs font-bold text-rose-500";
+                textPendaftaran.innerHTML = '<i class="fa-solid fa-circle-xmark mr-1"></i> DITUTUP (STOP)';
+                btnPendaftaran.className = "bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-2.5 rounded-lg flex items-center gap-2 transition-all shadow-md";
+                btnPendaftaran.innerHTML = '<i class="fa-solid fa-play"></i> BUKA REGISTRASI';
+            }
+
+            const textUjian = document.getElementById('statusUjianText');
+            const btnUjian = document.getElementById('btnToggleUjian');
+            if (currentStatus.ujian) {
+                textUjian.className = "text-xs font-bold text-emerald-400";
+                textUjian.innerHTML = '<i class="fa-solid fa-circle-check mr-1"></i> DIBUKA (PLAY)';
+                btnUjian.className = "bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs px-4 py-2.5 rounded-lg flex items-center gap-2 transition-all shadow-md";
+                btnUjian.innerHTML = '<i class="fa-solid fa-stop"></i> TUTUP UJIAN';
+            } else {
+                textUjian.className = "text-xs font-bold text-rose-500";
+                textUjian.innerHTML = '<i class="fa-solid fa-circle-xmark mr-1"></i> DITUTUP (STOP)';
+                btnUjian.className = "bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-2.5 rounded-lg flex items-center gap-2 transition-all shadow-md";
+                btnUjian.innerHTML = '<i class="fa-solid fa-play"></i> BUKA UJIAN';
+            }
+        });
+
+        function toggleSystemAccess(feature) {
+            const nextStatus = !currentStatus[feature];
+            database.ref('system_status/' + feature).set(nextStatus)
+                .then(() => {
+                    const label = feature === 'pendaftaran' ? 'Pendaftaran' : 'Uji Kompetensi';
+                    alert(`Akses ${label} berhasil ${nextStatus ? 'DIBUKA' : 'DITUTUP'}.`);
+                })
+                .catch((err) => alert("Gagal mengubah status: " + err.message));
+        }
+
+        function loadRegistrasiData() {
+            const tbody = document.getElementById('registrasiTableBody');
+            database.ref('pendaftaran_siswa').on('value', function(snapshot) {
+                tbody.innerHTML = '';
+                siswaRegisterMap = {};
+
+                if (!snapshot.exists()) {
+                    tbody.innerHTML = `<tr><td colspan="10" class="text-center py-8 text-slate-500">Belum ada data pendaftaran siswa.</td></tr>`;
+                    return;
+                }
+
+                snapshot.forEach(function(child) {
+                    const data = child.val();
+                    const key = child.key;
+
+                    const tanggal = data.tanggal_daftar || data.timestamp || '-';
+                    const nisgc = data.nisgc || key;
+                    const nisn = data.nisn || '-';
+                    const nama = data.nama || data.nama_lengkap || '-';
+                    const wa = data.whatsapp || data.no_wa || data.no_hp || data.telepon || data.hp || '-';
+                    
+                    const tempat = data.tempat_lahir || '';
+                    const tgl = data.tanggal_lahir || data.tgl_lahir || '';
+                    const ttl = data.ttl || (tempat || tgl ? `${tempat}${tempat && tgl ? ', ' : ''}${tgl}` : '-');
+
+                    const paket = data.paket_kelas || data.program || data.kelas || '-';
+                    const alamat = data.alamat || '-';
+                    const foto = data.foto || data.foto_siswa || data.pas_foto || data.url_foto || null;
+
+                    siswaRegisterMap[nisgc] = { nama, paket, nisn };
+
+                    tbody.innerHTML += `
+                        <tr class="hover:bg-slate-800/50 transition-colors">
+                            <td class="py-3.5 px-4 text-center">
+                                ${foto ? `
+                                    <img src="${foto}" alt="Foto ${nama}" onclick="openModal('${foto}', 'Foto Siswa - ${nama}')" class="w-10 h-10 object-cover rounded-full border border-sky-400 cursor-pointer hover:scale-110 transition-transform mx-auto shadow">
+                                ` : `
+                                    <div class="w-10 h-10 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-500 mx-auto text-xs" title="Tanpa Foto">
+                                        <i class="fa-solid fa-user"></i>
+                                    </div>
+                                `}
+                            </td>
+                            <td class="py-3.5 px-4 text-slate-400 font-mono whitespace-nowrap">${tanggal}</td>
+                            <td class="py-3.5 px-4 font-mono font-bold text-sky-400 whitespace-nowrap">${nisgc}</td>
+                            <td class="py-3.5 px-4 font-mono text-slate-300 font-medium whitespace-nowrap">${nisn}</td>
+                            <td class="py-3.5 px-4 font-semibold text-white whitespace-nowrap">${nama}</td>
+                            <td class="py-3.5 px-4 text-emerald-400 font-mono whitespace-nowrap">
+                                ${wa !== '-' ? `<a href="https://wa.me/${wa.toString().replace(/[^0-9]/g, '')}" target="_blank" class="hover:underline flex items-center gap-1.5"><i class="fa-brands fa-whatsapp text-emerald-400"></i> ${wa}</a>` : '-'}
+                            </td>
+                            <td class="py-3.5 px-4 text-slate-300 font-medium whitespace-nowrap">${ttl}</td>
+                            <td class="py-3.5 px-4 text-slate-200 font-medium whitespace-nowrap">${paket}</td>
+                            <td class="py-3.5 px-4 text-slate-400 max-w-xs truncate">${alamat}</td>
+                            <td class="py-3.5 px-4 text-center">
+                                <button onclick="hapusData('pendaftaran_siswa', '${key}')" title="Hapus Data" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 p-2 rounded-lg border border-rose-500/30 transition-all">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                });
+
+                loadHasilUjianData();
+            });
+        }
+
+        function loadHasilUjianData() {
+            const tbody = document.getElementById('ujianTableBody');
+            database.ref('hasil_ujian').on('value', function(snapshot) {
+                tbody.innerHTML = '';
+                if (!snapshot.exists()) {
+                    tbody.innerHTML = `<tr><td colspan="7" class="text-center py-8 text-slate-500">Belum ada data hasil ujian.</td></tr>`;
+                    return;
+                }
+
+                snapshot.forEach(function(child) {
+                    const data = child.val();
+                    const key = child.key;
+
+                    const waktu = data.waktu_ujian || data.waktu || data.tanggal || data.timestamp || '-';
+                    const nisgc = data.nisgc || key;
+
+                    let nama = data.nama_siswa || data.nama || data.nama_lengkap;
+                    if ((!nama || nama === '-') && siswaRegisterMap[nisgc]) {
+                        nama = siswaRegisterMap[nisgc].nama;
+                    }
+
+                    let kelas = data.paket_kelas || data.program_kursus || data.paketKelas || data.materi || data.program || data.kategori;
+                    if ((!kelas || kelas === '-') && siswaRegisterMap[nisgc]) {
+                        kelas = siswaRegisterMap[nisgc].paket;
+                    }
+                    if (!kelas) kelas = '-';
+
+                    const src = data.hasil || data.detail || data;
+
+                    let benar = src.benar ?? src.jumlah_benar ?? src.jawaban_benar ?? '-';
+                    let salah = src.salah ?? src.jumlah_salah ?? src.jawaban_salah ?? '-';
+                    let totalSoal = src.total_soal ?? src.jumlah_soal ?? src.totalSoal ?? '-';
+
+                    if (totalSoal !== '-' && benar !== '-' && salah === '-') {
+                        salah = Number(totalSoal) - Number(benar);
+                    } else if (totalSoal !== '-' && salah !== '-' && benar === '-') {
+                        benar = Number(totalSoal) - Number(salah);
+                    } else if (totalSoal === '-' && benar !== '-' && salah !== '-') {
+                        totalSoal = Number(benar) + Number(salah);
+                    }
+
+                    let skor = (src.skor !== undefined && src.skor !== null) ? src.skor :
+                               (src.nilai !== undefined && src.nilai !== null) ? src.nilai :
+                               (src.score !== undefined && src.score !== null) ? src.score : '-';
+
+                    if (skor === '-' && benar !== '-' && totalSoal !== '-' && Number(totalSoal) > 0) {
+                        skor = Math.round((Number(benar) / Number(totalSoal)) * 100);
+                    }
+
+                    let status = data.status || src.status || '-';
+                    if (status === '-' || !status) {
+                        status = (skor !== '-' && Number(skor) >= 70) ? 'LULUS' : 'TIDAK LULUS';
+                    }
+
+                    const isLulus = status.toUpperCase().includes('LULUS') && !status.toUpperCase().includes('TIDAK');
+                    const badgeClass = isLulus ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30' : 'bg-rose-500/15 text-rose-400 border-rose-500/30';
+
+                    tbody.innerHTML += `
+                        <tr class="hover:bg-slate-800/50 transition-colors">
+                            <td class="py-3.5 px-4 text-slate-400 font-mono">${waktu}</td>
+                            <td class="py-3.5 px-4 font-mono font-bold text-sky-400">${nisgc}</td>
+                            <td class="py-3.5 px-4 font-semibold text-white">${nama || '-'}</td>
+                            <td class="py-3.5 px-4 text-slate-200 font-medium">${kelas}</td>
+                            <td class="py-3.5 px-4">
+                                <div class="font-mono font-bold text-amber-400 text-sm">${skor}</div>
+                                <div class="text-[10px] text-slate-400 mt-0.5 whitespace-nowrap">
+                                    <span class="text-emerald-400 font-medium">B: ${benar}</span> | 
+                                    <span class="text-rose-400 font-medium">S: ${salah}</span> | 
+                                    <span class="text-slate-300">Total: ${totalSoal}</span>
+                                </div>
+                            </td>
+                            <td class="py-3.5 px-4">
+                                <span class="px-2.5 py-1 rounded-md text-[11px] font-bold border ${badgeClass}">
+                                    ${status}
+                                </span>
+                            </td>
+                            <td class="py-3.5 px-4 text-center">
+                                <button onclick="hapusData('hasil_ujian', '${key}')" title="Hapus Data" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 p-2 rounded-lg border border-rose-500/30 transition-all">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            });
+        }
+
+        function loadPembayaranData() {
+            const tbody = document.getElementById('pembayaranTableBody');
+            database.ref('pembayaran_pendaftaran').on('value', function(snapshot) {
+                tbody.innerHTML = '';
+                if (!snapshot.exists()) {
+                    tbody.innerHTML = `<tr><td colspan="8" class="text-center py-8 text-slate-500">Belum ada data pembayaran.</td></tr>`;
+                    return;
+                }
+
+                snapshot.forEach(function(child) {
+                    const data = child.val();
+                    const key = child.key;
+                    const waktu = data.tanggal_bayar || data.timestamp || '-';
+                    const nisgc = data.nisgc || key;
+                    const nama = data.nama_lengkap || data.nama_pengirim || '-';
+                    const jenisBayar = data.item_pembayaran || data.pembayaran_untuk || '-';
+                    const bank = data.metode_transfer || data.bank_tujuan || '-';
+                    const nominal = data.nominal ? 'Rp ' + Number(data.nominal).toLocaleString('id-ID') : 'Rp 0';
+                    const bukti = data.bukti_transfer || null;
+
+                    tbody.innerHTML += `
+                        <tr class="hover:bg-slate-800/50 transition-colors">
+                            <td class="py-3.5 px-4 text-slate-400 font-mono">${waktu}</td>
+                            <td class="py-3.5 px-4 font-mono font-bold text-sky-400">${nisgc}</td>
+                            <td class="py-3.5 px-4 font-semibold text-white">${nama}</td>
+                            <td class="py-3.5 px-4">
+                                <span class="inline-flex items-center gap-1.5 bg-amber-500/15 text-amber-300 font-medium px-2.5 py-1 rounded-md border border-amber-500/30">
+                                    <i class="fa-solid fa-circle-check text-[10px]"></i> ${jenisBayar}
+                                </span>
+                            </td>
+                            <td class="py-3.5 px-4 text-slate-300">${bank}</td>
+                            <td class="py-3.5 px-4 font-bold text-emerald-400 font-mono">${nominal}</td>
+                            <td class="py-3.5 px-4">
+                                ${bukti ? `<button onclick="openModal('${bukti}', 'Bukti Transfer - ${nama}')" class="text-sky-400 hover:text-sky-300 font-semibold inline-flex items-center gap-1 hover:underline"><i class="fa-solid fa-image"></i> Lihat Bukti</button>` : '<span class="text-slate-500 italic">Tanpa Bukti</span>'}
+                            </td>
+                            <td class="py-3.5 px-4 text-center">
+                                <button onclick="hapusData('pembayaran_pendaftaran', '${key}')" title="Hapus Data" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 p-2 rounded-lg border border-rose-500/30 transition-all">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            });
+        }
+
+        function hapusData(nodePath, key) {
+            if (confirm("Apakah Anda yakin ingin menghapus data ini?")) {
+                database.ref(nodePath + '/' + key).remove()
+                    .then(() => alert("Data berhasil dihapus."))
+                    .catch((err) => alert("Gagal menghapus: " + err.message));
+            }
+        }
+
+        function exportDataToExcel(type) {
+            let nodePath = type === 'pendaftaran' ? 'pendaftaran_siswa' : (type === 'ujian' ? 'hasil_ujian' : 'pembayaran_pendaftaran');
+            let fileNamePrefix = type === 'pendaftaran' ? 'Data_Pendaftaran_Siswa' : (type === 'ujian' ? 'Data_Hasil_Uji_Kompetensi' : 'Data_Pembayaran_Siswa');
+
+            database.ref(nodePath).once('value').then(function(snapshot) {
+                if (!snapshot.exists()) {
+                    alert(`Tidak ada data ${type} untuk diexport!`);
+                    return;
+                }
+
+                const excelData = [];
+                snapshot.forEach(function(child) {
+                    const data = child.val();
+                    const key = child.key;
+
+                    if (type === 'pendaftaran') {
+                        excelData.push({
+                            "Tanggal Daftar": data.tanggal_daftar || data.timestamp || "-",
+                            "NISGC": data.nisgc || key,
+                            "NISN": data.nisn || "-",
+                            "Nama Lengkap": data.nama || data.nama_lengkap || "-",
+                            "No WA": data.whatsapp || data.no_wa || "-",
+                            "Program / Kelas": data.paket_kelas || data.program || "-",
+                            "Alamat": data.alamat || "-"
+                        });
+                    } else if (type === 'ujian') {
+                        const nisgc = data.nisgc || key;
+                        let kelas = data.paket_kelas || data.program_kursus || (siswaRegisterMap[nisgc] ? siswaRegisterMap[nisgc].paket : "-");
+                        excelData.push({
+                            "Waktu Ujian": data.waktu_ujian || data.waktu || "-",
+                            "NISGC": nisgc,
+                            "Nama Siswa": data.nama_siswa || data.nama || (siswaRegisterMap[nisgc] ? siswaRegisterMap[nisgc].nama : "-"),
+                            "Paket Kelas": kelas,
+                            "Skor": data.skor ?? data.nilai ?? "-",
+                            "Benar": data.benar ?? "-",
+                            "Salah": data.salah ?? "-",
+                            "Total Soal": data.total_soal ?? "-",
+                            "Status": data.status || "TIDAK LULUS"
+                        });
+                    } else if (type === 'pembayaran') {
+                        excelData.push({
+                            "Tanggal Bayar": data.tanggal_bayar || data.timestamp || "-",
+                            "NISGC": data.nisgc || key,
+                            "Nama Pengirim": data.nama_lengkap || "-",
+                            "Nominal": data.nominal || 0
+                        });
+                    }
+                });
+
+                const worksheet = XLSX.utils.json_to_sheet(excelData);
+                const workbook = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+                XLSX.writeFile(workbook, `${fileNamePrefix}_${new Date().toISOString().split('T')[0]}.xlsx`);
+            });
+        }
+
+        function openModal(imgSrc, title = "Pratinjau Gambar") {
+            document.getElementById('modalTitle').innerHTML = `<i class="fa-solid fa-image mr-1"></i> ${title}`;
+            document.getElementById('modalImg').src = imgSrc;
+            document.getElementById('imageModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').classList.add('hidden');
+            document.getElementById('modalImg').src = '';
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            loadRegistrasiData();
+            loadPembayaranData();
+        });
+    </script>
+</body>
+</html>

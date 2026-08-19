@@ -86,7 +86,7 @@
                     </div>
                 </div>
 
-                <!-- Desktop Navigation Menu (Lengkap dengan 6 Menu utama - Legalitas Kami Aktif) -->
+                <!-- Desktop Navigation Menu -->
                 <nav class="hidden xl:flex items-center space-x-1 font-semibold text-sm">
                     <a href="index.html" class="px-3 py-2 rounded-lg text-slate-600 hover:text-primary-600 hover:bg-slate-50 transition-all">
                         <i class="fa-solid fa-house mr-1"></i> Home
@@ -265,7 +265,7 @@
                 <div class="bg-white text-slate-900 rounded-xl p-6 sm:p-8 border border-slate-800 shadow-inner relative overflow-hidden font-serif">
                     <div class="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] opacity-10"></div>
                     
-                    <!-- Simulating Paper Watermark Seal Background -->
+                    <!-- Watermark Background -->
                     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 sm:w-64 sm:h-64 rounded-full border-4 border-slate-100 flex items-center justify-center opacity-5 select-none pointer-events-none">
                         <img src="Logo Global.png" alt="Watermark Seal" class="w-full h-full object-contain">
                     </div>
@@ -309,8 +309,7 @@
                 <p class="text-xs leading-relaxed">Muara Dua, Kab. Ogan Komering Ulu Selatan, Sumatera Selatan.</p>
                 <div class="flex space-x-4">
                     <a href="https://wa.me/6287781865701" target="_blank" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-primary-600 hover:text-white flex items-center justify-center transition-all text-slate-300"><i class="fa-brands fa-whatsapp"></i></a>
-                    <a href="#" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-primary-600 hover:text-white flex items-center justify-center transition-all text-slate-300"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-primary-600 hover:text-white flex items-center justify-center transition-all text-slate-300"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="https://www.facebook.com/glc.simpang" target="_blank" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-primary-600 hover:text-white flex items-center justify-center transition-all text-slate-300"><i class="fa-brands fa-facebook"></i></a>
                 </div>
             </div>
 
@@ -319,8 +318,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-slate-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
             <p>&copy; 2026 LKP Global Course OKU Selatan. Hak Cipta Dilindungi Undang-Undang.</p>
             <div class="flex space-x-4">
-                <a href="#" class="hover:underline">Syarat & Ketentuan</a>
-                <a href="#" class="hover:underline">Kebijakan Privasi</a>
+
             </div>
         </div>
     </footer>
@@ -342,7 +340,7 @@
             }
         });
 
-        // DOCUMENT DATABASE PREVIEW (Pemberitahuan Format .jpg yang Sesuai VS Code Anda)
+        // DOCUMENT DATABASE PREVIEW
         const DOCUMENT_DATA = {
             kemenkumham: {
                 title: "KEMENTERIAN HUKUM DAN HAK ASASI MANUSIA RI",
@@ -352,7 +350,7 @@
                 desc: "Tentang Pengesahan Pendirian Badan Hukum Yayasan Pendidikan dan Pelatihan Global Course secara sah diakui oleh Negara Republik Indonesia.",
                 sign: "a.n. MENTERI HUKUM DAN HAK ASASI MANUSIA",
                 signer: "Direktur Jenderal Administrasi Hukum Umum",
-                image: "sk_kemenkumham.jpg" // Menggunakan format .jpg sesuai folder Anda
+                image: "sk_kemenkumham.jpg"
             },
             kemnaker: {
                 title: "KEMENTERIAN KETENAGAKERJAAN REPUBLIK INDONESIA",
@@ -372,19 +370,17 @@
                 desc: "Keputusan Kepala Dinas Pendidikan Kabupaten OKU Selatan mengenai izin operasional penyelenggaraan bimbingan teknis vokasi komputer non-formal kepada Yayasan Global Course.",
                 sign: "KEPALA DINAS PENDIDIKAN KAB. OKU SELATAN",
                 signer: "Pejabat Penandatangan Dinas Pendidikan",
-                image: "sk_disdik.jpg" // Menggunakan format .jpg sesuai folder Anda
+                image: "sk_disdik.jpg"
             }
         };
 
         // TAB SWITCH CONTROLLER
         function switchTab(tabKey) {
-            // Reset active button styling
             const allButtons = document.querySelectorAll('.tab-btn');
             allButtons.forEach(btn => {
                 btn.className = "tab-btn px-4 py-2 rounded-lg text-xs font-bold transition-all text-slate-400 hover:text-white bg-slate-800/40";
             });
 
-            // Set active button style
             const activeBtn = document.getElementById('tab-' + tabKey);
             if (activeBtn) {
                 if (tabKey === 'kemenkumham') {
@@ -396,18 +392,15 @@
                 }
             }
 
-            // Render selected document inside preview area
             renderDocument(tabKey);
         }
 
-        // RENDER DOCUMENT CONTENT WITH SMART IMAGE DETECTOR
+        // RENDER DOCUMENT CONTENT
         function renderDocument(key) {
             const doc = DOCUMENT_DATA[key];
             const area = document.getElementById('doc-view-area');
             
-            // Render kontainer gambar dengan deteksi onerror (fallback ke teks jika gambar tidak ditemukan)
             area.innerHTML = `
-                <!-- Tampilan Gambar SK (Aktif karena berkas SK Kemenkumham & Disdik JPG terdeteksi di VS Code) -->
                 <div id="img-wrapper-${key}" class="w-full flex flex-col items-center justify-center space-y-4">
                     <img 
                         src="${doc.image}" 
@@ -426,15 +419,12 @@
                     </a>
                 </div>
 
-                <!-- Tampilan Cadangan Berupa Teks Resmi (Otomatis tersembunyi jika gambar sukses dimuat) -->
                 <div id="text-fallback-${key}" class="space-y-6 hidden">
-                    <!-- Document Header (KOP SURAT) -->
                     <div class="border-b-4 border-slate-900 pb-4 text-center space-y-1">
                         <h3 class="text-sm sm:text-base font-bold tracking-wide text-slate-950">${doc.title}</h3>
                         <p class="text-[10px] sm:text-xs font-sans text-slate-500 tracking-wider">${doc.subtitle}</p>
                     </div>
 
-                    <!-- Document Body -->
                     <div class="py-4 space-y-4 text-center">
                         <h4 class="text-xs sm:text-sm font-bold underline tracking-wide text-slate-900">${doc.header}</h4>
                         <p class="text-[10px] sm:text-xs font-mono bg-slate-50 border border-slate-150 inline-block px-3 py-1.5 rounded-lg text-slate-700 font-bold">${doc.number}</p>
@@ -444,7 +434,6 @@
                         </p>
                     </div>
 
-                    <!-- Document Seal Footer -->
                     <div class="pt-4 border-t border-slate-100 flex justify-between items-end px-4 font-sans text-[10px] sm:text-xs">
                         <div class="text-left space-y-1">
                             <span class="text-slate-400 block text-[9px]">Ditetapkan secara sah di:</span>
@@ -460,7 +449,6 @@
             `;
         }
 
-        // Initialize Kemenkumham on load
         window.onload = () => {
             renderDocument('kemenkumham');
         };

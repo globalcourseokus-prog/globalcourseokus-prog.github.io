@@ -3,233 +3,304 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrasi - Global Course</title>
+    <title>Form Pendaftaran Siswa Baru - LKP Global Course</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Poppins', sans-serif; background-color: #050A18; color: #e0e0e0; }
-        .bg-tech { background: radial-gradient(circle at top left, #1E40AF, transparent 40%), radial-gradient(circle at bottom right, #22D3EE, transparent 40%), linear-gradient(135deg, #020617 0%, #0F172A 100%); }
-        .glow-border { border: 1px solid rgba(56, 189, 248, 0.3); box-shadow: 0 0 15px rgba(56, 189, 248, 0.2); }
-        .btn-glow { background: linear-gradient(45deg, #10b981, #059669); box-shadow: 0 0 15px rgba(16, 185, 129, 0.5); transition: all 0.3s ease; }
-        .btn-glow:hover { transform: translateY(-3px); box-shadow: 0 0 25px rgba(16, 185, 129, 0.7); }
-        .btn-home { background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(56, 189, 248, 0.3); }
-        .card-tech { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(55, 65, 81, 0.5); }
-        .text-gradient { background: linear-gradient(to right, #38bdf8, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        input, select, textarea { background: rgba(30, 41, 59, 0.5); border: 1px solid rgba(75, 85, 99, 0.5); color: #e0e0e0; }
-        input:focus, select:focus, textarea:focus { outline: none; border-color: #38bdf8; box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2); }
-        .loading { display: none; }
-        #successPage { display: none; }
-        .checkmark { width: 80px; height: 80px; border-radius: 50%; display: block; stroke-width: 4; stroke: #4bb543; stroke-miterlimit: 10; margin: 10% auto; box-shadow: inset 0px 0px 0px #4bb543; animation: fill 0.4s ease-in-out 0.4s forwards, scale 0.3s ease-in-out 0.9s both; }
-        .checkmark-circle { stroke-dasharray: 166; stroke-dashoffset: 166; stroke-width: 4; stroke: #4bb543; fill: none; animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards; }
-        .checkmark-check { transform-origin: 50% 50%; stroke-dasharray: 48; stroke-dashoffset: 48; animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards; }
-        @keyframes stroke { 100% { stroke-dashoffset: 0; } }
-        @keyframes scale { 0%, 100% { transform: none; } 50% { transform: scale(1.1); } }
-        @keyframes fill { 100% { box-shadow: inset 0px 0px 0px 15px rgba(75, 181, 67, 0.2); } }
+        body { background: #080d1a; color: #e2e8f0; font-family: 'Inter', sans-serif; }
+        .card-dark { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(51, 65, 85, 0.5); }
     </style>
 </head>
-<body class="bg-tech min-h-screen py-10">
-<div class="max-w-4xl mx-auto px-4">
-    <div class="text-center mb-6">
-        <img src="Logo Global.png" alt="Logo Global Course" class="h-20 w-auto mx-auto" onerror="this.src='https://placehold.co/200x200/0f172a/38bdf8?text=Global+Course'">
-    </div>
-    <div class="text-center mb-10">
-        <h1 class="text-4xl font-bold"><span class="text-gradient">FORMULIR</span> PENDAFTARAN</h1>
-        <p class="text-slate-400 mt-2">Yayasan Pendidikan & Pelatihan Global Course</p>
-    </div>
+<body class="min-h-screen p-4 md:p-8 flex items-center justify-center">
 
-    <!-- PESAN PERINGATAN -->
-    <div id="infoAlert" class="hidden mb-6 p-5 rounded-xl bg-rose-950/60 border border-rose-500/50 text-rose-200 text-sm flex items-start gap-3">
-        <i class="fas fa-exclamation-triangle mt-1 text-lg flex-shrink-0 text-rose-400 animate-pulse"></i>
-        <div>
-            <span class="font-bold block text-base mb-1" id="infoTitle">Peringatan!</span>
-            <span id="infoText" class="block text-slate-300"></span>
-        </div>
-    </div>
-
-    <div id="formCard" class="card-tech rounded-2xl p-8 md:p-10 glow-border">
-        <form id="registrationForm">
-            <div class="mb-6">
-                <label class="block text-slate-300 mb-2 font-medium">Nama Lengkap</label>
-                <input type="text" id="nama" required class="w-full px-4 py-3 rounded-lg">
-            </div>
-            
-            <div class="mb-6">
-                <label class="block text-slate-300 mb-2 font-medium">NISN</label>
-                <input type="text" id="nisn" required class="w-full px-4 py-3 rounded-lg" placeholder="Contoh: 0012345678">
-            </div>
-            
-            <div class="mb-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-slate-300 mb-2 font-medium">Tempat Lahir</label>
-                    <input type="text" id="tempat_lahir" required class="w-full px-4 py-3 rounded-lg">
-                </div>
-                <div>
-                    <label class="block text-slate-300 mb-2 font-medium">Tanggal Lahir</label>
-                    <input type="date" id="tgl_lahir" required class="w-full px-4 py-3 rounded-lg">
-                </div>
-            </div>
-            
-            <div class="mb-6">
-                <label class="block text-slate-300 mb-2 font-medium">Alamat Lengkap</label>
-                <textarea id="alamat" required rows="3" class="w-full px-4 py-3 rounded-lg"></textarea>
-            </div>
-            
-            <div class="mb-6">
-                <label class="block text-slate-300 mb-2 font-medium">Nomor WhatsApp</label>
-                <input type="text" id="hp" required class="w-full px-4 py-3 rounded-lg" placeholder="Contoh: 08123456789">
-            </div>
-            
-            <div class="mb-6">
-                <label class="block text-slate-300 mb-2 font-medium">Pilih Program Kursus</label>
-                <select id="program" required class="w-full px-4 py-3 rounded-lg">
-                    <option value="">-- Silakan Pilih --</option>
-                    <option value="Microsoft Office">💻 Microsoft Office</option>
-                    <option value="Desain Grafis">🎨 Desain Grafis</option>
-                </select>
-            </div>
-
-            <button type="submit" id="submitBtn" class="btn-glow w-full text-white font-bold py-4 px-8 rounded-xl text-lg flex items-center justify-center gap-2">
-                <span id="btnText" class="text-btn"><i class="fas fa-save"></i> SIMPAN DATA PENDAFTARAN</span>
-                <span id="btnLoading" class="loading"><i class="fas fa-spinner fa-spin animate-spin"></i> MENYIMPAN DATA...</span>
-            </button>
-        </form>
-    </div>
-
-    <div id="successPage" class="card-tech rounded-2xl p-8 md:p-10 glow-border text-center">
-        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-            <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
-            <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
-        </svg>
-        <h2 class="text-3xl font-bold text-green-400 mt-4">SELAMAT!</h2>
-        <p class="text-xl text-slate-300 mt-2">Anda sudah terdaftar di LKP Global Course</p>
+    <div class="max-w-2xl w-full space-y-4">
         
-        <div class="mt-8 text-left bg-slate-800/50 p-4 rounded-lg border border-slate-700">
-            <h3 class="text-center font-semibold text-cyan-400 mb-4 border-b border-slate-700 pb-2">Data Pendaftaran Anda</h3>
-            
-            <div class="bg-cyan-950/40 border border-cyan-500/30 p-3 rounded-lg mb-4 flex flex-col items-center justify-center">
-                <span class="text-xs text-cyan-300 font-bold uppercase tracking-wider">Nomor Induk Siswa Global Course</span>
-                <span id="sNisgc" class="text-2xl font-extrabold text-green-400 mt-1 tracking-wider"></span>
-            </div>
-
-            <div class="grid grid-cols-3 gap-2 text-sm mb-2"><span class="text-slate-400">Nama</span><span>:</span><span id="sNama" class="text-white font-medium"></span></div>
-            <div class="grid grid-cols-3 gap-2 text-sm mb-2"><span class="text-slate-400">NISN</span><span>:</span><span id="sNisn" class="text-white font-medium"></span></div>
-            <div class="grid grid-cols-3 gap-2 text-sm mb-2"><span class="text-slate-400">TTL</span><span>:</span><span id="sTtl" class="text-white font-medium"></span></div>
-            <div class="grid grid-cols-3 gap-2 text-sm mb-2"><span class="text-slate-400">Alamat</span><span>:</span><span id="sAlamat" class="text-white font-medium"></span></div>
-            <div class="grid grid-cols-3 gap-2 text-sm mb-2"><span class="text-slate-400">HP/WA</span><span>:</span><span id="sHp" class="text-white font-medium"></span></div>
-            <div class="grid grid-cols-3 gap-2 text-sm"><span class="text-slate-400">Program</span><span>:</span><span id="sProgram" class="text-white font-medium"></span></div>
-        </div>
-
-        <div class="mt-8">
-            <a href="index.html" class="btn-home inline-flex items-center gap-2 px-6 py-3 rounded-lg text-cyan-400 w-full justify-center border border-cyan-500/30">
-                <i class="fas fa-home"></i> Kembali ke Beranda
+        <!-- TOMBOL NAVIGASI HEADER (HOME & PEMBAYARAN) -->
+        <div class="card-dark rounded-2xl p-3 flex justify-between items-center shadow-lg">
+            <a href="index.html" class="text-xs font-semibold text-slate-300 hover:text-white flex items-center gap-2 px-3.5 py-2 rounded-xl hover:bg-slate-800 transition">
+                <i class="fas fa-house text-sky-400"></i> Home
+            </a>
+            <a href="pembayaran.html" class="text-xs font-bold text-amber-400 hover:text-amber-300 flex items-center gap-2 px-3.5 py-2 rounded-xl bg-amber-500/10 border border-amber-500/20 hover:bg-amber-500/20 transition">
+                <i class="fas fa-wallet"></i> Pembayaran Pendaftaran
             </a>
         </div>
+
+        <!-- HEADER JUDUL -->
+        <div class="card-dark rounded-2xl p-6 text-center shadow-xl border-t-4 border-emerald-500">
+            <div class="w-16 h-16 bg-emerald-500/10 text-emerald-400 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-3 border border-emerald-500/20">
+                <i class="fas fa-user-plus"></i>
+            </div>
+            <h1 class="text-2xl font-bold text-white tracking-wide">Pendaftaran Siswa Baru</h1>
+            <p class="text-xs text-slate-400 mt-1">Isi formulir pendaftaran di bawah ini dengan data yang valid dan benar.</p>
+        </div>
+
+        <!-- ALERT STATUS PENDAFTARAN (DITUTUP) -->
+        <div id="infoAlert" class="hidden bg-rose-950/80 border border-rose-500/50 rounded-2xl p-6 text-center space-y-2">
+            <div class="text-rose-400 text-3xl">
+                <i class="fas fa-circle-exclamation"></i>
+            </div>
+            <h2 id="infoTitle" class="text-lg font-bold text-rose-200">Pendaftaran Ditutup</h2>
+            <p id="infoText" class="text-xs text-rose-300">Mohon maaf, pendaftaran siswa baru saat ini sedang DITUTUP oleh Admin.</p>
+        </div>
+
+        <!-- FORMULIR REGISTRASI -->
+        <form id="formRegistrasi" class="card-dark rounded-2xl p-6 md:p-8 shadow-xl space-y-5">
+            
+            <!-- NISN -->
+            <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">NISN <span class="text-rose-400">*</span></label>
+                <input type="number" id="nisn" required placeholder="Contoh: 0051234567" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500 transition">
+            </div>
+
+            <!-- NAMA LENGKAP -->
+            <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">Nama Lengkap <span class="text-rose-400">*</span></label>
+                <input type="text" id="nama" required placeholder="Masukkan nama lengkap siswa" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500 transition">
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- TEMPAT LAHIR -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Tempat Lahir <span class="text-rose-400">*</span></label>
+                    <input type="text" id="tempat_lahir" required placeholder="Kota lahir" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500 transition">
+                </div>
+
+                <!-- TANGGAL LAHIR -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Tanggal Lahir <span class="text-rose-400">*</span></label>
+                    <input type="date" id="tgl_lahir" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500 transition">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- PROGRAM KURSUS -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Program Kursus <span class="text-rose-400">*</span></label>
+                    <select id="program" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500 transition">
+                        <option value="" disabled selected>-- Pilih Program --</option>
+                        <option value="Office">Office</option>
+                        <option value="Desain Grafis">Desain Grafis</option>
+                    </select>
+                </div>
+
+                <!-- NO WHATSAPP -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">No. WhatsApp <span class="text-rose-400">*</span></label>
+                    <input type="tel" id="hp" required placeholder="Contoh: 0821xxxxxxx" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500 transition">
+                </div>
+            </div>
+
+            <!-- ALAMAT LENGKAP -->
+            <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">Alamat Lengkap <span class="text-rose-400">*</span></label>
+                <textarea id="alamat" rows="2" required placeholder="Jalan, Desa, Kecamatan, Kab/Kota" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500 transition"></textarea>
+            </div>
+
+            <!-- UPLOAD FOTO SISWA -->
+            <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">Pas Foto Siswa (3x4/4x6) <span class="text-rose-400">*</span></label>
+                <div class="flex items-center gap-4">
+                    <input type="file" id="fotoInput" accept="image/*" required class="block w-full text-xs text-slate-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-emerald-400 hover:file:bg-slate-700 cursor-pointer">
+                    <div id="previewContainer" class="hidden">
+                        <img id="imgPreview" src="" alt="Preview" class="w-12 h-14 object-cover rounded-lg border border-slate-700">
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOMBOL SUBMIT -->
+            <button type="submit" id="submitBtn" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-xl transition shadow-lg shadow-emerald-950/50 flex items-center justify-center gap-2">
+                <i class="fas fa-paper-plane"></i> Kirim Pendaftaran
+            </button>
+
+        </form>
+
     </div>
 
-    <div class="text-center mt-10">
-        <p class="text-slate-400">Hubungi kami di: <a href="https://wa.me/6287781865701" class="text-green-400 font-bold">087781865701</a></p>
+    <!-- MODAL HASIL SUKSES PENDAFTARAN -->
+    <div id="successModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="max-w-lg w-full bg-slate-900 border border-slate-700 rounded-2xl p-6 space-y-4 shadow-2xl relative overflow-y-auto max-h-[90vh]">
+            
+            <div class="text-center space-y-2">
+                <div class="w-14 h-14 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center text-3xl mx-auto border border-emerald-500/30">
+                    <i class="fas fa-circle-check"></i>
+                </div>
+                <h2 class="text-xl font-bold text-white">Pendaftaran Berhasil!</h2>
+                <div class="bg-emerald-950/60 border border-emerald-500/30 p-3.5 rounded-xl text-xs text-emerald-300 leading-relaxed font-medium">
+                    Selamat Anda sudah terdaftar menjadi siswa Yayasan Pendidikan dan Pelatihan Global Course Komputer silakan lanjut ke pembayaran pendaftaran.
+                </div>
+            </div>
+
+            <!-- RINGKASAN DATA SISWA -->
+            <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800 space-y-3 text-xs">
+                <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                    <img id="sumFoto" src="" class="w-14 h-16 object-cover rounded-lg border border-slate-700 bg-slate-800">
+                    <div>
+                        <div id="sumNisgc" class="text-base font-bold text-sky-400">NISGC: -</div>
+                        <div id="sumNisn" class="text-slate-400 font-medium">NISN: -</div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3 text-slate-300">
+                    <div>
+                        <span class="text-slate-500 block">Nama Lengkap:</span>
+                        <strong id="sumNama" class="text-white text-sm"></strong>
+                    </div>
+                    <div>
+                        <span class="text-slate-500 block">Program Kursus:</span>
+                        <strong id="sumProgram" class="text-amber-400 text-sm"></strong>
+                    </div>
+                    <div>
+                        <span class="text-slate-500 block">Tempat, Tgl Lahir:</span>
+                        <strong id="sumTTL" class="text-slate-200"></strong>
+                    </div>
+                    <div>
+                        <span class="text-slate-500 block">No. WhatsApp:</span>
+                        <strong id="sumHp" class="text-slate-200"></strong>
+                    </div>
+                </div>
+
+                <div>
+                    <span class="text-slate-500 block">Alamat:</span>
+                    <strong id="sumAlamat" class="text-slate-200 block break-words"></strong>
+                </div>
+            </div>
+
+            <!-- ACTION BUTTON -->
+            <div class="pt-2">
+                <a href="pembayaran.html" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-3.5 rounded-xl transition text-center text-xs flex items-center justify-center gap-2 shadow-lg shadow-amber-950/50">
+                    <i class="fas fa-wallet text-sm"></i> Lanjut ke Pembayaran Pendaftaran
+                </a>
+            </div>
+
+        </div>
     </div>
-</div>
 
-<script>
-// ✅ GANTI DENGAN LINK BARU DARI HASIL SEBARKAN
-const API_URL = "https://script.google.com/macros/s/AKfycbzncSJv8uVEBCBg6iZRcrWlbLG0r03fBzAYLHEkxBaJ_a5Q19iYpAcxEdIKauUsX2KWEQ/exec";
-const formCard = document.getElementById('formCard');
-const sukses = document.getElementById('successPage');
-const infoAlert = document.getElementById('infoAlert');
-const infoTitle = document.getElementById('infoTitle');
-const infoText = document.getElementById('infoText');
+    <!-- FIREBASE & LOGIC SCRIPT -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-function generateNISGC() {
-    const sekarang = new Date();
-    const tgl = String(sekarang.getDate()).padStart(2, '0');
-    const bln = String(sekarang.getMonth() + 1).padStart(2, '0');
-    const thn = String(sekarang.getFullYear()).slice(-2);
-    
-    const kunci = `urutan_${sekarang.getFullYear()}${bln}${tgl}`;
-    let urutan = parseInt(localStorage.getItem(kunci) || "0") + 1;
-    localStorage.setItem(kunci, urutan);
-    
-    const noUrut = String(urutan).padStart(3, '0');
-    return `${noUrut}${bln}${tgl}${thn}`;
-}
-
-document.getElementById('registrationForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    infoAlert.classList.add('hidden');
-    
-    const btnText = document.getElementById('btnText');
-    const btnLoading = document.getElementById('btnLoading');
-    const submitBtn = document.getElementById('submitBtn');
-    
-    btnText.style.display = 'none';
-    btnLoading.style.display = 'inline-block';
-    submitBtn.disabled = true;
-    submitBtn.classList.remove('btn-glow');
-    submitBtn.classList.add('bg-slate-700', 'cursor-not-allowed');
-
-    try {
-        const nisgc = generateNISGC();
-        
-        const data = {
-            timestamp: new Date().toLocaleString('id-ID'),
-            nama: document.getElementById('nama').value,
-            nisn: document.getElementById('nisn').value,
-            tempat_lahir: document.getElementById('tempat_lahir').value,
-            tgl_lahir: document.getElementById('tgl_lahir').value,
-            alamat: document.getElementById('alamat').value,
-            hp: document.getElementById('hp').value,
-            program: document.getElementById('program').value,
-            nisgc: nisgc
+        const firebaseConfig = {
+            apiKey: "AIzaSyCe7o7XvCfQiMOn0dlBO20AK8IzQbz6nJw",
+            authDomain: "lkp-global-course.firebaseapp.com",
+            databaseURL: "https://lkp-global-course-default-rtdb.firebaseio.com",
+            projectId: "lkp-global-course",
+            storageBucket: "lkp-global-course.firebasestorage.app",
+            messagingSenderId: "95358874758",
+            appId: "1:95358874758:web:83c12f2d1cbbac3f53faa7"
         };
 
-        const res = await fetch(API_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        const form = document.getElementById('formRegistrasi');
+        const submitBtn = document.getElementById('submitBtn');
+        const infoAlert = document.getElementById('infoAlert');
+        const fotoInput = document.getElementById('fotoInput');
+        const previewContainer = document.getElementById('previewContainer');
+        const imgPreview = document.getElementById('imgPreview');
+
+        let fotoBase64 = '';
+
+        // 1. MONITOR STATUS PENDAFTARAN DARI ADMIN (PLAY / STOP)
+        onValue(ref(db, 'system_status/pendaftaran'), (snapshot) => {
+            const isPendaftaranBuka = snapshot.val() === true;
+
+            if (!isPendaftaranBuka) {
+                infoAlert.classList.remove('hidden');
+                form.classList.add('opacity-50', 'pointer-events-none');
+                submitBtn.disabled = true;
+            } else {
+                infoAlert.classList.add('hidden');
+                form.classList.remove('opacity-50', 'pointer-events-none');
+                submitBtn.disabled = false;
+            }
         });
 
-        const hasil = await res.json();
+        // 2. PRATINJAU & KOMPRESI FOTO KE BASE64
+        fotoInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    const img = new Image();
+                    img.src = event.target.result;
+                    img.onload = function () {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        const maxWidth = 300;
+                        const scaleSize = maxWidth / img.width;
+                        canvas.width = maxWidth;
+                        canvas.height = img.height * scaleSize;
 
-        if (hasil.status === "ganda") {
-            // NISN sudah ada
-            infoTitle.textContent = "Pendaftaran Gagal";
-            infoText.textContent = hasil.pesan;
-            infoAlert.classList.remove('hidden');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else if (hasil.status === "sukses") {
-            // Berhasil disimpan
-            document.getElementById('sNisgc').innerText = nisgc;
-            document.getElementById('sNama').innerText = data.nama;
-            document.getElementById('sNisn').innerText = data.nisn;
-            document.getElementById('sTtl').innerText = `${data.tempat_lahir}, ${data.tgl_lahir}`;
-            document.getElementById('sAlamat').innerText = data.alamat;
-            document.getElementById('sHp').innerText = data.hp;
-            document.getElementById('sProgram').innerText = data.program;
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                        fotoBase64 = canvas.toDataURL('image/jpeg', 0.7);
 
-            formCard.style.display = 'none';
-            sukses.style.display = 'block';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else {
-            throw new Error(hasil.pesan || "Terjadi kesalahan");
-        }
+                        imgPreview.src = fotoBase64;
+                        previewContainer.classList.remove('hidden');
+                    };
+                };
+                reader.readAsDataURL(file);
+            }
+        });
 
-    } catch (err) {
-        console.error(err);
-        infoTitle.textContent = "Kesalahan";
-        infoText.textContent = "Gagal terhubung ke server. Coba lagi nanti.";
-        infoAlert.classList.remove('hidden');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    } finally {
-        btnText.style.display = 'inline-block';
-        btnLoading.style.display = 'none';
-        submitBtn.disabled = false;
-        submitBtn.classList.add('btn-glow');
-        submitBtn.classList.remove('bg-slate-700', 'cursor-not-allowed');
-    }
-});
-</script>
+        // 3. PROSES SIMPAN PENDAFTARAN
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            if (!fotoBase64) {
+                alert("Harap unggah pas foto siswa terlebih dahulu!");
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Mengirim Data...`;
+
+            // GENEREATE OTOMATIS NISGC (Format: 00 + 7 digit acak)
+            const autoNisgc = '00' + Math.floor(1000000 + Math.random() * 9000000);
+
+            const payload = {
+                nisgc: autoNisgc,
+                nisn: document.getElementById('nisn').value.trim(),
+                nama: document.getElementById('nama').value.trim(),
+                tempat_lahir: document.getElementById('tempat_lahir').value.trim(),
+                tgl_lahir: document.getElementById('tgl_lahir').value,
+                program: document.getElementById('program').value,
+                hp: document.getElementById('hp').value.trim(),
+                alamat: document.getElementById('alamat').value.trim(),
+                foto: fotoBase64,
+                timestamp: new Date().toLocaleString('id-ID')
+            };
+
+            push(ref(db, 'pendaftaran_siswa'), payload)
+                .then(() => {
+                    // ISI DATA KE MODAL SUKSES
+                    document.getElementById('sumFoto').src = payload.foto;
+                    document.getElementById('sumNisgc').textContent = `NISGC: ${payload.nisgc}`;
+                    document.getElementById('sumNisn').textContent = `NISN: ${payload.nisn}`;
+                    document.getElementById('sumNama').textContent = payload.nama;
+                    document.getElementById('sumProgram').textContent = payload.program;
+                    document.getElementById('sumTTL').textContent = `${payload.tempat_lahir}, ${payload.tgl_lahir}`;
+                    document.getElementById('sumHp').textContent = payload.hp;
+                    document.getElementById('sumAlamat').textContent = payload.alamat;
+
+                    // TAMPILKAN MODAL SUKSES
+                    document.getElementById('successModal').classList.remove('hidden');
+
+                    // RESET FORMULIR
+                    form.reset();
+                    previewContainer.classList.add('hidden');
+                    fotoBase64 = '';
+                })
+                .catch((err) => {
+                    alert("Gagal mengirim pendaftaran: " + err.message);
+                })
+                .finally(() => {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = `<i class="fas fa-paper-plane"></i> Kirim Pendaftaran`;
+                });
+        });
+    </script>
 </body>
 </html>

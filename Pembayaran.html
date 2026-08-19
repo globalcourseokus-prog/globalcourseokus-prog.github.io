@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konfirmasi Pembayaran - LKP Global Course</title>
+    <!-- Tailwind CSS & Icon & Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = { 
+            theme: { 
+                extend: { 
+                    fontFamily: { 
+                        sans: ['Inter', 'sans-serif'], 
+                    }, 
+                    colors: { 
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        secondary: {
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309',
+                        }
+                    } 
+                }
+            } 
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        .bg-tech { background: radial-gradient(circle at top left, #1E40AF, transparent 40%), radial-gradient(circle at bottom right, #22D3EE, transparent 40%), linear-gradient(135deg, #020617 0%, #0F172A 100%); }
+        .glow-border { border: 1px solid rgba(56, 189, 248, 0.3); box-shadow: 0 0 15px rgba(56, 189, 248, 0.2); }
+        .btn-glow { background: linear-gradient(45deg, #10b981, #059669); box-shadow: 0 0 15px rgba(16, 185, 129, 0.5); transition: all 0.3s ease; }
+        .btn-glow:hover { transform: translateY(-3px); box-shadow: 0 0 25px rgba(16, 185, 129, 0.7); }
+        .card-tech { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(55, 65, 81, 0.5); }
+        .text-gradient { background: linear-gradient(to right, #38bdf8, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        .info-box {
+            background-color: rgba(37, 99, 235, 0.15);
+            border-left: 4px solid #3b82f6;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            font-size: 14px;
+            color: #93c5fd;
+            line-height: 1.6;
+        }
+
+        input[type="text"], input[type="date"], select { 
+            background: rgba(30, 41, 59, 0.6); 
+            border: 1px solid rgba(75, 85, 99, 0.5); 
+            color: #e0e0e0; 
+        }
+        input:focus, select:focus { 
+            outline: none; 
+            border-color: #38bdf8; 
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2); 
+        }
+    </style>
+</head>
+<body class="bg-tech min-h-screen font-sans text-slate-100 antialiased">
+
+    <!-- 📢 PROMO TOP BAR -->
+    <div class="bg-slate-900 text-white text-xs py-2 px-4 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+                <span class="bg-amber-500 text-slate-950 text-[10px] font-extrabold px-2 py-0.5 rounded">PROMO BARU</span>
+                <span>Biaya Pendaftaran hanya <strong>Rp 50.000</strong> untuk semua paket kelas!</span>
+            </div>
+            <div class="flex items-center gap-3">
+                <span class="text-slate-400">Hubungi WA Kami:</span>
+                <a href="https://wa.me/6287781865701" target="_blank" class="text-emerald-400 font-bold hover:underline">
+                    <i class="fa-brands fa-whatsapp mr-1"></i> 0877-8186-5701
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🧭 HEADER & NAVBAR -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm text-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="window.location.href='index.html'">
+                    <img src="Logo Global.png" alt="Logo LKP Global Course" class="h-14 w-auto object-contain" onerror="this.src='https://placehold.co/200x200/0f172a/38bdf8?text=LKP'">
+                    <div>
+                        <span class="font-extrabold text-lg sm:text-xl tracking-tight bg-gradient-to-r from-primary-900 to-indigo-800 bg-clip-text text-transparent">YAYASAN PENDIDIKAN DAN PELATIHAN GLOBAL COURSE</span>
+                        <div class="text-[10px] font-bold text-slate-500 uppercase tracking-widest -mt-1">KEC.SIMPANG OKU SELATAN • LKP</div>
+                    </div>
+                </div>
+
+                <nav class="hidden xl:flex items-center space-x-1 font-semibold text-sm">
+                    <a href="index.html" class="px-3 py-2 rounded-lg text-slate-600 hover:text-primary-600 hover:bg-slate-50 transition-all">
+                        <i class="fa-solid fa-house mr-1"></i> Home
+                    </a>
+                    <a href="legalitas.html" class="px-3 py-2 rounded-lg text-slate-600 hover:text-primary-600 hover:bg-slate-50 transition-all">
+                        <i class="fa-solid fa-scale-balanced mr-1"></i> Legalitas Kami
+                    </a>
+                    <a href="ujian.html" class="px-3 py-2 rounded-lg text-slate-600 hover:text-primary-600 hover:bg-slate-50 transition-all">
+                        <i class="fa-solid fa-laptop-code mr-1"></i> Uji Kompetensi
+                    </a>
+                    <a href="registrasi.html" class="px-3 py-2 rounded-lg text-slate-600 hover:text-primary-600 hover:bg-slate-50 transition-all">
+                        <i class="fa-solid fa-user-plus mr-1"></i> Registrasi
+                    </a>
+                    <a href="pembayaran.html" class="px-3 py-2 rounded-lg text-primary-600 bg-primary-50 transition-all">
+                        <i class="fa-solid fa-money-bill-wave mr-1"></i> Pembayaran
+                    </a>
+                    <a href="galeri.html" class="px-3 py-2 rounded-lg text-slate-600 hover:text-primary-600 hover:bg-slate-50 transition-all">
+                        <i class="fa-solid fa-images mr-1"></i> Galeri
+                    </a>
+                    <a href="hubungi.html" class="px-3 py-2 rounded-lg text-slate-600 hover:text-primary-600 hover:bg-slate-50 transition-all">
+                        <i class="fa-solid fa-envelope mr-1"></i> Hubungi Kami
+                    </a>
+                </nav>
+
+                <div class="flex items-center space-x-3">
+                    <div class="hidden md:block">
+                        <a href="registrasi.html" class="bg-gradient-to-r from-primary-600 to-indigo-600 text-white font-semibold text-sm px-5 py-2.5 rounded-xl shadow-lg shadow-primary-100 hover:shadow-primary-200 hover:-translate-y-0.5 transition-all duration-200 inline-flex items-center gap-1.5">
+                            Daftar Sekarang <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    <button id="mobile-menu-btn" class="xl:hidden text-slate-600 hover:text-primary-600 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                        <i class="fa-solid fa-bars text-xl" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden xl:hidden border-b border-slate-200 bg-white shadow-lg">
+            <div class="px-3 pt-2 pb-4 space-y-1 sm:px-4 text-base font-semibold">
+                <a href="index.html" class="block px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-50"><i class="fa-solid fa-house mr-2 w-5 text-center"></i> Home</a>
+                <a href="legalitas.html" class="block px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-50"><i class="fa-solid fa-scale-balanced mr-2 w-5 text-center"></i> Legalitas Kami</a>
+                <a href="ujian.html" class="block px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-50"><i class="fa-solid fa-laptop-code mr-2 w-5 text-center"></i> Uji Kompetensi Online</a>
+                <a href="registrasi.html" class="block px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-50"><i class="fa-solid fa-user-plus mr-2 w-5 text-center"></i> Registrasi</a>
+                <a href="pembayaran.html" class="block px-4 py-2.5 rounded-xl text-primary-600 bg-primary-50"><i class="fa-solid fa-money-bill-wave mr-2 w-5 text-center"></i> Pembayaran</a>
+                <a href="galeri.html" class="block px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-50"><i class="fa-solid fa-images mr-2 w-5 text-center"></i> Galeri</a>
+                <a href="hubungi.html" class="block px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-50"><i class="fa-solid fa-envelope mr-2 w-5 text-center"></i> Hubungi Kami</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- FORMULIR KONFIRMASI PEMBAYARAN -->
+    <div class="max-w-xl mx-auto px-4 py-10">
+        <div class="card-tech rounded-2xl p-6 sm:p-10 glow-border">
+            <div class="text-center mb-6">
+                <img src="Logo Global.png" alt="Logo Global Course" class="h-16 w-auto mx-auto mb-3" onerror="this.src='https://placehold.co/200x200/0f172a/38bdf8?text=Global+Course'">
+                <h1 class="text-3xl font-bold text-white">FORMULIR <span class="text-gradient">PEMBAYARAN</span></h1>
+                <p class="text-slate-400 text-sm mt-1">Masukkan NISGC Anda untuk memverifikasi data pendaftaran</p>
+            </div>
+
+            <!-- REKENING & QR CODE INFO BOX -->
+            <div class="info-box border-l-4 border-blue-500">
+                <p class="font-bold text-sky-300 mb-3"><i class="fas fa-info-circle mr-1 text-blue-400"></i> Rekening Resmi Pembayaran LKP Global Course:</p>
+                <div class="flex flex-col sm:flex-row items-center gap-4 bg-slate-900/80 p-3.5 rounded-xl border border-slate-700/60 shadow-inner">
+                    <img src="QRBSI.jpeg" alt="QR Code BSI" class="w-36 h-36 object-contain rounded-lg border border-sky-400/40 bg-white p-1.5 shadow-md" onerror="this.src='https://placehold.co/150x150/ffffff/000000?text=QR+BSI'">
+                    <div class="text-center sm:text-left">
+                        <span class="bg-sky-500/20 text-sky-300 text-[11px] font-extrabold px-2.5 py-0.5 rounded-md border border-sky-400/30 uppercase tracking-wide">Bank Syariah Indonesia (BSI)</span>
+                        <div class="text-2xl font-black text-white tracking-wider my-1 font-mono">7358102055</div>
+                        <p class="text-xs text-slate-300">Atas Nama: <strong class="text-sky-400 font-semibold">Jesica Dwi Yanti</strong></p>
+                        <p class="text-[11px] text-slate-400 mt-2"><i class="fa-solid fa-qrcode mr-1 text-sky-400"></i> Scan QR di samping untuk pembayaran instan via e-wallet / mobile banking.</p>
+                    </div>
+                </div>
+            </div>
+
+            <form id="paymentForm">
+                <!-- INPUT NISGC + AUTO CHECK -->
+                <div class="mb-4">
+                    <label for="nisgc" class="block text-sm font-semibold text-slate-200 mb-2">NISGC Siswa (Kode Unik)</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="nisgc" class="w-full px-4 py-3 rounded-lg font-mono tracking-widest text-sky-400 font-bold" placeholder="Contoh: 001062626" required>
+                        <button type="button" id="btnCekNisgc" onclick="verifikasiNISGC()" class="bg-sky-600 hover:bg-sky-500 text-white font-bold px-4 rounded-lg text-sm flex items-center gap-1 transition-all whitespace-nowrap">
+                            <i class="fa-solid fa-magnifying-glass"></i> Cek
+                        </button>
+                    </div>
+                    <div id="nisgcStatus" class="text-xs mt-1.5 font-medium hidden"></div>
+                </div>
+
+                <!-- NAMA LENGKAP (AUTO-FILLED) -->
+                <div class="mb-4">
+                    <label for="nama" class="block text-sm font-semibold text-slate-200 mb-2">Nama Lengkap Siswa</label>
+                    <input type="text" id="nama" class="w-full px-4 py-3 rounded-lg bg-slate-800/80 text-slate-400 cursor-not-allowed" placeholder="Nama otomatis terisi setelah NISGC diverifikasi" readonly required>
+                </div>
+
+                <!-- ITEM PEMBAYARAN CHECKBOXES -->
+                <div class="mb-4">
+                    <label class="block text-sm font-semibold text-slate-200 mb-2">Pilih Item Pembayaran</label>
+                    <div class="space-y-2 bg-slate-900/70 p-4 rounded-xl border border-slate-700">
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="checkbox" class="item-bayar w-4 h-4 text-sky-500 rounded focus:ring-sky-400" value="50000" data-label="Biaya Pendaftaran">
+                            <span class="text-sm text-slate-200">Biaya Pendaftaran — <strong class="text-emerald-400">Rp 50.000</strong></span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="checkbox" class="item-bayar w-4 h-4 text-sky-500 rounded focus:ring-sky-400" value="150000" data-label="Angsuran 1">
+                            <span class="text-sm text-slate-200">Angsuran 1 — <strong class="text-emerald-400">Rp 150.000</strong></span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="checkbox" class="item-bayar w-4 h-4 text-sky-500 rounded focus:ring-sky-400" value="150000" data-label="Angsuran 2">
+                            <span class="text-sm text-slate-200">Angsuran 2 — <strong class="text-emerald-400">Rp 150.000</strong></span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="checkbox" class="item-bayar w-4 h-4 text-sky-500 rounded focus:ring-sky-400" value="150000" data-label="Angsuran 3">
+                            <span class="text-sm text-slate-200">Angsuran 3 — <strong class="text-emerald-400">Rp 150.000</strong></span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- DISPLAY TOTAL OTOMATIS -->
+                <div class="mb-5 bg-sky-950/60 border border-sky-500/40 p-4 rounded-xl flex justify-between items-center shadow-inner">
+                    <span class="text-sm font-semibold text-slate-300">Total Yang Harus Dibayar:</span>
+                    <span id="displayTotal" class="text-2xl font-black text-sky-400">Rp 0</span>
+                </div>
+
+                <!-- METODE / BANK PENGIRIM SELECT -->
+                <div class="mb-4">
+                    <label for="bank" class="block text-sm font-semibold text-slate-200 mb-2">Metode / Bank Pengirim</label>
+                    <select id="bank" class="w-full px-4 py-3 rounded-lg" required>
+                        <option value="">-- Pilih Metode Transfer --</option>
+                        <option value="BSI">Transfer Bank BSI</option>
+                        <option value="BCA">Transfer Bank BCA</option>
+                        <option value="Mandiri">Transfer Bank Mandiri</option>
+                        <option value="BRI">Transfer Bank BRI</option>
+                        <option value="BNI">Transfer Bank BNI</option>
+                        <option value="E-Wallet">E-Wallet (QRIS / DANA / OVO / GoPay)</option>
+                        <option value="Lainnya">Bank Lainnya / Transfer Antarbank</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="tanggal" class="block text-sm font-semibold text-slate-200 mb-2">Tanggal Transfer</label>
+                    <input type="date" id="tanggal" class="w-full px-4 py-3 rounded-lg" required>
+                </div>
+
+                <div class="mb-6">
+                    <label for="bukti" class="block text-sm font-semibold text-slate-200 mb-2">Unggah Bukti Transfer (Format Gambar)</label>
+                    <input type="file" id="bukti" class="w-full px-4 py-2.5 rounded-lg file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-sky-500 file:text-white hover:file:bg-sky-600" accept="image/*" required>
+                </div>
+
+                <button type="submit" class="btn-glow w-full text-white font-bold py-3.5 px-6 rounded-xl text-base flex justify-center items-center gap-2">
+                    <i class="fas fa-paper-plane"></i> Kirim Konfirmasi Pembayaran
+                </button>
+
+                <a href="index.html" class="block text-center mt-5 text-sm text-slate-400 hover:text-sky-400 transition-colors">
+                    <i class="fa fa-arrow-left mr-1"></i> Kembali ke Beranda
+                </a>
+            </form>
+        </div>
+    </div>
+
+    <!-- SCRIPT MOBILE MENU -->
+    <script>
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            const isHidden = mobileMenu.classList.contains('hidden');
+            
+            if (isHidden) {
+                mobileMenu.classList.remove('hidden');
+                menuIcon.className = "fa-solid fa-xmark text-xl";
+            } else {
+                mobileMenu.classList.add('hidden');
+                menuIcon.className = "fa-solid fa-bars text-xl";
+            }
+        });
+    </script>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <script>
+        // CONFIG FIREBASE
+        const firebaseConfig = {
+            apiKey: "AIzaSyCe7o7XvCfQiMOn0dlBO20AK8IzQbz6nJw",
+            authDomain: "lkp-global-course.firebaseapp.com",
+            databaseURL: "https://lkp-global-course-default-rtdb.firebaseio.com",
+            projectId: "lkp-global-course",
+            storageBucket: "lkp-global-course.firebasestorage.app",
+            messagingSenderId: "95358874758",
+            appId: "1:95358874758:web:83c12f2d1cbbac3f53faa7",
+            measurementId: "G-MPG8SQDEWB"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        let isNisgcValid = false;
+
+        // FUNGSI VERIFIKASI NISGC KE FIREBASE
+        function verifikasiNISGC() {
+            const nisgcInput = document.getElementById('nisgc').value.trim();
+            const statusEl = document.getElementById('nisgcStatus');
+            const namaInput = document.getElementById('nama');
+
+            statusEl.classList.remove('hidden');
+
+            if (!nisgcInput) {
+                statusEl.className = "text-xs mt-1.5 font-semibold text-amber-400";
+                statusEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-1"></i> Silakan masukkan nomor NISGC terlebih dahulu.';
+                namaInput.value = "";
+                isNisgcValid = false;
+                return;
+            }
+
+            statusEl.className = "text-xs mt-1.5 font-semibold text-sky-400 animate-pulse";
+            statusEl.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> Memeriksa data siswa di database...';
+
+            // Query ke node 'pendaftaran_siswa' mencari child 'nisgc'
+            database.ref('pendaftaran_siswa')
+                .orderByChild('nisgc')
+                .equalTo(nisgcInput)
+                .once('value', function(snapshot) {
+                    if (snapshot.exists()) {
+                        let foundName = "";
+                        snapshot.forEach(function(childSnapshot) {
+                            const data = childSnapshot.val();
+                            foundName = data.nama || data.nama_lengkap;
+                        });
+
+                        namaInput.value = foundName;
+                        isNisgcValid = true;
+                        statusEl.className = "text-xs mt-1.5 font-semibold text-emerald-400";
+                        statusEl.innerHTML = '<i class="fa-solid fa-circle-check mr-1"></i> Data ditemukan! Nama Siswa: <strong>' + foundName + '</strong>';
+                    } else {
+                        namaInput.value = "";
+                        isNisgcValid = false;
+                        statusEl.className = "text-xs mt-1.5 font-semibold text-rose-400";
+                        statusEl.innerHTML = '<i class="fa-solid fa-circle-xmark mr-1"></i> Data NISGC tidak ditemukan! Periksa kembali nomor NISGC Anda.';
+                    }
+                }, function(error) {
+                    statusEl.className = "text-xs mt-1.5 font-semibold text-rose-400";
+                    statusEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-1"></i> Gagal terhubung ke database server.';
+                    isNisgcValid = false;
+                });
+        }
+
+        // Jalankan pengecekan saat siswa menekan Enter atau berpindah dari input NISGC
+        document.getElementById('nisgc').addEventListener('change', verifikasiNISGC);
+
+        // HITUNG NOMINAL OTOMATIS
+        const checkboxes = document.querySelectorAll('.item-bayar');
+        const displayTotal = document.getElementById('displayTotal');
+        let totalNominal = 0;
+        let selectedItems = [];
+
+        function updateCalculatedTotal() {
+            totalNominal = 0;
+            selectedItems = [];
+
+            checkboxes.forEach(cb => {
+                if (cb.checked) {
+                    totalNominal += parseInt(cb.value);
+                    selectedItems.push(cb.getAttribute('data-label'));
+                }
+            });
+
+            displayTotal.textContent = 'Rp ' + totalNominal.toLocaleString('id-ID');
+        }
+
+        checkboxes.forEach(cb => {
+            cb.addEventListener('change', updateCalculatedTotal);
+        });
+
+        function encodeImageFileAsURL(element, callback) {
+            var file = element.files[0];
+            var reader = new FileReader();
+            reader.onloadend = function() {
+                callback(reader.result);
+            }
+            reader.readAsDataURL(file);
+        }
+
+        // SUBMIT FORM KE NODE 'pembayaran' AGAR LANGSUNG DIBACA ADMIN
+        document.getElementById('paymentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            if (!isNisgcValid) {
+                alert("Nomor NISGC belum terverifikasi atau tidak ditemukan. Klik tombol 'Cek' terlebih dahulu!");
+                return;
+            }
+
+            if (totalNominal === 0) {
+                alert("Silakan pilih minimal satu item pembayaran!");
+                return;
+            }
+
+            const nisgc = document.getElementById('nisgc').value.trim();
+            const nama = document.getElementById('nama').value;
+            const bank = document.getElementById('bank').value;
+            const tanggal = document.getElementById('tanggal').value;
+            const fileInput = document.getElementById('bukti');
+
+            encodeImageFileAsURL(fileInput, function(base64Image) {
+                const payload = {
+                    nisgc: nisgc,
+                    nama: nama,
+                    nama_lengkap: nama,
+                    nama_pengirim: nama,
+                    bank: bank,
+                    bank_tujuan: bank,
+                    metode_transfer: bank,
+                    item_pembayaran: selectedItems.join(', '),
+                    nominal: totalNominal.toLocaleString('id-ID'),
+                    tanggal_bayar: tanggal,
+                    timestamp: tanggal + ' (' + new Date().toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit'}) + ')',
+                    bukti: base64Image,
+                    bukti_transfer: base64Image,
+                    status: "Pending"
+                };
+
+                // DIKIRIM KE NODE 'pembayaran' MENGGUNAKAN .push() AGAR ADMIN BISA KEBACA SECARA REALTIME
+                database.ref('pembayaran').push(payload, function(error) {
+                    if (error) {
+                        alert("Gagal mengirim konfirmasi! Silakan coba lagi.");
+                    } else {
+                        alert("Konfirmasi pembayaran sebesar Rp " + totalNominal.toLocaleString('id-ID') + " untuk " + nama + " berhasil dikirim!");
+                        document.getElementById('paymentForm').reset();
+                        document.getElementById('nisgcStatus').classList.add('hidden');
+                        isNisgcValid = false;
+                        updateCalculatedTotal();
+                        window.location.href = "index.html";
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

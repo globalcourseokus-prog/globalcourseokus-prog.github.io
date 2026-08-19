@@ -57,17 +57,6 @@
         .gallery-item {
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .gallery-item.hidden-item {
-            opacity: 0;
-            transform: scale(0.9) translateY(10px);
-            position: absolute;
-            pointer-events: none;
-            width: 0;
-            height: 0;
-            overflow: hidden;
-            margin: 0;
-            padding: 0;
-        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col antialiased">
@@ -92,7 +81,7 @@
     <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
-                <!-- Logo LKP Baru dengan Fallback -->
+                <!-- Logo LKP Global Course -->
                 <div class="flex items-center space-x-3 cursor-pointer" onclick="window.location.href='index.html'">
                     <img src="Logo Global.png" alt="Logo LKP Global Course" class="h-14 w-auto object-contain" onerror="this.src='https://placehold.co/200x200/0f172a/38bdf8?text=LKP'">
                     <div>
@@ -183,27 +172,21 @@
                     Galeri Foto <span class="bg-gradient-to-r from-amber-400 to-amber-200 bg-clip-text text-transparent">Global Course</span>
                 </h1>
                 <p class="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto font-light leading-relaxed">
-                    Melihat lebih dekat lingkungan belajar kami yang nyaman, laboratorium komputer ber-AC, keseruan interaksi kelas praktik, hingga upacara pelepasan alumni sukses.
+                    Dokumentasi kegiatan belajar, suasana kelas, fasilitas laboratorium komputer, dan penyerahan sertifikat peserta kursus.
                 </p>
             </div>
         </section>
 
         <!-- GALLERY PHOTOS GRID -->
         <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-            <!-- 
-              PETUNJUK PENGGANTIAN GAMBAR:
-              Anda dapat mengganti nilai atribut "src" di bawah (misal: "https://images.unsplash.com/...")
-              dengan nama file gambar Anda yang ada di folder lokal (misal: "ruang1.jpg" atau "kegiatan2.png").
-            -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8" id="gallery-grid">
                 
-                <!-- FOTO 1 - RUANG BELAJAR -->
-                <div class="gallery-item bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden group cursor-pointer" data-category="ruang" onclick="openLightbox(this)">
+                <!-- FOTO 1 -->
+                <div class="gallery-item bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden group cursor-pointer" onclick="openLightbox(this)">
                     <div class="relative overflow-hidden aspect-[4/3] bg-slate-100">
-                        <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80" 
-                             alt="Laboratorium Komputer Modern LKP Global Course" 
-                             class="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
-                             onerror="this.src='https://placehold.co/800x600/0f172a/38bdf8?text=Lab+Komputer'">
+                        <img src="Laboratorium Komputer Modern.jpeg" 
+                             alt="Laboratorium Komputer Modern" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-all duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end p-5">
                             <span class="text-white text-xs font-bold bg-primary-600 px-2.5 py-1 rounded-full"><i class="fa-solid fa-magnifying-glass-plus mr-1"></i> Perbesar</span>
                         </div>
@@ -211,53 +194,52 @@
                     <div class="p-5 space-y-1">
                         <span class="text-[10px] uppercase font-bold text-primary-600 tracking-wider">Ruang Belajar</span>
                         <h3 class="text-base font-bold text-slate-900 leading-tight">Laboratorium Komputer Modern</h3>
-                        <p class="text-xs text-slate-500 leading-relaxed">Dilengkapi dengan monitor LCD datar, meja belajar teratur, koneksi internet, dan pendingin udara (AC).</p>
+                        <p class="text-xs text-slate-500 leading-relaxed">Area layanan utama dan fasilitas komputer di LKP Global Course.</p>
                     </div>
                 </div>
 
-                <!-- FOTO 2 - KEGIATAN BELAJAR -->
-                <div class="gallery-item bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden group cursor-pointer" data-category="kegiatan" onclick="openLightbox(this)">
+                <!-- FOTO 2 -->
+                <div class="gallery-item bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden group cursor-pointer" onclick="openLightbox(this)">
                     <div class="relative overflow-hidden aspect-[4/3] bg-slate-100">
-                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80" 
-                             alt="Kelas Praktik Terbimbing Bersama Instruktur LKP" 
-                             class="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
-                             onerror="this.src='https://placehold.co/800x600/0f172a/38bdf8?text=Praktik+Bimbingan'">
+                        <img src="Sesi Diskusi.jpeg" 
+                             alt="Sesi Diskusi" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-all duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end p-5">
                             <span class="text-white text-xs font-bold bg-primary-600 px-2.5 py-1 rounded-full"><i class="fa-solid fa-magnifying-glass-plus mr-1"></i> Perbesar</span>
                         </div>
                     </div>
                     <div class="p-5 space-y-1">
                         <span class="text-[10px] uppercase font-bold text-primary-600 tracking-wider">Kegiatan Belajar</span>
-                        <h3 class="text-base font-bold text-slate-900 leading-tight">Praktik Aplikasi Perkantoran</h3>
-                        <p class="text-xs text-slate-500 leading-relaxed">Siswa dibimbing secara langsung satu-demi-satu oleh instruktur andal menggunakan kurikulum terstruktur.</p>
+                        <h3 class="text-base font-bold text-slate-900 leading-tight">Sesi Diskusi</h3>
+                        <p class="text-xs text-slate-500 leading-relaxed">Bimbingan langsung dari instruktur kepada siswa saat menyelesaikan modul praktik.</p>
                     </div>
                 </div>
 
-                <!-- FOTO 3 - ALUMNI WISUDA -->
-                <div class="gallery-item bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden group cursor-pointer" data-category="alumni" onclick="openLightbox(this)">
+                <!-- FOTO 3 -->
+                <div class="gallery-item bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden group cursor-pointer" onclick="openLightbox(this)">
                     <div class="relative overflow-hidden aspect-[4/3] bg-slate-100">
-                        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=800&q=80" 
-                             alt="Upacara Pelepasan & Penyerahan Sertifikat Kelulusan LKP" 
+                        <img src="Praktikum Desain Grafis.jpg" 
+                             alt="Praktikum Desain Grafis" 
                              class="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
-                             onerror="this.src='https://placehold.co/800x600/0f172a/38bdf8?text=Wisuda+Alumni'">
+                             onerror="this.onerror=null; this.src='Praktikum Desain Grafis.jpeg';">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end p-5">
                             <span class="text-white text-xs font-bold bg-primary-600 px-2.5 py-1 rounded-full"><i class="fa-solid fa-magnifying-glass-plus mr-1"></i> Perbesar</span>
                         </div>
                     </div>
                     <div class="p-5 space-y-1">
-                        <span class="text-[10px] uppercase font-bold text-primary-600 tracking-wider">Alumni & Wisuda</span>
-                        <h3 class="text-base font-bold text-slate-900 leading-tight">Penyerahan Sertifikat Kelulusan</h3>
-                        <p class="text-xs text-slate-500 leading-relaxed">Momen bahagia pelepasan siswa berprestasi yang siap terjun langsung bersaing di pasar kerja nasional.</p>
+                        <span class="text-[10px] uppercase font-bold text-primary-600 tracking-wider">Kegiatan Belajar</span>
+                        <h3 class="text-base font-bold text-slate-900 leading-tight">Praktikum Desain Grafis</h3>
+                        <p class="text-xs text-slate-500 leading-relaxed">Siswa berlatih mandiri dalam mengoperasikan perangkat lunak desain.</p>
                     </div>
                 </div>
 
-                <!-- FOTO 4 - RUANG BELAJAR 2 -->
-                <div class="gallery-item bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden group cursor-pointer" data-category="ruang" onclick="openLightbox(this)">
+                <!-- FOTO 4 -->
+                <div class="gallery-item bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden group cursor-pointer" onclick="openLightbox(this)">
                     <div class="relative overflow-hidden aspect-[4/3] bg-slate-100">
-                        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80" 
-                             alt="Ruang Teori & Diskusi Proyektor LKP Global Course" 
+                        <img src="Ruang Teori & Presentasi Proyektor.jpg" 
+                             alt="Ruang Teori & Presentasi Proyektor" 
                              class="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
-                             onerror="this.src='https://placehold.co/800x600/0f172a/38bdf8?text=Ruang+Teori'">
+                             onerror="this.onerror=null; this.src='Ruang Teori & Presentasi Proyektor.jpeg';">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end p-5">
                             <span class="text-white text-xs font-bold bg-primary-600 px-2.5 py-1 rounded-full"><i class="fa-solid fa-magnifying-glass-plus mr-1"></i> Perbesar</span>
                         </div>
@@ -265,43 +247,43 @@
                     <div class="p-5 space-y-1">
                         <span class="text-[10px] uppercase font-bold text-primary-600 tracking-wider">Ruang Belajar</span>
                         <h3 class="text-base font-bold text-slate-900 leading-tight">Ruang Teori & Presentasi Proyektor</h3>
-                        <p class="text-xs text-slate-500 leading-relaxed">Ruangan presentasi khusus berbasis LCD proyektor untuk penyampaian konsep teori materi komputer.</p>
+                        <p class="text-xs text-slate-500 leading-relaxed">Penyampaian materi teori dasar menggunakan proyektor visual.</p>
                     </div>
                 </div>
 
-                <!-- FOTO 5 - KEGIATAN BELAJAR 2 -->
-                <div class="gallery-item bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden group cursor-pointer" data-category="kegiatan" onclick="openLightbox(this)">
+                <!-- FOTO 5 -->
+                <div class="gallery-item bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden group cursor-pointer" onclick="openLightbox(this)">
                     <div class="relative overflow-hidden aspect-[4/3] bg-slate-100">
-                        <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=800&q=80" 
-                             alt="Kelas Praktik Desain Grafis Photoshop & Desain Kreatif" 
+                        <img src="Praktik Aplikasi Perkantoran.jpg" 
+                             alt="Praktik Aplikasi Perkantoran" 
                              class="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
-                             onerror="this.src='https://placehold.co/800x600/0f172a/38bdf8?text=Kelas+Desain'">
+                             onerror="this.onerror=null; this.src='Praktik Aplikasi Perkantoran.jpeg';">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end p-5">
                             <span class="text-white text-xs font-bold bg-primary-600 px-2.5 py-1 rounded-full"><i class="fa-solid fa-magnifying-glass-plus mr-1"></i> Perbesar</span>
                         </div>
                     </div>
                     <div class="p-5 space-y-1">
                         <span class="text-[10px] uppercase font-bold text-primary-600 tracking-wider">Kegiatan Belajar</span>
-                        <h3 class="text-base font-bold text-slate-900 leading-tight">Praktikum Desain Grafis Kreatif</h3>
-                        <p class="text-xs text-slate-500 leading-relaxed">Suasana intensif praktik mengolah dan memanipulasi gambar promosi memakai perangkat Photoshop.</p>
+                        <h3 class="text-base font-bold text-slate-900 leading-tight">Praktik Aplikasi Perkantoran</h3>
+                        <p class="text-xs text-slate-500 leading-relaxed">Suasana pembelajaran komputasi perkantoran di ruang laboratorium.</p>
                     </div>
                 </div>
 
-                <!-- FOTO 6 - ALUMNI WISUDA 2 -->
-                <div class="gallery-item bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden group cursor-pointer" data-category="alumni" onclick="openLightbox(this)">
+                <!-- FOTO 6 -->
+                <div class="gallery-item bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden group cursor-pointer" onclick="openLightbox(this)">
                     <div class="relative overflow-hidden aspect-[4/3] bg-slate-100">
-                        <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=800&q=80" 
-                             alt="Sesi Foto Bersama Angkatan Alumni LKP Global Course" 
+                        <img src="Penyerahan Sertifikat Kelulusan.jpg" 
+                             alt="Penyerahan Sertifikat Kelulusan" 
                              class="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
-                             onerror="this.src='https://placehold.co/800x600/0f172a/38bdf8?text=Foto+Bersama'">
+                             onerror="this.onerror=null; this.src='Penyerahan Sertifikat Kelulusan.jpeg';">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end p-5">
                             <span class="text-white text-xs font-bold bg-primary-600 px-2.5 py-1 rounded-full"><i class="fa-solid fa-magnifying-glass-plus mr-1"></i> Perbesar</span>
                         </div>
                     </div>
                     <div class="p-5 space-y-1">
                         <span class="text-[10px] uppercase font-bold text-primary-600 tracking-wider">Alumni & Wisuda</span>
-                        <h3 class="text-base font-bold text-slate-900 leading-tight">Sesi Diskusi & Kelompok Alumni</h3>
-                        <p class="text-xs text-slate-500 leading-relaxed">Membangun kolaborasi erat, relasi jejaring kerja, dan berbagi peluang kesempatan kerja pasca-lulus bimbingan.</p>
+                        <h3 class="text-base font-bold text-slate-900 leading-tight">Penyerahan Sertifikat Kelulusan</h3>
+                        <p class="text-xs text-slate-500 leading-relaxed">Foto bersama penyerahan sertifikat setelah peserta menyelesaikan masa pelatihan.</p>
                     </div>
                 </div>
 
@@ -312,22 +294,19 @@
 
     <!-- LIGHTBOX / FULLSCREEN MODAL VIEWER -->
     <div id="lightbox-modal" class="hidden fixed inset-0 z-50 overflow-hidden bg-slate-950/95 backdrop-blur-sm flex flex-col items-center justify-center p-4 sm:p-6 transition-all duration-300">
-        <!-- Close Button -->
         <button onclick="closeLightbox()" class="absolute top-4 right-4 sm:top-6 sm:right-6 bg-slate-800/80 hover:bg-slate-700 hover:scale-105 text-white p-3 rounded-full transition-all focus:outline-none focus:ring-2 focus:ring-primary-500 z-50">
             <i class="fa-solid fa-xmark text-xl sm:text-2xl"></i>
         </button>
         
-        <!-- Image Container -->
         <div class="max-w-4xl w-full flex flex-col items-center justify-center space-y-4">
             <div class="relative max-h-[70vh] flex items-center justify-center">
                 <img id="lightbox-img" src="" alt="Viewed Image" class="max-w-full max-h-[70vh] rounded-xl shadow-2xl object-contain border border-slate-800 transition-all duration-300">
             </div>
             
-            <!-- Caption Details -->
             <div class="text-center space-y-1 max-w-2xl px-4">
                 <span id="lightbox-badge" class="bg-primary-600 text-white text-[10px] uppercase tracking-wider font-extrabold px-3 py-1 rounded-full">KATEGORI</span>
                 <h3 id="lightbox-title" class="text-lg sm:text-2xl font-black text-white mt-2">Judul Foto</h3>
-                <p id="lightbox-desc" class="text-xs sm:text-sm text-slate-400 font-light leading-relaxed">Rincian deskripsi mengenai foto kegiatan atau sarana lab komputer.</p>
+                <p id="lightbox-desc" class="text-xs sm:text-sm text-slate-400 font-light leading-relaxed">Penjelasan singkat mengenai foto.</p>
             </div>
         </div>
     </div>
@@ -336,7 +315,6 @@
     <footer class="bg-slate-900 text-slate-400 pt-16 pb-8 border-t border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
             
-            <!-- About dengan Logo LKP -->
             <div class="space-y-4">
                 <div class="flex items-center space-x-3 text-white">
                     <img src="Logo Global.png" alt="Logo LKP Global Course" class="h-12 w-auto object-contain" onerror="this.src='https://placehold.co/200x200/0f172a/38bdf8?text=LKP'">
@@ -347,7 +325,6 @@
                 </p>
             </div>
 
-            <!-- Program list footer -->
             <div>
                 <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-4">Program Unggulan</h4>
                 <ul class="space-y-2 text-xs sm:text-sm">
@@ -356,14 +333,12 @@
                 </ul>
             </div>
 
-            <!-- Copyright / Socials -->
             <div class="space-y-4">
                 <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-4">Hubungi Kami</h4>
-                <p class="text-xs leading-relaxed">Muara Dua, Kab. Ogan Komering Ulu Selatan, Sumatera Selatan.</p>
+                <p class="text-xs leading-relaxed">Desa, Simpang Agung Kec. Simpang Kab. OKU Selatan, Sumatera Selatan.</p>
                 <div class="flex space-x-4">
                     <a href="https://wa.me/6282281865701" target="_blank" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-primary-600 hover:text-white flex items-center justify-center transition-all text-slate-300"><i class="fa-brands fa-whatsapp"></i></a>
-                    <a href="#" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-primary-600 hover:text-white flex items-center justify-center transition-all text-slate-300"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-primary-600 hover:text-white flex items-center justify-center transition-all text-slate-300"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-primary-600 hover:text-white flex items-center justify-center transition-all text-slate-300"><i class="fa-brands fa-facebook"></i></a>
                 </div>
             </div>
 
@@ -372,8 +347,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-slate-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
             <p>&copy; 2026 LKP Global Course OKU Selatan. Hak Cipta Dilindungi Undang-Undang.</p>
             <div class="flex space-x-4">
-                <a href="#" class="hover:underline">Syarat & Ketentuan</a>
-                <a href="#" class="hover:underline">Kebijakan Privasi</a>
+
             </div>
         </div>
     </footer>
@@ -403,30 +377,26 @@
             const lightboxTitle = document.getElementById('lightbox-title');
             const lightboxDesc = document.getElementById('lightbox-desc');
 
-            // Ambil data detail dari kartu gambar yang di-klik
             const imgSrc = element.querySelector('img').src;
             const categoryText = element.querySelector('span').innerText;
             const titleText = element.querySelector('h3').innerText;
             const descText = element.querySelector('p').innerText;
 
-            // Injeksi data ke dalam modal
             lightboxImg.src = imgSrc;
             lightboxBadge.innerText = categoryText;
             lightboxTitle.innerText = titleText;
             lightboxDesc.innerText = descText;
 
-            // Tampilkan modal dengan animasi fade-in yang menawan
             modal.classList.remove('hidden');
-            document.body.classList.add('overflow-hidden'); // Blokir scrolling layar utama
+            document.body.classList.add('overflow-hidden');
         }
 
         function closeLightbox() {
             const modal = document.getElementById('lightbox-modal');
             modal.classList.add('hidden');
-            document.body.classList.remove('overflow-hidden'); // Lepas blokir scrolling
+            document.body.classList.remove('overflow-hidden');
         }
 
-        // Tutup modal jika area luar gambar di-klik
         document.getElementById('lightbox-modal').addEventListener('click', function(e) {
             if (e.target.id === 'lightbox-modal') {
                 closeLightbox();
