@@ -159,7 +159,7 @@
             <div class="text-center mb-6">
                 <img src="Logo Global.png" alt="Logo Global Course" class="h-16 w-auto mx-auto mb-3" onerror="this.src='https://placehold.co/200x200/0f172a/38bdf8?text=Global+Course'">
                 <h1 class="text-3xl font-bold text-white">FORMULIR <span class="text-gradient">PEMBAYARAN</span></h1>
-                <p class="text-slate-400 text-sm mt-1">Masukkan NISGC Anda untuk memverifikasi data pendaftaran</p>
+                <p class="text-slate-400 text-sm mt-1">Masukkan NISGLC Anda untuk memverifikasi data pendaftaran</p>
             </div>
 
             <!-- REKENING & QR CODE INFO BOX -->
@@ -177,22 +177,22 @@
             </div>
 
             <form id="paymentForm">
-                <!-- INPUT NISGC + AUTO CHECK -->
+                <!-- INPUT NISGLC + AUTO CHECK -->
                 <div class="mb-4">
-                    <label for="nisgc" class="block text-sm font-semibold text-slate-200 mb-2">NISGC Siswa (Kode Unik)</label>
+                    <label for="nisglc" class="block text-sm font-semibold text-slate-200 mb-2">NISGLC Siswa (Kode Unik)</label>
                     <div class="flex gap-2">
-                        <input type="text" id="nisgc" class="w-full px-4 py-3 rounded-lg font-mono tracking-widest text-sky-400 font-bold" placeholder="Contoh: 001062626" required>
-                        <button type="button" id="btnCekNisgc" onclick="verifikasiNISGC()" class="bg-sky-600 hover:bg-sky-500 text-white font-bold px-4 rounded-lg text-sm flex items-center gap-1 transition-all whitespace-nowrap">
+                        <input type="text" id="nisglc" class="w-full px-4 py-3 rounded-lg font-mono tracking-widest text-sky-400 font-bold" placeholder="Contoh: 001062626" required>
+                        <button type="button" id="btnCekNisglc" onclick="verifikasiNISGLC()" class="bg-sky-600 hover:bg-sky-500 text-white font-bold px-4 rounded-lg text-sm flex items-center gap-1 transition-all whitespace-nowrap">
                             <i class="fa-solid fa-magnifying-glass"></i> Cek
                         </button>
                     </div>
-                    <div id="nisgcStatus" class="text-xs mt-1.5 font-medium hidden"></div>
+                    <div id="nisglcStatus" class="text-xs mt-1.5 font-medium hidden"></div>
                 </div>
 
                 <!-- NAMA LENGKAP (AUTO-FILLED) -->
                 <div class="mb-4">
                     <label for="nama" class="block text-sm font-semibold text-slate-200 mb-2">Nama Lengkap Siswa</label>
-                    <input type="text" id="nama" class="w-full px-4 py-3 rounded-lg bg-slate-800/80 text-slate-400 cursor-not-allowed" placeholder="Nama otomatis terisi setelah NISGC diverifikasi" readonly required>
+                    <input type="text" id="nama" class="w-full px-4 py-3 rounded-lg bg-slate-800/80 text-slate-400 cursor-not-allowed" placeholder="Nama otomatis terisi setelah NISGLC diverifikasi" readonly required>
                 </div>
 
                 <!-- ITEM PEMBAYARAN CHECKBOXES -->
@@ -297,31 +297,31 @@
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
-        let isNisgcValid = false;
+        let isNisglcValid = false;
 
-        // FUNGSI VERIFIKASI NISGC KE FIREBASE
-        function verifikasiNISGC() {
-            const nisgcInput = document.getElementById('nisgc').value.trim();
-            const statusEl = document.getElementById('nisgcStatus');
+        // FUNGSI VERIFIKASI NISGLC KE FIREBASE (DENGAN FALLBACK KE KUNCI LAMA NISGC)
+        function verifikasiNISGLC() {
+            const nisglcInput = document.getElementById('nisglc').value.trim();
+            const statusEl = document.getElementById('nisglcStatus');
             const namaInput = document.getElementById('nama');
 
             statusEl.classList.remove('hidden');
 
-            if (!nisgcInput) {
+            if (!nisglcInput) {
                 statusEl.className = "text-xs mt-1.5 font-semibold text-amber-400";
-                statusEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-1"></i> Silakan masukkan nomor NISGC terlebih dahulu.';
+                statusEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-1"></i> Silakan masukkan nomor NISGLC terlebih dahulu.';
                 namaInput.value = "";
-                isNisgcValid = false;
+                isNisglcValid = false;
                 return;
             }
 
             statusEl.className = "text-xs mt-1.5 font-semibold text-sky-400 animate-pulse";
             statusEl.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> Memeriksa data siswa di database...';
 
-            // Query ke node 'pendaftaran_siswa' mencari child 'nisgc'
+            // Query utama ke node 'pendaftaran_siswa' mencari child 'nisglc'
             database.ref('pendaftaran_siswa')
-                .orderByChild('nisgc')
-                .equalTo(nisgcInput)
+                .orderByChild('nisglc')
+                .equalTo(nisglcInput)
                 .once('value', function(snapshot) {
                     if (snapshot.exists()) {
                         let foundName = "";
@@ -331,24 +331,47 @@
                         });
 
                         namaInput.value = foundName;
-                        isNisgcValid = true;
+                        isNisglcValid = true;
                         statusEl.className = "text-xs mt-1.5 font-semibold text-emerald-400";
                         statusEl.innerHTML = '<i class="fa-solid fa-circle-check mr-1"></i> Data ditemukan! Nama Siswa: <strong>' + foundName + '</strong>';
                     } else {
-                        namaInput.value = "";
-                        isNisgcValid = false;
-                        statusEl.className = "text-xs mt-1.5 font-semibold text-rose-400";
-                        statusEl.innerHTML = '<i class="fa-solid fa-circle-xmark mr-1"></i> Data NISGC tidak ditemukan! Periksa kembali nomor NISGC Anda.';
+                        // Fallback ke child lama 'nisgc' apabila data terdaftar sebelum perubahan
+                        database.ref('pendaftaran_siswa')
+                            .orderByChild('nisgc')
+                            .equalTo(nisglcInput)
+                            .once('value', function(snapshotOld) {
+                                if (snapshotOld.exists()) {
+                                    let foundName = "";
+                                    snapshotOld.forEach(function(childSnapshot) {
+                                        const data = childSnapshot.val();
+                                        foundName = data.nama || data.nama_lengkap;
+                                    });
+
+                                    namaInput.value = foundName;
+                                    isNisglcValid = true;
+                                    statusEl.className = "text-xs mt-1.5 font-semibold text-emerald-400";
+                                    statusEl.innerHTML = '<i class="fa-solid fa-circle-check mr-1"></i> Data ditemukan! Nama Siswa: <strong>' + foundName + '</strong>';
+                                } else {
+                                    namaInput.value = "";
+                                    isNisglcValid = false;
+                                    statusEl.className = "text-xs mt-1.5 font-semibold text-rose-400";
+                                    statusEl.innerHTML = '<i class="fa-solid fa-circle-xmark mr-1"></i> Data NISGLC tidak ditemukan! Periksa kembali nomor NISGLC Anda.';
+                                }
+                            }, function(error) {
+                                statusEl.className = "text-xs mt-1.5 font-semibold text-rose-400";
+                                statusEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-1"></i> Gagal terhubung ke database server.';
+                                isNisglcValid = false;
+                            });
                     }
                 }, function(error) {
                     statusEl.className = "text-xs mt-1.5 font-semibold text-rose-400";
                     statusEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-1"></i> Gagal terhubung ke database server.';
-                    isNisgcValid = false;
+                    isNisglcValid = false;
                 });
         }
 
-        // Jalankan pengecekan saat siswa menekan Enter atau berpindah dari input NISGC
-        document.getElementById('nisgc').addEventListener('change', verifikasiNISGC);
+        // Jalankan pengecekan saat siswa menekan Enter atau berpindah dari input NISGLC
+        document.getElementById('nisglc').addEventListener('change', verifikasiNISGLC);
 
         // HITUNG NOMINAL OTOMATIS
         const checkboxes = document.querySelectorAll('.item-bayar');
@@ -383,12 +406,12 @@
             reader.readAsDataURL(file);
         }
 
-        // SUBMIT FORM KE NODE 'pembayaran' AGAR LANGSUNG DIBACA ADMIN
+        // SUBMIT FORM KE FIREBASE AGAR LANGSUNG DIBACA ADMIN REALTIME
         document.getElementById('paymentForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
-            if (!isNisgcValid) {
-                alert("Nomor NISGC belum terverifikasi atau tidak ditemukan. Klik tombol 'Cek' terlebih dahulu!");
+            if (!isNisglcValid) {
+                alert("Nomor NISGLC belum terverifikasi atau tidak ditemukan. Klik tombol 'Cek' terlebih dahulu!");
                 return;
             }
 
@@ -397,7 +420,7 @@
                 return;
             }
 
-            const nisgc = document.getElementById('nisgc').value.trim();
+            const nisglc = document.getElementById('nisglc').value.trim();
             const nama = document.getElementById('nama').value;
             const bank = document.getElementById('bank').value;
             const tanggal = document.getElementById('tanggal').value;
@@ -405,7 +428,8 @@
 
             encodeImageFileAsURL(fileInput, function(base64Image) {
                 const payload = {
-                    nisgc: nisgc,
+                    nisglc: nisglc,
+                    nisgc: nisglc, // Fallback compatibility
                     nama: nama,
                     nama_lengkap: nama,
                     nama_pengirim: nama,
@@ -413,23 +437,24 @@
                     bank_tujuan: bank,
                     metode_transfer: bank,
                     item_pembayaran: selectedItems.join(', '),
-                    nominal: totalNominal.toLocaleString('id-ID'),
+                    nominal: totalNominal,
                     tanggal_bayar: tanggal,
                     timestamp: tanggal + ' (' + new Date().toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit'}) + ')',
                     bukti: base64Image,
                     bukti_transfer: base64Image,
+                    status_pembayaran: "MENUNGGU",
                     status: "Pending"
                 };
 
-                // DIKIRIM KE NODE 'pembayaran' MENGGUNAKAN .push() AGAR ADMIN BISA KEBACA SECARA REALTIME
-                database.ref('pembayaran').push(payload, function(error) {
+                // Kirim ke node 'pembayaran_pendaftaran' agar terbaca sempurna pada Panel Admin
+                database.ref('pembayaran_pendaftaran').push(payload, function(error) {
                     if (error) {
                         alert("Gagal mengirim konfirmasi! Silakan coba lagi.");
                     } else {
                         alert("Konfirmasi pembayaran sebesar Rp " + totalNominal.toLocaleString('id-ID') + " untuk " + nama + " berhasil dikirim!");
                         document.getElementById('paymentForm').reset();
-                        document.getElementById('nisgcStatus').classList.add('hidden');
-                        isNisgcValid = false;
+                        document.getElementById('nisglcStatus').classList.add('hidden');
+                        isNisglcValid = false;
                         updateCalculatedTotal();
                         window.location.href = "index.html";
                     }

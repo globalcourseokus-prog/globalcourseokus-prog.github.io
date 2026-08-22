@@ -36,171 +36,282 @@
             border-color: rgba(56, 189, 248, 0.4) !important;
             font-weight: 700 !important;
         }
+
+        /* Proteksi Seleksi Teks */
+        body {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
     </style>
 </head>
-<body class="bg-tech min-h-screen font-sans text-slate-100 p-4 sm:p-6 lg:p-8">
+<body class="bg-tech min-h-screen font-sans text-slate-100 flex flex-col justify-center">
 
-    <div class="max-w-7xl mx-auto space-y-6">
-        
-        <!-- HEADER ADMIN -->
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-slate-900/80 p-6 rounded-2xl border border-slate-800 shadow-xl">
-            <div class="flex items-center space-x-3">
-                <img src="Logo Global.png" alt="Logo LKP Global Course" class="h-12 w-auto" onerror="this.src='https://placehold.co/100x100/0f172a/38bdf8?text=LKP'">
+    <!-- LAYAR LOGIN ADMIN -->
+    <div id="loginScreen" class="w-full max-w-md mx-auto p-4 sm:p-6">
+        <div class="card-tech p-8 rounded-2xl shadow-2xl border border-sky-500/30 text-center space-y-6">
+            <div class="flex justify-center mb-2">
+                <img src="Logo Global.png" alt="Logo LKP Global Course" class="h-16 w-auto" onerror="this.src='https://placehold.co/100x100/0f172a/38bdf8?text=LKP'">
+            </div>
+            <div>
+                <h2 class="text-xl font-extrabold text-white tracking-wide">LOGIN ADMIN</h2>
+                <p class="text-xs text-sky-400 mt-1">LKP Global Course Management Panel</p>
+            </div>
+
+            <form onsubmit="handleLogin(event)" class="space-y-4 text-left">
                 <div>
-                    <h1 class="text-xl sm:text-2xl font-extrabold text-white tracking-wide">PANEL ADMIN LKP GLOBAL COURSE</h1>
-                    <p class="text-xs text-sky-400 font-medium">Sistem Kelola Pendaftaran, Uji Kompetensi & Pembayaran</p>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Username</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                            <i class="fa-solid fa-user text-xs"></i>
+                        </span>
+                        <input type="text" id="loginUser" required class="w-full pl-9 pr-4 py-2.5 bg-slate-900/90 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-sky-500 transition-all" placeholder="Masukkan Username">
+                    </div>
                 </div>
-            </div>
-            <a href="index.html" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded-xl text-xs font-semibold border border-slate-700 transition-all flex items-center gap-2">
-                <i class="fa-solid fa-arrow-right-from-bracket"></i> Kembali ke Website
-            </a>
-        </div>
 
-        <!-- TOP CARDS CONTROL & EXPORT -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Password</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                            <i class="fa-solid fa-key text-xs"></i>
+                        </span>
+                        <input type="password" id="loginPass" required class="w-full pl-9 pr-4 py-2.5 bg-slate-900/90 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-sky-500 transition-all" placeholder="Masukkan Password">
+                    </div>
+                </div>
+
+                <div id="loginError" class="hidden text-rose-400 text-xs font-medium text-center bg-rose-500/10 p-2 rounded-lg border border-rose-500/20">
+                    <i class="fa-solid fa-triangle-exclamation mr-1"></i> Username atau Password salah!
+                </div>
+
+                <button type="submit" class="w-full bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs py-3 rounded-xl transition-all shadow-lg shadow-sky-600/30 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-right-to-bracket"></i> Masuk Panel Admin
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- PANEL ADMIN UTAMA (HIDDEN BY DEFAULT) -->
+    <div id="adminContent" class="hidden min-h-screen p-4 sm:p-6 lg:p-8">
+        <div class="max-w-7xl mx-auto space-y-6">
             
-            <!-- KONTROL AKSES (PLAY / STOP) -->
-            <div class="card-tech rounded-2xl p-6 border-sky-500/30">
-                <h2 class="text-xs font-bold text-sky-400 tracking-wider uppercase mb-4 flex items-center gap-2">
-                    <i class="fa-solid fa-sliders"></i> KONTROL AKSES SISTEM (PLAY / STOP)
-                </h2>
-                <div class="space-y-3">
-                    <!-- STATUS REGISTRASI -->
-                    <div class="flex items-center justify-between bg-slate-900/90 p-3.5 rounded-xl border border-slate-800">
-                        <div>
-                            <div class="text-[11px] font-bold text-slate-400 uppercase">STATUS PENDAFTARAN</div>
-                            <div id="statusPendaftaranText" class="text-xs font-bold text-rose-500">DITUTUP (STOP)</div>
-                        </div>
-                        <button id="btnTogglePendaftaran" onclick="toggleSystemAccess('pendaftaran')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-2.5 rounded-lg flex items-center gap-2 transition-all shadow-md">
-                            <i class="fa-solid fa-play"></i> BUKA REGISTRASI
-                        </button>
+            <!-- HEADER ADMIN -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-slate-900/80 p-6 rounded-2xl border border-slate-800 shadow-xl">
+                <div class="flex items-center space-x-3">
+                    <img src="Logo Global.png" alt="Logo LKP Global Course" class="h-12 w-auto" onerror="this.src='https://placehold.co/100x100/0f172a/38bdf8?text=LKP'">
+                    <div>
+                        <h1 class="text-xl sm:text-2xl font-extrabold text-white tracking-wide">PANEL ADMIN LKP GLOBAL COURSE</h1>
+                        <p class="text-xs text-sky-400 font-medium">Sistem Kelola Pendaftaran, Uji Kompetensi & Pembayaran</p>
                     </div>
-
-                    <!-- STATUS UJIAN -->
-                    <div class="flex items-center justify-between bg-slate-900/90 p-3.5 rounded-xl border border-slate-800">
-                        <div>
-                            <div class="text-[11px] font-bold text-slate-400 uppercase">STATUS UJI KOMPETENSI</div>
-                            <div id="statusUjianText" class="text-xs font-bold text-rose-500">DITUTUP (STOP)</div>
-                        </div>
-                        <button id="btnToggleUjian" onclick="toggleSystemAccess('ujian')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-2.5 rounded-lg flex items-center gap-2 transition-all shadow-md">
-                            <i class="fa-solid fa-play"></i> BUKA UJIAN
-                        </button>
-                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="handleLogout()" class="bg-rose-600/20 hover:bg-rose-600 text-rose-300 hover:text-white px-4 py-2 rounded-xl text-xs font-semibold border border-rose-500/30 transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-power-off"></i> Logout
+                    </button>
+                    <a href="index.html" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded-xl text-xs font-semibold border border-slate-700 transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i> Kembali ke Website
+                    </a>
                 </div>
             </div>
 
-            <!-- EXPORT DATA TO EXCEL -->
-            <div class="card-tech rounded-2xl p-6 border-emerald-500/30">
-                <h2 class="text-xs font-bold text-emerald-400 tracking-wider uppercase mb-4 flex items-center gap-2">
-                    <i class="fa-file-excel text-emerald-400"></i> EXPORT DATA KE EXCEL (.XLSX)
-                </h2>
-                <div class="flex flex-wrap gap-3">
-                    <button onclick="exportDataToExcel('pendaftaran')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs px-5 py-3 rounded-xl flex items-center gap-2 transition-all shadow-lg shadow-emerald-900/30">
-                        <i class="fa-solid fa-file-export"></i> Export Pendaftaran
-                    </button>
-                    <button onclick="exportDataToExcel('ujian')" class="bg-sky-600 hover:bg-sky-500 text-white font-semibold text-xs px-5 py-3 rounded-xl flex items-center gap-2 transition-all shadow-lg shadow-sky-900/30">
-                        <i class="fa-solid fa-file-export"></i> Export Hasil Ujian
-                    </button>
-                    <button onclick="exportDataToExcel('pembayaran')" class="bg-amber-600 hover:bg-amber-500 text-white font-semibold text-xs px-5 py-3 rounded-xl flex items-center gap-2 transition-all shadow-lg shadow-amber-900/30">
-                        <i class="fa-solid fa-file-invoice-dollar"></i> Export Pembayaran
-                    </button>
+            <!-- TOP CARDS CONTROL & EXPORT -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                
+                <!-- KONTROL AKSES (PLAY / STOP) -->
+                <div class="card-tech rounded-2xl p-6 border-sky-500/30">
+                    <h2 class="text-xs font-bold text-sky-400 tracking-wider uppercase mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-sliders"></i> KONTROL AKSES SISTEM (PLAY / STOP)
+                    </h2>
+                    <div class="space-y-3">
+                        <!-- STATUS REGISTRASI -->
+                        <div class="flex items-center justify-between bg-slate-900/90 p-3.5 rounded-xl border border-slate-800">
+                            <div>
+                                <div class="text-[11px] font-bold text-slate-400 uppercase">STATUS PENDAFTARAN</div>
+                                <div id="statusPendaftaranText" class="text-xs font-bold text-rose-500">DITUTUP (STOP)</div>
+                            </div>
+                            <button id="btnTogglePendaftaran" onclick="toggleSystemAccess('pendaftaran')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-2.5 rounded-lg flex items-center gap-2 transition-all shadow-md">
+                                <i class="fa-solid fa-play"></i> BUKA REGISTRASI
+                            </button>
+                        </div>
+
+                        <!-- STATUS UJIAN -->
+                        <div class="flex items-center justify-between bg-slate-900/90 p-3.5 rounded-xl border border-slate-800">
+                            <div>
+                                <div class="text-[11px] font-bold text-slate-400 uppercase">STATUS UJI KOMPETENSI</div>
+                                <div id="statusUjianText" class="text-xs font-bold text-rose-500">DITUTUP (STOP)</div>
+                            </div>
+                            <button id="btnToggleUjian" onclick="toggleSystemAccess('ujian')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-2.5 rounded-lg flex items-center gap-2 transition-all shadow-md">
+                                <i class="fa-solid fa-play"></i> BUKA UJIAN
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- EXPORT DATA TO EXCEL -->
+                <div class="card-tech rounded-2xl p-6 border-emerald-500/30">
+                    <h2 class="text-xs font-bold text-emerald-400 tracking-wider uppercase mb-4 flex items-center gap-2">
+                        <i class="fa-file-excel text-emerald-400"></i> EXPORT DATA KE EXCEL (.XLSX)
+                    </h2>
+                    <div class="flex flex-wrap gap-3">
+                        <button onclick="exportDataToExcel('pendaftaran')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs px-4 py-3 rounded-xl flex items-center gap-2 transition-all shadow-lg shadow-emerald-900/30">
+                            <i class="fa-solid fa-file-export"></i> Export Pendaftaran
+                        </button>
+                        <button onclick="exportDataToExcel('ujian')" class="bg-sky-600 hover:bg-sky-500 text-white font-semibold text-xs px-4 py-3 rounded-xl flex items-center gap-2 transition-all shadow-lg shadow-sky-900/30">
+                            <i class="fa-solid fa-file-export"></i> Export Hasil Ujian
+                        </button>
+                        <button onclick="exportDataToExcel('pembayaran')" class="bg-amber-600 hover:bg-amber-500 text-white font-semibold text-xs px-4 py-3 rounded-xl flex items-center gap-2 transition-all shadow-lg shadow-amber-900/30">
+                            <i class="fa-solid fa-file-invoice-dollar"></i> Export Pembayaran
+                        </button>
+                        <button onclick="exportAllDataToExcel()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs px-4 py-3 rounded-xl flex items-center gap-2 transition-all shadow-lg shadow-indigo-900/30">
+                            <i class="fa-solid fa-layer-group"></i> Export Semua Laporan (3 Sheet)
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- NAVIGATION TABS -->
+            <div class="flex items-center gap-2 border-b border-slate-800 pb-2 overflow-x-auto">
+                <button id="tabBtnUjian" onclick="switchTab('ujian')" class="tab-btn-active px-5 py-2.5 rounded-xl font-semibold text-xs text-slate-400 hover:text-white border border-transparent transition-all flex items-center gap-2 whitespace-nowrap">
+                    <i class="fa-solid fa-graduation-cap"></i> Hasil Ujian
+                </button>
+                <button id="tabBtnRegistrasi" onclick="switchTab('registrasi')" class="px-5 py-2.5 rounded-xl font-semibold text-xs text-slate-400 hover:text-white border border-transparent transition-all flex items-center gap-2 whitespace-nowrap">
+                    <i class="fa-solid fa-user-plus"></i> Data Registrasi Siswa
+                </button>
+                <button id="tabBtnPembayaran" onclick="switchTab('pembayaran')" class="px-5 py-2.5 rounded-xl font-semibold text-xs text-slate-400 hover:text-white border border-transparent transition-all flex items-center gap-2 whitespace-nowrap">
+                    <i class="fa-solid fa-wallet"></i> Data Pembayaran
+                </button>
+            </div>
+
+            <!-- CONTAINER TAB 1: HASIL UJIAN -->
+            <div id="tabContentUjian" class="card-tech rounded-2xl p-6 shadow-2xl">
+                <h3 class="text-base font-bold text-sky-400 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-graduation-cap"></i> Data Hasil Uji Kompetensi Siswa
+                </h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="text-[11px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-800">
+                                <th class="py-3 px-4">WAKTU UJIAN</th>
+                                <th class="py-3 px-4">NISGLC</th>
+                                <th class="py-3 px-4">NAMA SISWA</th>
+                                <th class="py-3 px-4">PAKET KELAS</th>
+                                <th class="py-3 px-4">SKOR & RINCIAN</th>
+                                <th class="py-3 px-4">STATUS</th>
+                                <th class="py-3 px-4 text-center">AKSI</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ujianTableBody" class="divide-y divide-slate-800 text-xs">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- CONTAINER TAB 2: DATA REGISTRASI SISWA -->
+            <div id="tabContentRegistrasi" class="card-tech rounded-2xl p-6 shadow-2xl hidden">
+                <h3 class="text-base font-bold text-emerald-400 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-users"></i> Data Pendaftaran / Registrasi Siswa
+                </h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="text-[11px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-800">
+                                <th class="py-3 px-4 text-center">FOTO</th>
+                                <th class="py-3 px-4">TANGGAL</th>
+                                <th class="py-3 px-4">NISGLC</th>
+                                <th class="py-3 px-4">NISN</th>
+                                <th class="py-3 px-4">NAMA LENGKAP</th>
+                                <th class="py-3 px-4">NO. WA / HP</th>
+                                <th class="py-3 px-4">TEMPAT, TGL LAHIR</th>
+                                <th class="py-3 px-4">PROGRAM / KELAS</th>
+                                <th class="py-3 px-4">ALAMAT</th>
+                                <th class="py-3 px-4 text-center">AKSI</th>
+                            </tr>
+                        </thead>
+                        <tbody id="registrasiTableBody" class="divide-y divide-slate-800 text-xs">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- CONTAINER TAB 3: DATA PEMBAYARAN -->
+            <div id="tabContentPembayaran" class="card-tech rounded-2xl p-6 shadow-2xl hidden">
+                <h3 class="text-base font-bold text-amber-400 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-folder-open"></i> Data Konfirmasi Pembayaran
+                </h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="text-[11px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-800">
+                                <th class="py-3 px-4">WAKTU</th>
+                                <th class="py-3 px-4">NISGLC</th>
+                                <th class="py-3 px-4">NAMA PENGIRIM</th>
+                                <th class="py-3 px-4 text-amber-400">JENIS PEMBAYARAN</th>
+                                <th class="py-3 px-4">BANK TUJUAN</th>
+                                <th class="py-3 px-4">NOMINAL</th>
+                                <th class="py-3 px-4">BUKTI TRANSFER</th>
+                                <th class="py-3 px-4 text-center">AKSI & KONFIRMASI</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pembayaranTableBody" class="divide-y divide-slate-800 text-xs">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
         </div>
+    </div>
 
-        <!-- NAVIGATION TABS -->
-        <div class="flex items-center gap-2 border-b border-slate-800 pb-2 overflow-x-auto">
-            <button id="tabBtnUjian" onclick="switchTab('ujian')" class="tab-btn-active px-5 py-2.5 rounded-xl font-semibold text-xs text-slate-400 hover:text-white border border-transparent transition-all flex items-center gap-2 whitespace-nowrap">
-                <i class="fa-solid fa-graduation-cap"></i> Hasil Ujian
+    <!-- MODAL EDIT DATA SISWA -->
+    <div id="editSiswaModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-700 p-6 rounded-2xl max-w-lg w-full relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeEditSiswaModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-lg"></i>
             </button>
-            <button id="tabBtnRegistrasi" onclick="switchTab('registrasi')" class="px-5 py-2.5 rounded-xl font-semibold text-xs text-slate-400 hover:text-white border border-transparent transition-all flex items-center gap-2 whitespace-nowrap">
-                <i class="fa-solid fa-user-plus"></i> Data Registrasi Siswa
-            </button>
-            <button id="tabBtnPembayaran" onclick="switchTab('pembayaran')" class="px-5 py-2.5 rounded-xl font-semibold text-xs text-slate-400 hover:text-white border border-transparent transition-all flex items-center gap-2 whitespace-nowrap">
-                <i class="fa-solid fa-wallet"></i> Data Pembayaran
-            </button>
+            <h4 class="text-base font-bold text-emerald-400 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-user-pen"></i> Edit Data Registrasi Siswa
+            </h4>
+            <form id="formEditSiswa" onsubmit="simpanEditSiswa(event)" class="space-y-3 text-left text-xs">
+                <input type="hidden" id="editSiswaKey">
+                <div>
+                    <label class="block font-semibold text-slate-300 mb-1">NISN</label>
+                    <input type="text" id="editNisn" class="w-full p-2.5 bg-slate-900/90 border border-slate-700 rounded-xl text-white focus:outline-none focus:border-sky-500">
+                </div>
+                <div>
+                    <label class="block font-semibold text-slate-300 mb-1">Nama Lengkap</label>
+                    <input type="text" id="editNama" required class="w-full p-2.5 bg-slate-900/90 border border-slate-700 rounded-xl text-white focus:outline-none focus:border-sky-500">
+                </div>
+                <div>
+                    <label class="block font-semibold text-slate-300 mb-1">No. WhatsApp / HP</label>
+                    <input type="text" id="editWa" class="w-full p-2.5 bg-slate-900/90 border border-slate-700 rounded-xl text-white focus:outline-none focus:border-sky-500">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-semibold text-slate-300 mb-1">Tempat Lahir</label>
+                        <input type="text" id="editTempatLahir" class="w-full p-2.5 bg-slate-900/90 border border-slate-700 rounded-xl text-white focus:outline-none focus:border-sky-500">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-300 mb-1">Tanggal Lahir</label>
+                        <input type="text" id="editTglLahir" class="w-full p-2.5 bg-slate-900/90 border border-slate-700 rounded-xl text-white focus:outline-none focus:border-sky-500" placeholder="YYYY-MM-DD">
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-semibold text-slate-300 mb-1">Program / Kelas</label>
+                    <input type="text" id="editPaket" class="w-full p-2.5 bg-slate-900/90 border border-slate-700 rounded-xl text-white focus:outline-none focus:border-sky-500">
+                </div>
+                <div>
+                    <label class="block font-semibold text-slate-300 mb-1">Alamat</label>
+                    <textarea id="editAlamat" rows="2" class="w-full p-2.5 bg-slate-900/90 border border-slate-700 rounded-xl text-white focus:outline-none focus:border-sky-500"></textarea>
+                </div>
+                <div class="pt-3 flex justify-end gap-2">
+                    <button type="button" onclick="closeEditSiswaModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl font-semibold">Batal</button>
+                    <button type="submit" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-semibold flex items-center gap-1.5"><i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan</button>
+                </div>
+            </form>
         </div>
-
-        <!-- CONTAINER TAB 1: HASIL UJIAN -->
-        <div id="tabContentUjian" class="card-tech rounded-2xl p-6 shadow-2xl">
-            <h3 class="text-base font-bold text-sky-400 mb-4 flex items-center gap-2">
-                <i class="fa-solid fa-graduation-cap"></i> Data Hasil Uji Kompetensi Siswa
-            </h3>
-            <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
-                    <thead>
-                        <tr class="text-[11px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-800">
-                            <th class="py-3 px-4">WAKTU UJIAN</th>
-                            <th class="py-3 px-4">NISGC</th>
-                            <th class="py-3 px-4">NAMA SISWA</th>
-                            <th class="py-3 px-4">PAKET KELAS</th>
-                            <th class="py-3 px-4">SKOR & RINCIAN</th>
-                            <th class="py-3 px-4">STATUS</th>
-                            <th class="py-3 px-4 text-center">AKSI</th>
-                        </tr>
-                    </thead>
-                    <tbody id="ujianTableBody" class="divide-y divide-slate-800 text-xs">
-                        <!-- Populated by JS -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- CONTAINER TAB 2: DATA REGISTRASI SISWA -->
-        <div id="tabContentRegistrasi" class="card-tech rounded-2xl p-6 shadow-2xl hidden">
-            <h3 class="text-base font-bold text-emerald-400 mb-4 flex items-center gap-2">
-                <i class="fa-solid fa-users"></i> Data Pendaftaran / Registrasi Siswa
-            </h3>
-            <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
-                    <thead>
-                        <tr class="text-[11px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-800">
-                            <th class="py-3 px-4 text-center">FOTO</th>
-                            <th class="py-3 px-4">TANGGAL</th>
-                            <th class="py-3 px-4">NISGC</th>
-                            <th class="py-3 px-4">NISN</th>
-                            <th class="py-3 px-4">NAMA LENGKAP</th>
-                            <th class="py-3 px-4">NO. WA / HP</th>
-                            <th class="py-3 px-4">TEMPAT, TGL LAHIR</th>
-                            <th class="py-3 px-4">PROGRAM / KELAS</th>
-                            <th class="py-3 px-4">ALAMAT</th>
-                            <th class="py-3 px-4 text-center">AKSI</th>
-                        </tr>
-                    </thead>
-                    <tbody id="registrasiTableBody" class="divide-y divide-slate-800 text-xs">
-                        <!-- Populated by JS -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- CONTAINER TAB 3: DATA PEMBAYARAN -->
-        <div id="tabContentPembayaran" class="card-tech rounded-2xl p-6 shadow-2xl hidden">
-            <h3 class="text-base font-bold text-amber-400 mb-4 flex items-center gap-2">
-                <i class="fa-solid fa-folder-open"></i> Data Konfirmasi Pembayaran
-            </h3>
-            <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
-                    <thead>
-                        <tr class="text-[11px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-800">
-                            <th class="py-3 px-4">WAKTU</th>
-                            <th class="py-3 px-4">NISGC</th>
-                            <th class="py-3 px-4">NAMA PENGIRIM</th>
-                            <th class="py-3 px-4 text-amber-400">JENIS PEMBAYARAN</th>
-                            <th class="py-3 px-4">BANK TUJUAN</th>
-                            <th class="py-3 px-4">NOMINAL</th>
-                            <th class="py-3 px-4">BUKTI TRANSFER</th>
-                            <th class="py-3 px-4 text-center">AKSI</th>
-                        </tr>
-                    </thead>
-                    <tbody id="pembayaranTableBody" class="divide-y divide-slate-800 text-xs">
-                        <!-- Populated by JS -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
     </div>
 
     <!-- MODAL PRATINJAU GAMBAR -->
@@ -221,6 +332,75 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
     <script>
+        /* ========================================================
+           SKRIP PROTEKSI ANTI-INSPECT / DEVTOOLS
+           ======================================================== */
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            // Blokir F12
+            if (e.key === 'F12' || e.keyCode === 123) {
+                e.preventDefault();
+                return false;
+            }
+            // Blokir Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C
+            if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c' || e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) {
+                e.preventDefault();
+                return false;
+            }
+            // Blokir Ctrl+U (View Source) & Ctrl+S (Save Page)
+            if (e.ctrlKey && (e.key === 'u' || e.key === 'U' || e.key === 's' || e.key === 'S' || e.keyCode === 85 || e.keyCode === 83)) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        /* ========================================================
+           SISTEM LOGIN ADMIN (UPDATED AUTH)
+           ======================================================== */
+        const AUTH_PASS = "32164";
+
+        function checkAuthStatus() {
+            if (sessionStorage.getItem('adminLoggedIn') === 'true') {
+                document.getElementById('loginScreen').classList.add('hidden');
+                document.getElementById('adminContent').classList.remove('hidden');
+                initFirebaseAndData();
+            } else {
+                document.getElementById('loginScreen').classList.remove('hidden');
+                document.getElementById('adminContent').classList.add('hidden');
+            }
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const userInput = document.getElementById('loginUser').value.trim().toLowerCase();
+            const passInput = document.getElementById('loginPass').value.trim();
+            const errBox = document.getElementById('loginError');
+
+            // Menerima username "adminglc" maupun "user adminglc"
+            const isUserValid = (userInput === "adminglc" || userInput === "user adminglc");
+
+            if (isUserValid && passInput === AUTH_PASS) {
+                sessionStorage.setItem('adminLoggedIn', 'true');
+                errBox.classList.add('hidden');
+                checkAuthStatus();
+            } else {
+                errBox.classList.remove('hidden');
+            }
+        }
+
+        function handleLogout() {
+            if (confirm("Apakah Anda yakin ingin keluar dari Panel Admin?")) {
+                sessionStorage.removeItem('adminLoggedIn');
+                location.reload();
+            }
+        }
+
+        /* ========================================================
+           LOGIKA UTAMA FIREBASE & PANEL ADMIN
+           ======================================================== */
         const firebaseConfig = {
             apiKey: "AIzaSyCe7o7XvCfQiMOn0dlBO20AK8IzQbz6nJw",
             authDomain: "lkp-global-course.firebaseapp.com",
@@ -232,10 +412,54 @@
             measurementId: "G-MPG8SQDEWB"
         };
         
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
-
+        let database;
         let siswaRegisterMap = {};
+        let registrasiDataStore = {};
+        let currentStatus = { pendaftaran: false, ujian: false };
+
+        function initFirebaseAndData() {
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            }
+            database = firebase.database();
+
+            database.ref('system_status').on('value', function(snapshot) {
+                const data = snapshot.val() || {};
+                currentStatus.pendaftaran = !!data.pendaftaran;
+                currentStatus.ujian = !!data.ujian;
+
+                const textPendaftaran = document.getElementById('statusPendaftaranText');
+                const btnPendaftaran = document.getElementById('btnTogglePendaftaran');
+                if (currentStatus.pendaftaran) {
+                    textPendaftaran.className = "text-xs font-bold text-emerald-400";
+                    textPendaftaran.innerHTML = '<i class="fa-solid fa-circle-check mr-1"></i> DIBUKA (PLAY)';
+                    btnPendaftaran.className = "bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs px-4 py-2.5 rounded-lg flex items-center gap-2 transition-all shadow-md";
+                    btnPendaftaran.innerHTML = '<i class="fa-solid fa-stop"></i> TUTUP REGISTRASI';
+                } else {
+                    textPendaftaran.className = "text-xs font-bold text-rose-500";
+                    textPendaftaran.innerHTML = '<i class="fa-solid fa-circle-xmark mr-1"></i> DITUTUP (STOP)';
+                    btnPendaftaran.className = "bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-2.5 rounded-lg flex items-center gap-2 transition-all shadow-md";
+                    btnPendaftaran.innerHTML = '<i class="fa-solid fa-play"></i> BUKA REGISTRASI';
+                }
+
+                const textUjian = document.getElementById('statusUjianText');
+                const btnUjian = document.getElementById('btnToggleUjian');
+                if (currentStatus.ujian) {
+                    textUjian.className = "text-xs font-bold text-emerald-400";
+                    textUjian.innerHTML = '<i class="fa-solid fa-circle-check mr-1"></i> DIBUKA (PLAY)';
+                    btnUjian.className = "bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs px-4 py-2.5 rounded-lg flex items-center gap-2 transition-all shadow-md";
+                    btnUjian.innerHTML = '<i class="fa-solid fa-stop"></i> TUTUP UJIAN';
+                } else {
+                    textUjian.className = "text-xs font-bold text-rose-500";
+                    textUjian.innerHTML = '<i class="fa-solid fa-circle-xmark mr-1"></i> DITUTUP (STOP)';
+                    btnUjian.className = "bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-2.5 rounded-lg flex items-center gap-2 transition-all shadow-md";
+                    btnUjian.innerHTML = '<i class="fa-solid fa-play"></i> BUKA UJIAN';
+                }
+            });
+
+            loadRegistrasiData();
+            loadPembayaranData();
+        }
 
         function switchTab(tabName) {
             document.getElementById('tabContentUjian').classList.add('hidden');
@@ -258,42 +482,6 @@
             }
         }
 
-        let currentStatus = { pendaftaran: false, ujian: false };
-
-        database.ref('system_status').on('value', function(snapshot) {
-            const data = snapshot.val() || {};
-            currentStatus.pendaftaran = !!data.pendaftaran;
-            currentStatus.ujian = !!data.ujian;
-
-            const textPendaftaran = document.getElementById('statusPendaftaranText');
-            const btnPendaftaran = document.getElementById('btnTogglePendaftaran');
-            if (currentStatus.pendaftaran) {
-                textPendaftaran.className = "text-xs font-bold text-emerald-400";
-                textPendaftaran.innerHTML = '<i class="fa-solid fa-circle-check mr-1"></i> DIBUKA (PLAY)';
-                btnPendaftaran.className = "bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs px-4 py-2.5 rounded-lg flex items-center gap-2 transition-all shadow-md";
-                btnPendaftaran.innerHTML = '<i class="fa-solid fa-stop"></i> TUTUP REGISTRASI';
-            } else {
-                textPendaftaran.className = "text-xs font-bold text-rose-500";
-                textPendaftaran.innerHTML = '<i class="fa-solid fa-circle-xmark mr-1"></i> DITUTUP (STOP)';
-                btnPendaftaran.className = "bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-2.5 rounded-lg flex items-center gap-2 transition-all shadow-md";
-                btnPendaftaran.innerHTML = '<i class="fa-solid fa-play"></i> BUKA REGISTRASI';
-            }
-
-            const textUjian = document.getElementById('statusUjianText');
-            const btnUjian = document.getElementById('btnToggleUjian');
-            if (currentStatus.ujian) {
-                textUjian.className = "text-xs font-bold text-emerald-400";
-                textUjian.innerHTML = '<i class="fa-solid fa-circle-check mr-1"></i> DIBUKA (PLAY)';
-                btnUjian.className = "bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs px-4 py-2.5 rounded-lg flex items-center gap-2 transition-all shadow-md";
-                btnUjian.innerHTML = '<i class="fa-solid fa-stop"></i> TUTUP UJIAN';
-            } else {
-                textUjian.className = "text-xs font-bold text-rose-500";
-                textUjian.innerHTML = '<i class="fa-solid fa-circle-xmark mr-1"></i> DITUTUP (STOP)';
-                btnUjian.className = "bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-2.5 rounded-lg flex items-center gap-2 transition-all shadow-md";
-                btnUjian.innerHTML = '<i class="fa-solid fa-play"></i> BUKA UJIAN';
-            }
-        });
-
         function toggleSystemAccess(feature) {
             const nextStatus = !currentStatus[feature];
             database.ref('system_status/' + feature).set(nextStatus)
@@ -309,6 +497,7 @@
             database.ref('pendaftaran_siswa').on('value', function(snapshot) {
                 tbody.innerHTML = '';
                 siswaRegisterMap = {};
+                registrasiDataStore = {};
 
                 if (!snapshot.exists()) {
                     tbody.innerHTML = `<tr><td colspan="10" class="text-center py-8 text-slate-500">Belum ada data pendaftaran siswa.</td></tr>`;
@@ -319,8 +508,10 @@
                     const data = child.val();
                     const key = child.key;
 
+                    registrasiDataStore[key] = { ...data, key };
+
                     const tanggal = data.tanggal_daftar || data.timestamp || '-';
-                    const nisgc = data.nisgc || key;
+                    const nisglc = data.nisglc || data.nisgc || key;
                     const nisn = data.nisn || '-';
                     const nama = data.nama || data.nama_lengkap || '-';
                     const wa = data.whatsapp || data.no_wa || data.no_hp || data.telepon || data.hp || '-';
@@ -333,7 +524,7 @@
                     const alamat = data.alamat || '-';
                     const foto = data.foto || data.foto_siswa || data.pas_foto || data.url_foto || null;
 
-                    siswaRegisterMap[nisgc] = { nama, paket, nisn };
+                    siswaRegisterMap[nisglc] = { nama, paket, nisn };
 
                     tbody.innerHTML += `
                         <tr class="hover:bg-slate-800/50 transition-colors">
@@ -347,7 +538,7 @@
                                 `}
                             </td>
                             <td class="py-3.5 px-4 text-slate-400 font-mono whitespace-nowrap">${tanggal}</td>
-                            <td class="py-3.5 px-4 font-mono font-bold text-sky-400 whitespace-nowrap">${nisgc}</td>
+                            <td class="py-3.5 px-4 font-mono font-bold text-sky-400 whitespace-nowrap">${nisglc}</td>
                             <td class="py-3.5 px-4 font-mono text-slate-300 font-medium whitespace-nowrap">${nisn}</td>
                             <td class="py-3.5 px-4 font-semibold text-white whitespace-nowrap">${nama}</td>
                             <td class="py-3.5 px-4 text-emerald-400 font-mono whitespace-nowrap">
@@ -357,9 +548,14 @@
                             <td class="py-3.5 px-4 text-slate-200 font-medium whitespace-nowrap">${paket}</td>
                             <td class="py-3.5 px-4 text-slate-400 max-w-xs truncate">${alamat}</td>
                             <td class="py-3.5 px-4 text-center">
-                                <button onclick="hapusData('pendaftaran_siswa', '${key}')" title="Hapus Data" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 p-2 rounded-lg border border-rose-500/30 transition-all">
-                                    <i class="fa-solid fa-trash-can"></i>
-                                </button>
+                                <div class="flex items-center justify-center gap-1.5">
+                                    <button onclick="bukaModalEditSiswa('${key}')" title="Edit Data Siswa" class="bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 p-2 rounded-lg border border-amber-500/30 transition-all">
+                                        <i class="fa-solid fa-user-pen"></i>
+                                    </button>
+                                    <button onclick="hapusData('pendaftaran_siswa', '${key}')" title="Hapus Data" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 p-2 rounded-lg border border-rose-500/30 transition-all">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                     `;
@@ -367,6 +563,55 @@
 
                 loadHasilUjianData();
             });
+        }
+
+        /* FITUR EDIT SISWA FIREBASE */
+        function bukaModalEditSiswa(key) {
+            const data = registrasiDataStore[key];
+            if (!data) return;
+
+            document.getElementById('editSiswaKey').value = key;
+            document.getElementById('editNisn').value = data.nisn || '';
+            document.getElementById('editNama').value = data.nama || data.nama_lengkap || '';
+            document.getElementById('editWa').value = data.whatsapp || data.no_wa || data.no_hp || data.telepon || data.hp || '';
+            document.getElementById('editTempatLahir').value = data.tempat_lahir || '';
+            document.getElementById('editTglLahir').value = data.tanggal_lahir || data.tgl_lahir || '';
+            document.getElementById('editPaket').value = data.paket_kelas || data.program || data.kelas || '';
+            document.getElementById('editAlamat').value = data.alamat || '';
+
+            document.getElementById('editSiswaModal').classList.remove('hidden');
+        }
+
+        function closeEditSiswaModal() {
+            document.getElementById('editSiswaModal').classList.add('hidden');
+        }
+
+        function simpanEditSiswa(e) {
+            e.preventDefault();
+            const key = document.getElementById('editSiswaKey').value;
+            if (!key) return;
+
+            const updatedData = {
+                nisn: document.getElementById('editNisn').value.trim(),
+                nama: document.getElementById('editNama').value.trim(),
+                nama_lengkap: document.getElementById('editNama').value.trim(),
+                whatsapp: document.getElementById('editWa').value.trim(),
+                no_wa: document.getElementById('editWa').value.trim(),
+                tempat_lahir: document.getElementById('editTempatLahir').value.trim(),
+                tanggal_lahir: document.getElementById('editTglLahir').value.trim(),
+                paket_kelas: document.getElementById('editPaket').value.trim(),
+                program: document.getElementById('editPaket').value.trim(),
+                alamat: document.getElementById('editAlamat').value.trim()
+            };
+
+            database.ref('pendaftaran_siswa/' + key).update(updatedData)
+                .then(() => {
+                    alert("Data siswa berhasil diperbarui!");
+                    closeEditSiswaModal();
+                })
+                .catch((err) => {
+                    alert("Gagal memperbarui data siswa: " + err.message);
+                });
         }
 
         function loadHasilUjianData() {
@@ -383,16 +628,16 @@
                     const key = child.key;
 
                     const waktu = data.waktu_ujian || data.waktu || data.tanggal || data.timestamp || '-';
-                    const nisgc = data.nisgc || key;
+                    const nisglc = data.nisglc || data.nisgc || key;
 
                     let nama = data.nama_siswa || data.nama || data.nama_lengkap;
-                    if ((!nama || nama === '-') && siswaRegisterMap[nisgc]) {
-                        nama = siswaRegisterMap[nisgc].nama;
+                    if ((!nama || nama === '-') && siswaRegisterMap[nisglc]) {
+                        nama = siswaRegisterMap[nisglc].nama;
                     }
 
                     let kelas = data.paket_kelas || data.program_kursus || data.paketKelas || data.materi || data.program || data.kategori;
-                    if ((!kelas || kelas === '-') && siswaRegisterMap[nisgc]) {
-                        kelas = siswaRegisterMap[nisgc].paket;
+                    if ((!kelas || kelas === '-') && siswaRegisterMap[nisglc]) {
+                        kelas = siswaRegisterMap[nisglc].paket;
                     }
                     if (!kelas) kelas = '-';
 
@@ -429,7 +674,7 @@
                     tbody.innerHTML += `
                         <tr class="hover:bg-slate-800/50 transition-colors">
                             <td class="py-3.5 px-4 text-slate-400 font-mono">${waktu}</td>
-                            <td class="py-3.5 px-4 font-mono font-bold text-sky-400">${nisgc}</td>
+                            <td class="py-3.5 px-4 font-mono font-bold text-sky-400">${nisglc}</td>
                             <td class="py-3.5 px-4 font-semibold text-white">${nama || '-'}</td>
                             <td class="py-3.5 px-4 text-slate-200 font-medium">${kelas}</td>
                             <td class="py-3.5 px-4">
@@ -469,17 +714,26 @@
                     const data = child.val();
                     const key = child.key;
                     const waktu = data.tanggal_bayar || data.timestamp || '-';
-                    const nisgc = data.nisgc || key;
+                    const nisglc = data.nisglc || data.nisgc || key;
                     const nama = data.nama_lengkap || data.nama_pengirim || '-';
                     const jenisBayar = data.item_pembayaran || data.pembayaran_untuk || '-';
                     const bank = data.metode_transfer || data.bank_tujuan || '-';
                     const nominal = data.nominal ? 'Rp ' + Number(data.nominal).toLocaleString('id-ID') : 'Rp 0';
                     const bukti = data.bukti_transfer || null;
 
+                    // Logic Status Pembayaran
+                    const statusPembayaran = (data.status_pembayaran || data.status || 'MENUNGGU').toUpperCase();
+                    let statusBadgeClass = 'bg-amber-500/15 text-amber-400 border-amber-500/30';
+                    if (statusPembayaran === 'VALID') {
+                        statusBadgeClass = 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30';
+                    } else if (statusPembayaran === 'TIDAK VALID') {
+                        statusBadgeClass = 'bg-rose-500/15 text-rose-400 border-rose-500/30';
+                    }
+
                     tbody.innerHTML += `
                         <tr class="hover:bg-slate-800/50 transition-colors">
                             <td class="py-3.5 px-4 text-slate-400 font-mono">${waktu}</td>
-                            <td class="py-3.5 px-4 font-mono font-bold text-sky-400">${nisgc}</td>
+                            <td class="py-3.5 px-4 font-mono font-bold text-sky-400">${nisglc}</td>
                             <td class="py-3.5 px-4 font-semibold text-white">${nama}</td>
                             <td class="py-3.5 px-4">
                                 <span class="inline-flex items-center gap-1.5 bg-amber-500/15 text-amber-300 font-medium px-2.5 py-1 rounded-md border border-amber-500/30">
@@ -492,14 +746,39 @@
                                 ${bukti ? `<button onclick="openModal('${bukti}', 'Bukti Transfer - ${nama}')" class="text-sky-400 hover:text-sky-300 font-semibold inline-flex items-center gap-1 hover:underline"><i class="fa-solid fa-image"></i> Lihat Bukti</button>` : '<span class="text-slate-500 italic">Tanpa Bukti</span>'}
                             </td>
                             <td class="py-3.5 px-4 text-center">
-                                <button onclick="hapusData('pembayaran_pendaftaran', '${key}')" title="Hapus Data" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 p-2 rounded-lg border border-rose-500/30 transition-all">
-                                    <i class="fa-solid fa-trash-can"></i>
-                                </button>
+                                <div class="flex flex-col items-center gap-1.5">
+                                    <span class="px-2.5 py-0.5 rounded-md text-[10px] font-bold border ${statusBadgeClass}">
+                                        ${statusPembayaran}
+                                    </span>
+                                    <div class="flex items-center gap-1">
+                                        <button onclick="konfirmasiPembayaran('${key}', 'VALID')" title="Tandai Pembayaran Valid" class="bg-emerald-500/10 hover:bg-emerald-500/25 text-emerald-400 px-2 py-1 rounded-lg border border-emerald-500/30 transition-all font-semibold flex items-center gap-1 text-[10px]">
+                                            <i class="fa-solid fa-check"></i> Valid
+                                        </button>
+                                        <button onclick="konfirmasiPembayaran('${key}', 'TIDAK VALID')" title="Tandai Pembayaran Tidak Valid" class="bg-rose-500/10 hover:bg-rose-500/25 text-rose-400 px-2 py-1 rounded-lg border border-rose-500/30 transition-all font-semibold flex items-center gap-1 text-[10px]">
+                                            <i class="fa-solid fa-xmark"></i> Tidak Valid
+                                        </button>
+                                        <button onclick="hapusData('pembayaran_pendaftaran', '${key}')" title="Hapus Data" class="bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-rose-400 p-1 rounded-lg border border-slate-700 transition-all">
+                                            <i class="fa-solid fa-trash-can text-xs"></i>
+                                        </button>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     `;
                 });
             });
+        }
+
+        /* FITUR KONFIRMASI PEMBAYARAN FIREBASE */
+        function konfirmasiPembayaran(key, status) {
+            if (confirm(`Apakah Anda yakin ingin mengubah status pembayaran ini menjadi ${status}?`)) {
+                database.ref('pembayaran_pendaftaran/' + key).update({
+                    status_pembayaran: status,
+                    status: status
+                })
+                .then(() => alert(`Status pembayaran berhasil diubah menjadi ${status}.`))
+                .catch((err) => alert("Gagal mengubah status pembayaran: " + err.message));
+            }
         }
 
         function hapusData(nodePath, key) {
@@ -510,6 +789,7 @@
             }
         }
 
+        /* EXPORT DATA EXCEL PER KATEGORI */
         function exportDataToExcel(type) {
             let nodePath = type === 'pendaftaran' ? 'pendaftaran_siswa' : (type === 'ujian' ? 'hasil_ujian' : 'pembayaran_pendaftaran');
             let fileNamePrefix = type === 'pendaftaran' ? 'Data_Pendaftaran_Siswa' : (type === 'ujian' ? 'Data_Hasil_Uji_Kompetensi' : 'Data_Pembayaran_Siswa');
@@ -528,7 +808,7 @@
                     if (type === 'pendaftaran') {
                         excelData.push({
                             "Tanggal Daftar": data.tanggal_daftar || data.timestamp || "-",
-                            "NISGC": data.nisgc || key,
+                            "NISGLC": data.nisglc || data.nisgc || key,
                             "NISN": data.nisn || "-",
                             "Nama Lengkap": data.nama || data.nama_lengkap || "-",
                             "No WA": data.whatsapp || data.no_wa || "-",
@@ -536,12 +816,12 @@
                             "Alamat": data.alamat || "-"
                         });
                     } else if (type === 'ujian') {
-                        const nisgc = data.nisgc || key;
-                        let kelas = data.paket_kelas || data.program_kursus || (siswaRegisterMap[nisgc] ? siswaRegisterMap[nisgc].paket : "-");
+                        const nisglc = data.nisglc || data.nisgc || key;
+                        let kelas = data.paket_kelas || data.program_kursus || (siswaRegisterMap[nisglc] ? siswaRegisterMap[nisglc].paket : "-");
                         excelData.push({
                             "Waktu Ujian": data.waktu_ujian || data.waktu || "-",
-                            "NISGC": nisgc,
-                            "Nama Siswa": data.nama_siswa || data.nama || (siswaRegisterMap[nisgc] ? siswaRegisterMap[nisgc].nama : "-"),
+                            "NISGLC": nisglc,
+                            "Nama Siswa": data.nama_siswa || data.nama || (siswaRegisterMap[nisglc] ? siswaRegisterMap[nisglc].nama : "-"),
                             "Paket Kelas": kelas,
                             "Skor": data.skor ?? data.nilai ?? "-",
                             "Benar": data.benar ?? "-",
@@ -552,9 +832,12 @@
                     } else if (type === 'pembayaran') {
                         excelData.push({
                             "Tanggal Bayar": data.tanggal_bayar || data.timestamp || "-",
-                            "NISGC": data.nisgc || key,
+                            "NISGLC": data.nisglc || data.nisgc || key,
                             "Nama Pengirim": data.nama_lengkap || "-",
-                            "Nominal": data.nominal || 0
+                            "Jenis Pembayaran": data.item_pembayaran || data.pembayaran_untuk || "-",
+                            "Bank Tujuan": data.metode_transfer || data.bank_tujuan || "-",
+                            "Nominal": data.nominal || 0,
+                            "Status Pembayaran": data.status_pembayaran || data.status || "MENUNGGU"
                         });
                     }
                 });
@@ -564,6 +847,89 @@
                 XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
                 XLSX.writeFile(workbook, `${fileNamePrefix}_${new Date().toISOString().split('T')[0]}.xlsx`);
             });
+        }
+
+        /* FITUR BARU: EXPORT GABUNGAN 3 SHEET SEKALIGUS */
+        function exportAllDataToExcel() {
+            const reqPendaftaran = database.ref('pendaftaran_siswa').once('value');
+            const reqUjian = database.ref('hasil_ujian').once('value');
+            const reqPembayaran = database.ref('pembayaran_pendaftaran').once('value');
+
+            Promise.all([reqPendaftaran, reqUjian, reqPembayaran])
+                .then(([snapPendaftaran, snapUjian, snapPembayaran]) => {
+                    const workbook = XLSX.utils.book_new();
+
+                    // 1. Data Pendaftaran Siswa
+                    const listPendaftaran = [];
+                    if (snapPendaftaran.exists()) {
+                        snapPendaftaran.forEach(child => {
+                            const data = child.val();
+                            const key = child.key;
+                            listPendaftaran.push({
+                                "Tanggal Daftar": data.tanggal_daftar || data.timestamp || "-",
+                                "NISGLC": data.nisglc || data.nisgc || key,
+                                "NISN": data.nisn || "-",
+                                "Nama Lengkap": data.nama || data.nama_lengkap || "-",
+                                "No WA": data.whatsapp || data.no_wa || "-",
+                                "Program / Kelas": data.paket_kelas || data.program || "-",
+                                "Alamat": data.alamat || "-"
+                            });
+                        });
+                    }
+                    const sheetPendaftaran = XLSX.utils.json_to_sheet(listPendaftaran);
+                    XLSX.utils.book_append_sheet(workbook, sheetPendaftaran, "Pendaftaran Siswa");
+
+                    // 2. Data Hasil Uji Kompetensi
+                    const listUjian = [];
+                    if (snapUjian.exists()) {
+                        snapUjian.forEach(child => {
+                            const data = child.val();
+                            const key = child.key;
+                            const nisglc = data.nisglc || data.nisgc || key;
+                            let kelas = data.paket_kelas || data.program_kursus || (siswaRegisterMap[nisglc] ? siswaRegisterMap[nisglc].paket : "-");
+                            listUjian.push({
+                                "Waktu Ujian": data.waktu_ujian || data.waktu || "-",
+                                "NISGLC": nisglc,
+                                "Nama Siswa": data.nama_siswa || data.nama || (siswaRegisterMap[nisglc] ? siswaRegisterMap[nisglc].nama : "-"),
+                                "Paket Kelas": kelas,
+                                "Skor": data.skor ?? data.nilai ?? "-",
+                                "Benar": data.benar ?? "-",
+                                "Salah": data.salah ?? "-",
+                                "Total Soal": data.total_soal ?? "-",
+                                "Status": data.status || "TIDAK LULUS"
+                            });
+                        });
+                    }
+                    const sheetUjian = XLSX.utils.json_to_sheet(listUjian);
+                    XLSX.utils.book_append_sheet(workbook, sheetUjian, "Hasil Uji Kompetensi");
+
+                    // 3. Data Pembayaran
+                    const listPembayaran = [];
+                    if (snapPembayaran.exists()) {
+                        snapPembayaran.forEach(child => {
+                            const data = child.val();
+                            const key = child.key;
+                            listPembayaran.push({
+                                "Tanggal Bayar": data.tanggal_bayar || data.timestamp || "-",
+                                "NISGLC": data.nisglc || data.nisgc || key,
+                                "Nama Pengirim": data.nama_lengkap || "-",
+                                "Jenis Pembayaran": data.item_pembayaran || data.pembayaran_untuk || "-",
+                                "Bank Tujuan": data.metode_transfer || data.bank_tujuan || "-",
+                                "Nominal": data.nominal || 0,
+                                "Status Pembayaran": data.status_pembayaran || data.status || "MENUNGGU"
+                            });
+                        });
+                    }
+                    const sheetPembayaran = XLSX.utils.json_to_sheet(listPembayaran);
+                    XLSX.utils.book_append_sheet(workbook, sheetPembayaran, "Data Pembayaran");
+
+                    // Unduh File Excel Gabungan
+                    const dateStr = new Date().toISOString().split('T')[0];
+                    XLSX.writeFile(workbook, `Laporan_Lengkap_LKP_Global_Course_${dateStr}.xlsx`);
+                })
+                .catch(err => {
+                    alert("Gagal melakukan export gabungan: " + err.message);
+                });
         }
 
         function openModal(imgSrc, title = "Pratinjau Gambar") {
@@ -578,8 +944,7 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-            loadRegistrasiData();
-            loadPembayaranData();
+            checkAuthStatus();
         });
     </script>
 </body>

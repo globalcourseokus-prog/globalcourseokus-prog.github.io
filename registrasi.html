@@ -136,7 +136,7 @@
                 <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
                     <img id="sumFoto" src="" class="w-14 h-16 object-cover rounded-lg border border-slate-700 bg-slate-800">
                     <div>
-                        <div id="sumNisgc" class="text-base font-bold text-sky-400">NISGC: -</div>
+                        <div id="sumNisglc" class="text-base font-bold text-sky-400">NISGLC: -</div>
                         <div id="sumNisn" class="text-slate-400 font-medium">NISN: -</div>
                     </div>
                 </div>
@@ -257,11 +257,12 @@
             submitBtn.disabled = true;
             submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Mengirim Data...`;
 
-            // GENEREATE OTOMATIS NISGC (Format: 00 + 7 digit acak)
-            const autoNisgc = '00' + Math.floor(1000000 + Math.random() * 9000000);
+            // GENERATE OTOMATIS NISGLC (Format: 00 + 7 digit acak)
+            const autoNisglc = '00' + Math.floor(1000000 + Math.random() * 9000000);
 
             const payload = {
-                nisgc: autoNisgc,
+                nisglc: autoNisglc,
+                nisgc: autoNisglc, // Fallback compatibility untuk sistem lama
                 nisn: document.getElementById('nisn').value.trim(),
                 nama: document.getElementById('nama').value.trim(),
                 tempat_lahir: document.getElementById('tempat_lahir').value.trim(),
@@ -277,7 +278,7 @@
                 .then(() => {
                     // ISI DATA KE MODAL SUKSES
                     document.getElementById('sumFoto').src = payload.foto;
-                    document.getElementById('sumNisgc').textContent = `NISGC: ${payload.nisgc}`;
+                    document.getElementById('sumNisglc').textContent = `NISGLC: ${payload.nisglc}`;
                     document.getElementById('sumNisn').textContent = `NISN: ${payload.nisn}`;
                     document.getElementById('sumNama').textContent = payload.nama;
                     document.getElementById('sumProgram').textContent = payload.program;
