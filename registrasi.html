@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form Pendaftaran Siswa Baru - LKP Global Course</title>
     <!-- Favicon / Icon Tab Browser -->
-<link rel="icon" type="image/png" href="Logo Global.png">
+    <link rel="icon" type="image/png" href="Logo Global.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -181,7 +181,7 @@
     <!-- FIREBASE & LOGIC SCRIPT -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, push, onValue, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCe7o7XvCfQiMOn0dlBO20AK8IzQbz6nJw",
@@ -248,7 +248,7 @@
         });
 
         // 3. PROSES SIMPAN PENDAFTARAN
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
             if (!fotoBase64) {
@@ -259,50 +259,64 @@
             submitBtn.disabled = true;
             submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Mengirim Data...`;
 
-            // GENERATE OTOMATIS NISGLC (Format: 00 + 7 digit acak)
-            const autoNisglc = '00' + Math.floor(1000000 + Math.random() * 9000000);
+            try {
+                // Ambil jumlah pendaftar untuk nomor urut
+                const snapshotData = await get(ref(db, 'pendaftaran_siswa'));
+                const totalSiswa = snapshotData.exists() ? Object.keys(snapshotData.val()).length + 1 : 1;
+                
+                // Nomor Urut 3 Digit (001, 002, dst)
+                const noUrut = String(totalSiswa).padStart(3, '0');
 
-            const payload = {
-                nisglc: autoNisglc,
-                nisgc: autoNisglc, // Fallback compatibility untuk sistem lama
-                nisn: document.getElementById('nisn').value.trim(),
-                nama: document.getElementById('nama').value.trim(),
-                tempat_lahir: document.getElementById('tempat_lahir').value.trim(),
-                tgl_lahir: document.getElementById('tgl_lahir').value,
-                program: document.getElementById('program').value,
-                hp: document.getElementById('hp').value.trim(),
-                alamat: document.getElementById('alamat').value.trim(),
-                foto: fotoBase64,
-                timestamp: new Date().toLocaleString('id-ID')
-            };
+                // Format Tanggal Pendaftaran (DDMMYY)
+                const now = new Date();
+                const dd = String(now.getDate()).padStart(2, '0');
+                const mm = String(now.getMonth() + 1).padStart(2, '0');
+                const yy = String(now.getFullYear()).slice(-2);
+                const tglPendaftaran = `${dd}${mm}${yy}`;
 
-            push(ref(db, 'pendaftaran_siswa'), payload)
-                .then(() => {
-                    // ISI DATA KE MODAL SUKSES
-                    document.getElementById('sumFoto').src = payload.foto;
-                    document.getElementById('sumNisglc').textContent = `NISGLC: ${payload.nisglc}`;
-                    document.getElementById('sumNisn').textContent = `NISN: ${payload.nisn}`;
-                    document.getElementById('sumNama').textContent = payload.nama;
-                    document.getElementById('sumProgram').textContent = payload.program;
-                    document.getElementById('sumTTL').textContent = `${payload.tempat_lahir}, ${payload.tgl_lahir}`;
-                    document.getElementById('sumHp').textContent = payload.hp;
-                    document.getElementById('sumAlamat').textContent = payload.alamat;
+                // GENERATE NISGLC (No Urut + - + TglBulanTahun, contoh: 010-010926)
+                const autoNisglc = `${noUrut}-${tglPendaftaran}`;
 
-                    // TAMPILKAN MODAL SUKSES
-                    document.getElementById('successModal').classList.remove('hidden');
+                const payload = {
+                    nisglc: autoNisglc,
+                    nisgc: autoNisglc, // Fallback compatibility untuk sistem lama
+                    nisn: document.getElementById('nisn').value.trim(),
+                    nama: document.getElementById('nama').value.trim(),
+                    tempat_lahir: document.getElementById('tempat_lahir').value.trim(),
+                    tgl_lahir: document.getElementById('tgl_lahir').value,
+                    program: document.getElementById('program').value,
+                    hp: document.getElementById('hp').value.trim(),
+                    alamat: document.getElementById('alamat').value.trim(),
+                    foto: fotoBase64,
+                    timestamp: new Date().toLocaleString('id-ID')
+                };
 
-                    // RESET FORMULIR
-                    form.reset();
-                    previewContainer.classList.add('hidden');
-                    fotoBase64 = '';
-                })
-                .catch((err) => {
-                    alert("Gagal mengirim pendaftaran: " + err.message);
-                })
-                .finally(() => {
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = `<i class="fas fa-paper-plane"></i> Kirim Pendaftaran`;
-                });
+                await push(ref(db, 'pendaftaran_siswa'), payload);
+
+                // ISI DATA KE MODAL SUKSES
+                document.getElementById('sumFoto').src = payload.foto;
+                document.getElementById('sumNisglc').textContent = `NISGLC: ${payload.nisglc}`;
+                document.getElementById('sumNisn').textContent = `NISN: ${payload.nisn}`;
+                document.getElementById('sumNama').textContent = payload.nama;
+                document.getElementById('sumProgram').textContent = payload.program;
+                document.getElementById('sumTTL').textContent = `${payload.tempat_lahir}, ${payload.tgl_lahir}`;
+                document.getElementById('sumHp').textContent = payload.hp;
+                document.getElementById('sumAlamat').textContent = payload.alamat;
+
+                // TAMPILKAN MODAL SUKSES
+                document.getElementById('successModal').classList.remove('hidden');
+
+                // RESET FORMULIR
+                form.reset();
+                previewContainer.classList.add('hidden');
+                fotoBase64 = '';
+
+            } catch (err) {
+                alert("Gagal mengirim pendaftaran: " + err.message);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = `<i class="fas fa-paper-plane"></i> Kirim Pendaftaran`;
+            }
         });
     </script>
 </body>
