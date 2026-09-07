@@ -153,6 +153,7 @@
 
     <main class="flex-grow">
 
+        <!-- HERO SECTION -->
         <section class="relative overflow-hidden bg-gradient-to-b from-slate-900 to-slate-950 text-white py-16 lg:py-24">
             <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary-900/40 via-transparent to-transparent"></div>
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -216,6 +217,7 @@
             </div>
         </section>
 
+        <!-- STATS BAR -->
         <div class="bg-white border-b border-slate-200 py-8 relative z-10">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
@@ -294,6 +296,7 @@
             </div>
         </div>
 
+        <!-- DAFTAR PAKET PROGRAM PELATIHAN LKP -->
         <div class="py-16 bg-slate-50" id="program-pricing-section">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center max-w-3xl mx-auto mb-12">
@@ -404,7 +407,87 @@
             </div>
         </div>
 
-        <div class="py-16 bg-white border-y border-slate-200">
+        <!-- SEKSI CEK STATUS SISWA (VERIFIKASI NISGLC) -->
+        <section class="py-12 bg-slate-900 text-white relative overflow-hidden border-y border-slate-800">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="bg-slate-800/90 border border-slate-700/80 rounded-2xl p-6 sm:p-8 shadow-2xl backdrop-blur-sm">
+                    
+                    <div class="text-center max-w-xl mx-auto mb-6">
+                        <div class="inline-flex items-center gap-2 bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-semibold px-3 py-1 rounded-full mb-3">
+                            <i class="fa-solid fa-id-card"></i> Verifikasi Data Siswa
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Cek Status Terdaftar Siswa</h2>
+                        <p class="text-xs sm:text-sm text-slate-400 mt-1">Masukkan Nomor Induk Siswa Global Course (NISGLC) untuk mengecek status pendaftaran resmi.</p>
+                    </div>
+
+                    <!-- FORM PENCARIAN -->
+                    <form id="searchForm" class="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto">
+                        <div class="relative flex-grow">
+                            <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                            <input 
+                                type="text" 
+                                id="inputNisglc" 
+                                required 
+                                placeholder="Masukkan NISGLC (contoh: 010-010926)" 
+                                class="w-full bg-slate-950 border border-slate-700 text-white placeholder-slate-500 pl-11 pr-4 py-3.5 rounded-xl text-sm focus:outline-none focus:border-sky-500 transition-all font-mono"
+                            >
+                        </div>
+                        <button 
+                            type="submit" 
+                            id="btnCekSiswa"
+                            class="bg-sky-600 hover:bg-sky-500 text-white font-bold px-6 py-3.5 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 text-sm flex-shrink-0"
+                        >
+                            <i class="fa-solid fa-search"></i> Cek Data
+                        </button>
+                    </form>
+
+                    <!-- WADAH HASIL PENCARIAN (DYNAMIC) -->
+                    <div id="searchResult" class="mt-6 max-w-xl mx-auto hidden transition-all">
+                        
+                        <!-- TERDAFTAR (SUKSES) -->
+                        <div id="resultFound" class="hidden bg-emerald-950/60 border border-emerald-500/40 rounded-xl p-5 space-y-3">
+                            <div class="flex items-center gap-3 border-b border-emerald-500/20 pb-3">
+                                <div class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl border border-emerald-500/30 flex-shrink-0">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                </div>
+                                <div>
+                                    <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-wider block">Status Terverifikasi</span>
+                                    <h3 class="text-base font-bold text-white">Siswa Terdaftar Resmi di LKP Global Course</h3>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                                <div>
+                                    <span class="text-slate-400 block">Nama Lengkap Siswa:</span>
+                                    <strong id="resNama" class="text-white text-sm block mt-0.5"></strong>
+                                </div>
+                                <div>
+                                    <span class="text-slate-400 block">NISGLC:</span>
+                                    <strong id="resNisglc" class="text-sky-400 text-sm font-mono block mt-0.5"></strong>
+                                </div>
+                                <div class="sm:col-span-2">
+                                    <span class="text-slate-400 block">Tanggal Terdaftar:</span>
+                                    <strong id="resTgl" class="text-amber-300 block mt-0.5"></strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TIDAK DITEMUKAN (GAGAL) -->
+                        <div id="resultNotFound" class="hidden bg-rose-950/60 border border-rose-500/40 rounded-xl p-5 text-center space-y-2">
+                            <div class="w-10 h-10 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center text-xl border border-rose-500/30 mx-auto">
+                                <i class="fa-solid fa-circle-xmark"></i>
+                            </div>
+                            <h3 class="text-sm font-bold text-rose-200">Data Tidak Ditemukan</h3>
+                            <p class="text-xs text-rose-300">Mohon periksa kembali NISGLC yang Anda masukkan. Pastikan nomor dimasukkan dengan benar.</p>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SEKSI KENAPA MEMILIH KAMI & KONTAK -->
+        <div class="py-16 bg-white border-b border-slate-200">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div>
                     <h2 class="text-xs font-bold text-primary-600 uppercase tracking-widest">Kenapa Memilih Kami?</h2>
@@ -504,11 +587,9 @@
                 <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-4">Hubungi Kami</h4>
                 <p class="text-xs leading-relaxed">Muara Dua, Kab. Ogan Komering Ulu Selatan, Sumatera Selatan.</p>
                 <div class="flex space-x-4">
-                    <!-- WhatsApp -->
                     <a href="https://wa.me/6287781865701" target="_blank" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-primary-600 hover:text-white flex items-center justify-center transition-all text-slate-300" title="WhatsApp">
                         <i class="fa-brands fa-whatsapp"></i>
                     </a>
-                    <!-- Facebook -->
                     <a href="https://www.facebook.com/glc.simpang" target="_blank" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-primary-600 hover:text-white flex items-center justify-center transition-all text-slate-300" title="Facebook">
                         <i class="fa-brands fa-facebook-f"></i>
                     </a>
@@ -519,12 +600,10 @@
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-slate-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
             <p>© 2026 LKP Global Course OKU Selatan. Hak Cipta Dilindungi Undang-Undang.</p>
-            <div class="flex space-x-4">
-
-            </div>
         </div>
     </footer>
 
+    <!-- SCRIPT MOBILE MENU -->
     <script>
         document.getElementById('mobile-menu-btn').addEventListener('click', () => {
             const mobileMenu = document.getElementById('mobile-menu');
@@ -541,5 +620,82 @@
         });
     </script>
 
+    <!-- SCRIPT FIREBASE LOGIC PENCARIAN SISWA -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCe7o7XvCfQiMOn0dlBO20AK8IzQbz6nJw",
+            authDomain: "lkp-global-course.firebaseapp.com",
+            databaseURL: "https://lkp-global-course-default-rtdb.firebaseio.com",
+            projectId: "lkp-global-course",
+            storageBucket: "lkp-global-course.firebasestorage.app",
+            messagingSenderId: "95358874758",
+            appId: "1:95358874758:web:83c12f2d1cbbac3f53faa7"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        const searchForm = document.getElementById('searchForm');
+        const inputNisglc = document.getElementById('inputNisglc');
+        const btnCekSiswa = document.getElementById('btnCekSiswa');
+        const searchResult = document.getElementById('searchResult');
+        const resultFound = document.getElementById('resultFound');
+        const resultNotFound = document.getElementById('resultNotFound');
+
+        searchForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const queryVal = inputNisglc.value.trim();
+            if (!queryVal) return;
+
+            // TAMPILAN LOADING
+            btnCekSiswa.disabled = true;
+            btnCekSiswa.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Memeriksa...`;
+            searchResult.classList.add('hidden');
+            resultFound.classList.add('hidden');
+            resultNotFound.classList.add('hidden');
+
+            try {
+                const snapshot = await get(ref(db, 'pendaftaran_siswa'));
+                let foundData = null;
+                
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+                    const cleanQuery = queryVal.replace(/[^0-9a-zA-Z]/g, '').toLowerCase();
+
+                    for (let key in data) {
+                        const item = data[key];
+                        const cleanNisglc = item.nisglc ? item.nisglc.replace(/[^0-9a-zA-Z]/g, '').toLowerCase() : '';
+                        const cleanNisgc = item.nisgc ? item.nisgc.replace(/[^0-9a-zA-Z]/g, '').toLowerCase() : '';
+
+                        if (cleanNisglc === cleanQuery || cleanNisgc === cleanQuery || (item.nisglc && item.nisglc.toLowerCase() === queryVal.toLowerCase())) {
+                            foundData = item;
+                            break;
+                        }
+                    }
+                }
+
+                searchResult.classList.remove('hidden');
+
+                if (foundData) {
+                    document.getElementById('resNama').textContent = foundData.nama || '-';
+                    document.getElementById('resNisglc').textContent = foundData.nisglc || foundData.nisgc || queryVal;
+                    document.getElementById('resTgl').textContent = foundData.timestamp || 'Sudah Terdaftar';
+                    resultFound.classList.remove('hidden');
+                } else {
+                    resultNotFound.classList.remove('hidden');
+                }
+
+            } catch (err) {
+                console.error("Firebase Error:", err);
+                alert("Gagal melakukan pencarian: " + err.message);
+            } finally {
+                btnCekSiswa.disabled = false;
+                btnCekSiswa.innerHTML = `<i class="fa-solid fa-search"></i> Cek Data`;
+            }
+        });
+    </script>
 </body>
 </html>
